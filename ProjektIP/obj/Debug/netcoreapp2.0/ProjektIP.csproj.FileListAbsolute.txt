@@ -34,3 +34,15 @@ C:\Users\szyme\Desktop\Daria 18.03.2018\ProjektIP\ProjektIP\obj\Debug\netcoreapp
 C:\Users\szyme\Desktop\Daria 18.03.2018\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
 C:\Users\szyme\Desktop\Daria 18.03.2018\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb
 C:\Users\szyme\Desktop\Daria 18.03.2018\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csprojResolveAssemblyReference.cache
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.deps.json
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.json
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.dev.json
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.dll
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.pdb
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csprojResolveAssemblyReference.cache
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csproj.CoreCompileInputs.cache
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfoInputs.cache
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfo.cs
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
+C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb

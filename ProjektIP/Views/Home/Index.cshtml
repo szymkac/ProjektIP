@@ -1,24 +1,27 @@
 ﻿@{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
+<hr />
+<div class="row marging-top-70">
 
-<div class="col-md-6">
-	<h3>Zaloguj</h3>
-	<hr />
-	<form action="/Home/Login" method="post">
-		<div class="row">
-			<input class="form-control control-margin" type="text" name="login" placeholder="Login" />
-		</div>
-		<div class="row">
-			<input class="form-control control-margin" type="password" name="password" placeholder="Hasło"/>
-		</div>
-		<div class="row">
-			<div class="right col-md-2">
-				<input class="btn btn-primary" type="submit" value="Zaloguj" />
-			</div>
-		</div>
-	</form>
-</div>
-<div class="col-md-6">
-
+    <div class="col-md-6 ">
+        <div class="marging-top-50 border-corners">
+            <h2 class="font-blue">Logowanie</h2>
+            <hr />
+            <form action="/Home/Login" method="post">
+                <div class="row">
+                    <input class="form-control login-control" type="text" name="login" placeholder="Login" />
+                </div>
+                <div class="row">
+                    <input class="form-control login-control" type="password" name="password" placeholder="Hasło" />
+                </div>
+                <div class="row">
+                    <input class="btn background-blue font-white pull-right margin-right-10p btn-login" type="submit" value="Zaloguj" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img src="~/Content/Image/login_image.png" alt="Logo" class="center-block img-responsive hidden-image" height="400" width="400">
+    </div>
 </div>

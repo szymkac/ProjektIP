@@ -1,3 +1,66 @@
 ﻿.control-margin {
 	margin: 20px 0;
 }
+
+.marging-top-50 {
+    margin-top: 50px;
+}
+
+.marging-top-70 {
+    margin-top: 70px;
+}
+
+.background-blue {
+    background-color:#4472c4
+}
+
+.border-corners {
+    border-radius: 25px;
+    padding: 20px;
+    border: 6px solid #4472c4;
+}
+
+
+.login-control {
+    width: 80%;
+    border: 2px solid #4472c4;
+    margin: 0px 10% 20px 10%;
+}
+
+.font-white{
+    color: white;
+}
+
+
+.font-blue {
+    color: #4472c4;
+}
+
+
+.margin-right-10p{
+    margin-right:10%;
+}
+
+.btn-login {
+    width:150px;
+    font-weight: bold;
+}
+
+a {
+    color:white !important;
+}
+
+a:hover {
+    color:darkgray !important;
+}
+
+.border-corners-bottom {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+@media(max-width:950px) {
+    .hidden-image{
+        display: none;
+    }
+}

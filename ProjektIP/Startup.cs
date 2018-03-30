@@ -12,6 +12,8 @@ using ProjektIP.Data;
 using ProjektIP.Models;
 using ProjektIP.Services;
 using ProjektIP.Database;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace ProjektIP
 {
@@ -62,6 +64,13 @@ namespace ProjektIP
             }
 
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Content")),
+                RequestPath = "/Content"
+            });
 
             app.UseAuthentication();
 
