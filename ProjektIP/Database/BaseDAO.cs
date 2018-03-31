@@ -9,23 +9,9 @@ using Microsoft.IdentityModel.Protocols;
 
 namespace ProjektIP.Database
 {
-    public static class SQLStatements
+    public static class BaseDAO
     {
-        public static bool CheckUser(string login, string password)
-        {
-            List<string> cols = new List<string>();
-            cols.Add("Login");
-            cols.Add("Password");
-
-            Dictionary<string, object> filter = new Dictionary<string, object>();
-            filter.Add("Login", login);
-            filter.Add("Password", password);
-
-            if (Select("Users", cols, filter).Count == 1)
-                return true;
-
-            return false;            
-        }
+    
         /// <summary>
         /// Zapytanie SELECT
         /// </summary>
@@ -34,7 +20,7 @@ namespace ProjektIP.Database
         /// <param name="filter">Słownik filtów, gdzie kluczem jest nazwa parametru</param>
         /// <returns>Metoda zwraca tablice obiektów [i,k] i-zwrócone wiersze, k-kolumny</returns>
         public static List<object[]> Select(string table, List<string> columns, Dictionary<string, object> filters)
-        {            
+        {
             List<object[]> result = null;
             using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
             {
@@ -43,12 +29,12 @@ namespace ProjektIP.Database
                     string cols = "";
                     if (columns != null && columns.Count > 0)
                     {
-                        for(int i = 0;i<columns.Count;i++)
+                        for (int i = 0; i < columns.Count; i++)
                         {
-                            if(i==columns.Count-1)
-                                cols += columns[i] ;
+                            if (i == columns.Count - 1)
+                                cols += columns[i];
                             else
-                            cols += columns[i] + ", ";
+                                cols += columns[i] + ", ";
                         }
                     }
                     else
@@ -57,30 +43,7 @@ namespace ProjektIP.Database
 
                     string sqlQuery = String.Format("SELECT {0} FROM {1}", cols, table);
 
-                    if (filters != null && filters.Count > 0)
-                    {
-                        string flt = "";
-                        int i = 0;
-                        foreach (KeyValuePair<string, object> pair in filters)
-                        {
-                            if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
-                            {
-                                if (i == 0)
-                                    flt += pair.Key + " = '" + pair.Value+"'";
-                                else
-                                    flt += " AND " + pair.Key + " = '" + pair.Value+"'";
-                            }
-                            else
-                            {
-                                if (i == 0)
-                                    flt += pair.Key + " = " + pair.Value;
-                                else
-                                    flt += " AND " + pair.Key + " = " + pair.Value;
-                            }
-                            i++;
-                        }
-                        sqlQuery += String.Format(" WHERE {0}", flt);
-                    }
+                    sqlQuery += GetWhereClause(filters);
 
                     conn.Open();
                     command.CommandText = sqlQuery;
@@ -108,18 +71,17 @@ namespace ProjektIP.Database
         /// <param name="values">Słownik wartości, gdzie kluczem jest nazwa kolumny</param>
         public static void Insert(string table, Dictionary<string, object> values)
         {
-            List<object[]> result = null;
             using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
             {
                 using (SqlCommand command = new SqlCommand("", conn))
                 {
 
-                   string columns = "";
-                   string value = "";
+                    string columns = "";
+                    string value = "";
 
                     if (values != null && values.Count > 0)
                     {
-                        
+
                         int i = 0;
                         foreach (KeyValuePair<string, object> pair in values)
                         {
@@ -133,10 +95,10 @@ namespace ProjektIP.Database
                             if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
                             {
                                 if (i != values.Count - 1)
-                                    value += "'"+pair.Value+"'" + ",";
+                                    value += "'" + pair.Value + "'" + ",";
                                 else
-                                    value += "'" + pair.Value + "'" ;
-                              
+                                    value += "'" + pair.Value + "'";
+
                             }
                             else
                             {
@@ -151,7 +113,7 @@ namespace ProjektIP.Database
                     }
 
                     string sqlQuery = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", table, columns, value);
-                   
+
                     conn.Open();
                     command.CommandText = sqlQuery;
                     command.ExecuteNonQuery();
@@ -159,6 +121,78 @@ namespace ProjektIP.Database
                     conn.Close();
                 }
             }
+        }
+
+        /// <summary>
+        /// Metoda UPDATE
+        /// </summary>
+        /// <param name="table">Nazwa tabeli</param>
+        /// <param name="id">Identyfikator modyfikowanego pola</param>
+        /// <param name="values">Słownik wartości, gdzie kluczem jest nazwa kolumny. Jeśli wartość ma pozostać bez zmiany, podać null</param>
+        public static void Update(string table, KeyValuePair<string,object> id, Dictionary<string, object> values)
+        {
+            using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand command = new SqlCommand("", conn))
+                {
+                    string columns = string.Empty;
+
+                    foreach(KeyValuePair<string, object> pair in values)
+                    {
+                        if(pair.Value!=null)
+                        {
+                            if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
+                            {
+                                columns += pair.Key + " = '" + pair.Value + "',";
+                            }
+                            else
+                            {
+                                columns += pair.Key + " = " + pair.Value + ",";
+                            }
+                        }
+                    }
+                    if(columns.Length > 0)
+                        columns.Remove(columns.Length - 1);
+
+                    string sqlQuery = String.Format("UPDATE {0} SET{1} WHERE {2} = {3} ", table, columns, id.Key, id.Value);
+
+                    conn.Open();
+                    command.CommandText = sqlQuery;
+                    command.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+        }
+
+        private static string GetWhereClause(Dictionary<string,object> filters)
+        {
+            string clause = string.Empty;
+            if (filters != null && filters.Count > 0)
+            {
+                string flt = "";
+                int i = 0;
+                foreach (KeyValuePair<string, object> pair in filters)
+                {
+                    if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
+                    {
+                        if (i == 0)
+                            flt += pair.Key + " = '" + pair.Value + "'";
+                        else
+                            flt += " AND " + pair.Key + " = '" + pair.Value + "'";
+                    }
+                    else
+                    {
+                        if (i == 0)
+                            flt += pair.Key + " = " + pair.Value;
+                        else
+                            flt += " AND " + pair.Key + " = " + pair.Value;
+                    }
+                    i++;
+                }
+                clause += String.Format(" WHERE {0}", flt);
+            }
+            return clause;
         }
 
     }

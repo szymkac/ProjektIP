@@ -51,5 +51,22 @@ namespace ProjektIP.Models
 			Title = title;
 		}
 
-	}
+        /// <summary>
+        /// Utworzone na potrzeby kontrolera, bez dodatkowych pól
+        /// </summary>
+        public MeetingModel(long id, long meetingTypeId, DateTime dateStart, DateTime dateEnd, long employeeAuthorId, long roomId,  string location, string note, long priorityId, string title)
+        {
+            Id = id;
+            MeetingTypeId = meetingTypeId;
+            DateStart = dateStart;
+            DateEnd = dateEnd;
+            EmployeeAuthorId = employeeAuthorId;
+            RoomId = roomId;
+            Location = location;
+            Note = note;
+            PriorityId = priorityId;
+            Title = title;
+        }
+
+    }
 }

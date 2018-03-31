@@ -28,7 +28,7 @@ namespace ProjektIP.Controllers
 		[HttpPost]
 		public IActionResult Login(string login, string password)
 		{
-			if (SQLStatements.CheckUser(login, password))
+			if (AccountController.AccountDAO.CheckUser(login, password))
 				ViewData["Message"] = "dobre hasło";
 			else
 				ViewData["Message"] = "złe hasło";

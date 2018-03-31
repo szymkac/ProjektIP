@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ProjektIP.Database;
 using ProjektIP.Models;
 using ProjektIP.Models.AccountViewModels;
 using ProjektIP.Services;
@@ -460,5 +461,23 @@ namespace ProjektIP.Controllers
         }
 
         #endregion
+        public static class AccountDAO
+        {
+            public static bool CheckUser(string login, string password)
+            {
+                List<string> cols = new List<string>();
+                cols.Add("Login");
+                cols.Add("Password");
+
+                Dictionary<string, object> filter = new Dictionary<string, object>();
+                filter.Add("Login", login);
+                filter.Add("Password", password);
+
+                if (BaseDAO.Select("Users", cols, filter).Count == 1)
+                    return true;
+
+                return false;
+            }
+        }
     }
 }
