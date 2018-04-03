@@ -3,6 +3,107 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
-@ViewData["Message"]
+<div class="row main-height">
+    <div class="col-md-9 border-corners max-height scroll-container all-meeting-container">
+        <div class="meeting-bar"></div>
+        <div class="meeting-container">
+            <div class="date-container">
+                <div class="date-text">03.04.2018</div>
+                Dzisiaj
+            </div>
 
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="row background-yellow">
+                                    <div class="col-md-2">
+                                        <img src="~/Content/Image/meeting_white.png" alt="Typ" height="40" width="40" />
+                                    </div>
+                                    <div class="col-md-8 font-white">
+                                        Spotkanie #1 <br />
+                                        08:30
+                                    </div>
+                                    <div class="col-md-2">
+                                        @* tu bêdzie avatar!!!! *@
+                                    </div>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse margin-top-minus10" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="border-type-yellow">
+                                <b>Miejsce:</b> Sala nr 2 <br />
+                                <b>Autor:</b> Harold Mikołajczak <br />
+                                <b>Priorytet:</b> Normalny <img src="~/Content/Image/priority_normal.png" alt="Priorytet" height="20" width="20" />  <br />
+                                <b>Opis:</b>
+                                Pizza Party!!! Dzisiaj tylko hawajka.
+                                <div class="row text-center">
+                                    <input type="image" src="~/Content/Image/cross.png" height="35" width="35" />
+                                    <input type="image" src="~/Content/Image/tick.png" height="35" width="35" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <div class="row background-lightblue">
+                                    <div class="col-md-2">
+                                        <img src="~/Content/Image/phone_white.png" alt="Typ" height="40" width="40" />
+                                    </div>
+                                    <div class="col-md-8 font-white">
+                                        Spotkanie #2 <br />
+                                        12:00
+                                    </div>
+                                    <div class="col-md-2">
+                                        @*tu bêdzie avatar!!!!*@ 
+                                    </div>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse margin-top-minus10" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="border-type-lightblue">
+                                <b>Miejsce:</b> Sala nr 1 <br />
+                                <b>Autor:</b> Edward Szyszka <br />
+                                <b>Priorytet:</b> Pilny <img src="~/Content/Image/priority_important.png" alt="Priorytet" height="20" width="20" />  <br />
+                                <b>Opis:</b>
+                                Ważne spotkanie z nowym klientem.
+                                <div class="row text-center">
+                                    <input class="btn background-blue font-white" type="submit" value="Edytuj" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="meeting-bar"></div>
+        <div class="meeting-container">
+            <div class="date-container">
+                <div class="date-text">04.04.2018</div>
+                Jutro
+            </div>
+        </div>
+        <div class="meeting-bar"></div>
+        <div class="meeting-container">
+            <div class="date-container">
+                <div class="date-text">05.04.2018</div>
+                Pojutrze
+            </div>
+        </div>
+        <div class="meeting-bar"></div>
+    </div>
+    <div class="col-md-3 border-corners max-height">
+        @*zadania*@
+    </div>
+</div>
