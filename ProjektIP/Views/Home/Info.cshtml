@@ -5,24 +5,30 @@
 
 <div>
 	<h3>Kilka przydatnych informacji :)</h3>
-	<p>Jako że nie było strajków spróbujemy zrobić projekt w mvc</p>
-	<p>Tą stronę z informacjami wkrótce przerzuce na inną podstronę</p>
-	<p>Projekt jest dostępny na dysku google</p>
-	<p>Jest założony w visual studio 2017</p>
 	<p>Domyślnie Visual ma włączone debugowanie w przeglądarce czy jakoś tak... proponuje to wyłączyć, wszystko będzie działać szybciej :D Opcje ->debugowanie -> odznaczyć "Włącz debugowanie JavaScript dla przeglądarek chrome i ie"</p>
 	<hr />
 	<h3>Więcej informacji!!!</h3>
-	<p>Każdy kto dokona zmian wrzuca cały projekt na dysk, do folderu z datą i imieniem (najlepiej informacją co się zrobiło, może utworzymy jakiś arkusz? ), no chyba że chcemy kożystać z gita :o</p>
-	<p>Będę to łączyć, myślę że nie będzie to trudne, ponieważ nie ma nas tak dużo a każdy jest odpowiedzialny za coś innego :)</p>
-	<p>Logowanie i rejestracja zostało wygenerowane automatycznie przy tworzeniu projektu, zostanie zmienione najpewniej :P</p>
 	<p>Jeśli dokonało się jakieś brutalnej zmiany to proszę o dopisanie informacji w zakładce poniżej ;) (oprócz informacji o tym na facebooku)</p>
 	<p><b>W celu zachownaia w miarę porządku, są utworzone foldery w projekcie:</b></p>
-	<p>- Database: na wszystko co związane z bazą danych, zapytanie, klasy z metodamy itd</p>
-	<p>- Content: obrazki i style</p>
-	<p><b>Po za tymi dwoma folderami istnieją oczywiście jeszcze te od mvc ;) W Model trzeba będzie utworzyć klasy odpowiadające tabelą w bazie np: klasa pracownik, posiadająca pola takie jak kolumny w bazie</b></p>
+	<ul>
+		<li>DAO: na wszystko co związane z bazą danych, zapytanie, klasy z metodamy itd (<b>DAWNIEJ Database !!!</b>)</li>
+		<li>Content: obrazki</li>
+		<li>Common: klasy c# nie będące modelem controlerem</li>
+		<li>wwwroot/css/StyleSheet.css: arkusz styli</li>
+	</ul>
 	<hr />
 	<h3>Informacje o zmianach w projekcie</h3>
-	<p>utworzony plik z stylami nazwa - StyleSheet, połączo projekty, wersja na gicie</p>
-	<p></p>
+	<p>Zmiany nazw!!!</p>
+	<ul>
+		<li>widok Login (kontroler Home) teraz nazywa się MainPage</li>
+		<li>folder database -> DAO</li>
+		<li>Metody w kontrolerach!! na przykładzie task: AddTask -> zwraca partialView formatki dodawania tasków, PushAddTaskToDB -> zapisuje model do bazy, przekierowywuje do Home/MainPage</li>
+	</ul>
+	<p><b>połączono wersje Darii z 05.04.2018 z wersją Szymona </b></p>
+	<p>formatka dodawania tasków jest w oknie modalnym (drugi guzik od prawej), wzorować się na tym przy tworzeniu formatek, instrukcja działania modalu -> pytać Szymona</p>
+	<hr />
+	<p><b>Uwagi</b></p>
+	<p>Daria proszę popraw ścieżki do obrazków w twojej formatce :3 (sciezka Content/Image - wszystkie aktualne obrazki obecne)</p>
+	<p>Jeśli komuś nie działają zmiany w stylach to wyczyścić solucje, zbuildować solucje, odświeżyć strone - ctrl + F5, dzieje się to chyba po ściagnięciu projektu, visual gubi się w tym czy ktoś coś zmieniał (taka teoria spiskowa xD)</p>
 </div>
 

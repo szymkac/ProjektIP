@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ProjektIP.Database;
+using ProjektIP.DAO;
 using ProjektIP.Models;
 using ProjektIP.Models.AccountViewModels;
 using ProjektIP.Services;

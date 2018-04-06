@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjektIP.Database;
+using ProjektIP.DAO;
 using ProjektIP.Models;
 
 namespace ProjektIP.Controllers
@@ -14,9 +14,19 @@ namespace ProjektIP.Controllers
         {
             return View();
         }
-        
+        [HttpGet]
+		public IActionResult AddEmployee()
+		{
+			return PartialView();
+		}
+		
+		public IActionResult PushAddEmployeeToDB()
+		{
+			return RedirectToAction("MainPage", "Home");
+		}
         public static class EmployeeDAO
         {
+
             public static class Columns
             {
                 public static string IdEmployee = "IdEmployee";
