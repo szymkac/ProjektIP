@@ -48,7 +48,7 @@ namespace ProjektIP.Controllers
 
             public static MeetingModel SelectFirst(Dictionary<string, object> filters)
             {
-                List<object[]> result = BaseDAO.Select("Meeting", null, null);
+                List<object[]> result = BaseDAO.Select("Meetings", null, null);
                 return new MeetingModel(Convert.ToInt64(result[0][0]), Convert.ToInt64(result[0][1]), Convert.ToDateTime(result[0][2]), Convert.ToDateTime(result[0][3]), Convert.ToInt64(result[0][4]), Convert.ToInt64(result[0][5]), result[0][6].ToString(), result[0][7].ToString(), Convert.ToInt64(result[0][8]), result[0][9].ToString());
             }
 
@@ -56,7 +56,7 @@ namespace ProjektIP.Controllers
             {
                 List<MeetingModel> list = new List<MeetingModel>();
 
-                List<object[]> result = BaseDAO.Select("Task", null, null);
+                List<object[]> result = BaseDAO.Select("Meetings", null, null);
                 foreach (object[] res in result)
                     list.Add(new MeetingModel(Convert.ToInt64(res[0]), Convert.ToInt64(res[1]), Convert.ToDateTime(res[2]), Convert.ToDateTime(res[3]), Convert.ToInt64(res[4]), Convert.ToInt64(res[5]), res[6].ToString(), res[7].ToString(), Convert.ToInt64(res[8]), res[9].ToString()));
 
@@ -65,12 +65,12 @@ namespace ProjektIP.Controllers
 
             public static void Insert(MeetingModel Meeting)
             {
-                BaseDAO.Insert("Meeting", Columns.Fill(Meeting));
+                BaseDAO.Insert("Meetings", Columns.Fill(Meeting));
             }
 
             public static void Update(int id, MeetingModel Meeting)
             {
-                BaseDAO.Update("Meeting", new KeyValuePair<string, object>(Columns.IdMeeting, id), Columns.Fill(Meeting));
+                BaseDAO.Update("Meetings", new KeyValuePair<string, object>(Columns.IdMeeting, id), Columns.Fill(Meeting));
             }
         }
     }

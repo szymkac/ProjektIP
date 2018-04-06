@@ -52,7 +52,7 @@ namespace ProjektIP.Controllers
             
             public static EmployeeModel SelectFirst(Dictionary<string, object> filters)
             {
-                List<object[]> result = BaseDAO.Select("Employee", null, null);
+                List<object[]> result = BaseDAO.Select("Employees", null, null);
                 return new EmployeeModel(Convert.ToInt64(result[0][0]), result[0][1].ToString(), result[0][2].ToString(), result[0][3].ToString(), result[0][4].ToString(), Convert.ToBoolean(result[0][5]), Convert.ToInt64(result[0][6]), result[0][7].ToString());
             }
 
@@ -60,7 +60,7 @@ namespace ProjektIP.Controllers
             {
                 List<EmployeeModel> list = new List<EmployeeModel>();
 
-                List<object[]> result = BaseDAO.Select("Task", null, null);
+                List<object[]> result = BaseDAO.Select("Employees", null, null);
                 foreach (object[] res in result)
                     list.Add(new EmployeeModel(Convert.ToInt64(res[0]), res[1].ToString(), res[2].ToString(), res[3].ToString(), res[4].ToString(), Convert.ToBoolean(res[5]), Convert.ToInt64(res[6]), res[7].ToString()));
 
@@ -68,12 +68,12 @@ namespace ProjektIP.Controllers
             }
             public static void Insert(EmployeeModel employee)
             {
-                BaseDAO.Insert("Employee", Columns.Fill(employee));
+                BaseDAO.Insert("Employees", Columns.Fill(employee));
             }
 
             public static void Update(int id, EmployeeModel employee)
             {
-                BaseDAO.Update("Employee", new KeyValuePair<string, object>(Columns.IdEmployee, id), Columns.Fill(employee));
+                BaseDAO.Update("Employees", new KeyValuePair<string, object>(Columns.IdEmployee, id), Columns.Fill(employee));
             }
         }
     }
