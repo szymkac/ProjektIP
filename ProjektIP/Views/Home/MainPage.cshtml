@@ -1,212 +1,225 @@
 ﻿@{
-	ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login";
 }
 <script>
-	function openModal(url) {
-		$.ajax({
-			type: "GET",
-			url: url,
-			success: function (viewHTML) {
-				$('#modal-body').html(viewHTML);
-				$('#modal-window').modal('show');
-			},
-			error: function (errorData) {
-				console.log(errorData);
-			}
-		});
-	}
-	function openModalAddUser() {
-		this.openModal("/Employee/AddEmployee/");
-	}
-	function openModalAddTask() {
-		this.openModal("/Task/AddTask/");
-	}
-	function closeModal() {
-		$('#modal-window').modal('dispose');
-	}
-	function showHideButtonsMenu() {
-		if ($("#menu").hasClass("modal-button-menu-white")) {
-			$(".right-button-group").find(".modal-button").addClass("modal-button-visible");
-			$(".right-button-group").find(".modal-button").removeClass("modal-button-unvisible");
-			$("#menu").removeClass("modal-button-menu-white");
-		}
-		else {
-			$(".right-button-group").find(".modal-button").addClass("modal-button-unvisible");
-			$(".right-button-group").find(".modal-button").removeClass("modal-button-visible");
-			$("#menu").addClass("modal-button-menu-white");
-		}
-	}
-	function showHideButtonsFilter() {
-		if ($("#filter").hasClass("modal-button-menu-white")) {
-			$(".left-button-group").find(".modal-button").addClass("modal-button-visible");
-			$(".left-button-group").find(".modal-button").removeClass("modal-button-unvisible");
-			$("#filter").removeClass("modal-button-menu-white");
-		}
-		else {
-			$(".left-button-group").find(".modal-button").addClass("modal-button-unvisible");
-			$(".left-button-group").find(".modal-button").removeClass("modal-button-visible");
-			$("#filter").addClass("modal-button-menu-white");
-		}
-	}
+    function openModal(url) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (viewHTML) {
+                $('#modal-body').html(viewHTML);
+                $('#modal-window').modal('show');
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    }
+    function openModalAddUser() {
+        this.openModal("/Employee/AddEmployee/");
+    }
+    function openModalAddTask() {
+        this.openModal("/Task/AddTask/");
+    }
+    function closeModal() {
+        $('#modal-window').modal('dispose');
+    }
+    function showHideButtonsMenu() {
+        if ($("#menu").hasClass("modal-button-menu-white")) {
+            $(".right-button-group").find(".modal-button").addClass("modal-button-visible");
+            $(".right-button-group").find(".modal-button").removeClass("modal-button-unvisible");
+            $("#menu").removeClass("modal-button-menu-white");
+        }
+        else {
+            $(".right-button-group").find(".modal-button").addClass("modal-button-unvisible");
+            $(".right-button-group").find(".modal-button").removeClass("modal-button-visible");
+            $("#menu").addClass("modal-button-menu-white");
+        }
+    }
+    function showHideButtonsFilter() {
+        if ($("#filter").hasClass("modal-button-menu-white")) {
+            $(".left-button-group").find(".modal-button").addClass("modal-button-visible");
+            $(".left-button-group").find(".modal-button").removeClass("modal-button-unvisible");
+            $("#filter").removeClass("modal-button-menu-white");
+        }
+        else {
+            $(".left-button-group").find(".modal-button").addClass("modal-button-unvisible");
+            $(".left-button-group").find(".modal-button").removeClass("modal-button-visible");
+            $("#filter").addClass("modal-button-menu-white");
+        }
+    }
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip(
+            {
+                animation: false
+            }
+        );
+    });
 </script>
 
 <div class="row main-height">
-	<div class="col-md-9 max-height">
-		<div class="button-container">
+    <div class="col-md-9 max-height">
+        <div class="button-container">
 
-			<button id="filter" class="btn background-blue modal-button left modal-button-menu-white">
-				<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
-			</button>
-			<div class="left-button-group">
-				<button class="btn background-blue modal-button modal-button-unvisible">
-					<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
-				</button>
-				<button class="btn background-blue modal-button modal-button-unvisible">
-					<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
-				</button>
-				<button class="btn background-blue modal-button modal-button-unvisible">
-					<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
-				</button>
-			</div>
+            <button id="filter" class="btn background-blue modal-button left modal-button-menu-white grey-tooltip" title="Filtry" data-toggle="tooltip">
+                <img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
+            </button>
+            <div class="left-button-group">
+                <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip">
+                    <img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+                </button>
+                <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip">
+                    <img class="modal-button-img" src="~/Content/Image/filter_all.png" />
+                </button>
+                <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip">
+                    <img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+                </button>
+            </div>
 
-			<button id="menu" class="btn background-blue modal-button right modal-button-menu-white">
-				<img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
-			</button>
-			<div class="right-button-group">
-				<button class="btn background-blue modal-button right modal-button-unvisible" onclick="openModalAddUser()">
-					<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
-				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible" onclick="openModalAddTask()">
-					<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
-				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible">
-					<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
-				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible">
-					<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
-				</button>
-			</div>
-		</div>
-		<div class="border-corners task-height scroll-container all-meeting-container">
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div class="date-text">03.04.2018</div>
-					Dzisiaj
-				</div>
+            <button id="menu" class="btn background-blue modal-button right modal-button-menu-white grey-tooltip" title="Menu" data-toggle="tooltip">
+                <img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
+            </button>
+            <div class="right-button-group">
+                <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj pracownika" data-toggle="tooltip" onclick="openModalAddUser()">
+                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                </button>
+                <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
+                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                </button>
+                <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip">
+                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                </button>
+                <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip">
+                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                </button>
+            </div>
+        </div>
+        <div class="border-corners task-height scroll-container all-meeting-container">
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div class="date-text">03.04.2018</div>
+                    Dzisiaj
+                </div>
 
-				<div id="accordion">
-					<div class="card">
-						<div class="card-header" id="headingOne">
-							<h5 class="mb-0">
-								<button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									<div class="row background-yellow">
-										<div class="col-md-2">
-											<img src="~/Content/Image/meeting_white.png" alt="Typ" height="40" width="40" />
-										</div>
-										<div class="col-md-8 font-white">
-											Spotkanie #1 <br />
-											08:30
-										</div>
-										<div class="col-md-2">
-											@* tu bêdzie avatar!!!! *@
-										</div>
-									</div>
-								</button>
-							</h5>
-						</div>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <div class="row background-yellow">
+                                        <div class="col-md-2">
+                                            <img src="~/Content/Image/meeting_white.png" alt="Typ" height="40" width="40" />
+                                        </div>
+                                        <div class="col-md-8 font-white">
+                                            Spotkanie #1 <br />
+                                            08:30
+                                        </div>
+                                        <div class="col-md-2">
+                                            @* tu bêdzie avatar!!!! *@
+                                        </div>
+                                    </div>
+                                </button>
+                            </h5>
+                        </div>
 
-						<div id="collapseOne" class="collapse margin-top-minus10" aria-labelledby="headingOne" data-parent="#accordion">
-							<div class="card-body">
-								<div class="border-type-yellow">
-									<b>Miejsce:</b> Sala nr 2 <br />
-									<b>Autor:</b> Harold Mikołajczak <br />
-									<b>Priorytet:</b> Normalny <img src="~/Content/Image/priority_normal.png" alt="Priorytet" height="20" width="20" />  <br />
-									<b>Opis:</b>
-									Pizza Party!!! Dzisiaj tylko hawajka.
-									<div class="row text-center">
-										<input type="image" src="~/Content/Image/cross.png" height="35" width="35" />
-										<input type="image" src="~/Content/Image/tick.png" height="35" width="35" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card">
-						<div class="card-header" id="headingTwo">
-							<h5 class="mb-0">
-								<button class="btn btn-link collapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-									<div class="row background-lightblue">
-										<div class="col-md-2">
-											<img src="~/Content/Image/phone_white.png" alt="Typ" height="40" width="40" />
-										</div>
-										<div class="col-md-8 font-white">
-											Spotkanie #2 <br />
-											12:00
-										</div>
-										<div class="col-md-2">
-											@*tu bêdzie avatar!!!!*@
-										</div>
-									</div>
-								</button>
-							</h5>
-						</div>
-						<div id="collapseTwo" class="collapse margin-top-minus10" aria-labelledby="headingTwo" data-parent="#accordion">
-							<div class="card-body">
-								<div class="border-type-lightblue">
-									<b>Miejsce:</b> Sala nr 1 <br />
-									<b>Autor:</b> Edward Szyszka <br />
-									<b>Priorytet:</b> Pilny <img src="~/Content/Image/priority_important.png" alt="Priorytet" height="20" width="20" />  <br />
-									<b>Opis:</b>
-									Ważne spotkanie z nowym klientem.
-									<div class="row text-center">
-										<input class="btn background-blue font-white" type="submit" value="Edytuj" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                        <div id="collapseOne" class="collapse margin-top-minus10" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="border-type-yellow">
+                                    <b>Miejsce:</b> Sala nr 2 <br />
+                                    <b>Autor:</b> Harold Mikołajczak <br />
+                                    <b>Priorytet:</b> Normalny <img src="~/Content/Image/priority_normal.png" alt="Priorytet" height="20" width="20" />  <br />
+                                    <b>Opis:</b>
+                                    Pizza Party!!! Dzisiaj tylko hawajka.
+                                    <div class="row text-center">
+                                        <input type="image" src="~/Content/Image/cross.png" height="35" width="35" />
+                                        <input type="image" src="~/Content/Image/tick.png" height="35" width="35" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <div class="row background-lightblue">
+                                        <div class="col-md-2">
+                                            <img src="~/Content/Image/phone_white.png" alt="Typ" height="40" width="40" />
+                                        </div>
+                                        <div class="col-md-8 font-white">
+                                            Spotkanie #2 <br />
+                                            12:00
+                                        </div>
+                                        <div class="col-md-2">
+                                            @*tu bêdzie avatar!!!!*@
+                                        </div>
+                                    </div>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse margin-top-minus10" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="border-type-lightblue">
+                                    <b>Miejsce:</b> Sala nr 1 <br />
+                                    <b>Autor:</b> Edward Szyszka <br />
+                                    <b>Priorytet:</b> Pilny <img src="~/Content/Image/priority_important.png" alt="Priorytet" height="20" width="20" />  <br />
+                                    <b>Opis:</b>
+                                    Ważne spotkanie z nowym klientem.
+                                    <div class="row text-center">
+                                        <input class="btn background-blue font-white" type="submit" value="Edytuj" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-			</div>
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div class="date-text">04.04.2018</div>
-					Jutro
-				</div>
-			</div>
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div class="date-text">05.04.2018</div>
-					Pojutrze
-				</div>
-			</div>
-			<div class="meeting-bar"></div>
-		</div>
-	</div>
-	<div class="col-md-3 border-corners max-height">
-		@*zadania*@
-	</div>
+            </div>
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div class="date-text">04.04.2018</div>
+                    Jutro
+                </div>
+            </div>
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div class="date-text">05.04.2018</div>
+                    Pojutrze
+                </div>
+            </div>
+            <div class="meeting-bar"></div>
+        </div>
+    </div>
+    <div class="col-md-3 border-corners max-height">
+        @*zadania*@
+    </div>
 </div>
 
 <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Dodaj użytkownika</h5>
-			</div>
-			<div class="modal-body">
-				<div id="modal-body" class="modal-inner-body">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Dodaj użytkownika</h5>
+            </div>
+            <div class="modal-body">
+                <div id="modal-body" class="modal-inner-body">
 
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">ANULUJ</button>
-				<input class="btn btn-primary" type="submit" form="partialViewForm" value="ZAPISZ" onclick="closeModal()" />
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ANULUJ</button>
+                <input class="btn btn-primary" type="submit" form="partialViewForm" value="ZAPISZ" onclick="closeModal()" />
+            </div>
+        </div>
+    </div>
 </div>
