@@ -11,7 +11,7 @@
 }
 
 .background-blue {
-	background-color: #4472c4
+	background-color: #4472c4;
 }
 
 .border-corners {
@@ -102,7 +102,7 @@ a {
 }
 
 .scroll-container {
-	overflow-x: auto;
+	overflow-y: scroll;
 }
 
 .meeting-container {
@@ -264,3 +264,38 @@ a {
     border-top-color: #c1bdc3;
 }
 
+.scroll5::-webkit-scrollbar {
+	width: 15px;
+}
+
+.scroll5::-webkit-scrollbar-thumb {
+	background: #4472c4;
+	border: 2px #315599 solid;
+	border-radius: 10px;
+}
+
+.scroll5::-webkit-scrollbar-track {
+	background: #ddd;
+	border: 2px #ddd solid;
+	border-radius: 10px;
+}
+
+.scroll5::-webkit-scrollbar-button {
+	background: #4472c4;
+	height: 15px;
+	border-radius: 50%;
+}
+
+.scroll4::-webkit-scrollbar {
+	width: 10px;
+}
+
+.scroll4::-webkit-scrollbar-thumb {
+	background: #4472c4;
+	border-radius: 20px;
+}
+
+.scroll4::-webkit-scrollbar-track {
+	background: #ddd;
+	border-radius: 20px;
+}

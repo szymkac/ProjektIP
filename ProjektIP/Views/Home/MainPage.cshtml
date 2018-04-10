@@ -5,9 +5,67 @@
 				trigger: 'hover'
 			}
 		);
+
+		getMeetingColumnsForThreeDays(getDate(new Date()));
 	});
-</script>
-<script>
+
+	function getMeetingColumnsForThreeDays(firstDayDate) {
+		var today = getDate(new Date());
+		for (var i = 1; i < 4; i++) {
+			(function (i) {
+				var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
+				if (colDate === changeDateFormat(today))
+					$('#col-today-' + i).html("Dzisiaj");
+				else if (colDate === changeDateFormat(dateIncrease(today, 1)))
+					$('#col-today-' + i).html("Jutro");
+				else if (colDate === changeDateFormat(dateIncrease(today, 2)))
+					$('#col-today-' + i).html("Pojurze");
+				$('#col-date-' + i).html(colDate);
+				$.ajax({
+					type: "GET",
+					url: "/Meeting/MeetingDetailsForDay/",
+					data: {
+						date: colDate,
+						column: i
+					},
+					success: function (viewHTML) {
+						var col = '#col' + i;
+						$(col).html(viewHTML);
+					},
+					error: function (errorData) {
+						console.log(errorData);
+					}
+				});
+			})(i);
+		}
+	}
+	function getDate(myDate) {
+		var dd = myDate.getDate();
+		var mm = myDate.getMonth() + 1;
+		var yyyy = myDate.getFullYear();
+
+		if (dd < 10) {
+			dd = '0' + dd
+		}
+
+		if (mm < 10) {
+			mm = '0' + mm
+		}
+
+		var date = mm + '/' + dd + '/' + yyyy;
+		return date;
+	}
+	function dateIncrease(date, plusDays) {
+		var myDate = new Date(date);
+		if (plusDays) {
+			myDate.setDate(myDate.getDate() + plusDays);
+		}
+		return getDate(myDate);
+	}
+	function changeDateFormat(date) {
+		myDate = date.split('/');
+		return myDate[1] + '/' + myDate[0] + '/' + myDate[2];
+	}
 	function openModal(url) {
 		$.ajax({
 			type: "GET",
@@ -22,9 +80,11 @@
 		});
 	}
 	function openModalAddUser() {
+		$('#modal-head').html('<h3>Dodaj pracownika</h3>');
 		this.openModal("/Employee/AddEmployee/");
 	}
 	function openModalAddTask() {
+		$('#modal-head').html('<h3>Dodaj zadanie</h3>');
 		this.openModal("/Task/AddTask/");
 	}
 	function closeModal() {
@@ -62,9 +122,7 @@
 			$("#filter").addClass("modal-button-menu-white");
 		}
 	}
-
 </script>
-
 
 
 <div class="row main-height">
@@ -104,102 +162,30 @@
 				</button>
 			</div>
 		</div>
-		<div class="border-corners task-height scroll-container all-meeting-container">
+		<div class="border-corners task-height scroll-container scroll5 all-meeting-container">
 			<div class="meeting-bar"></div>
 			<div class="meeting-container">
 				<div class="date-container">
-					<div class="date-text">03.04.2018</div>
-					Dzisiaj
+					<div id="col-date-1" class="date-text"></div>
+					<div id="col-today-1"></div>
 				</div>
-
-				<div id="accordion">
-					<div class="card">
-						<div class="card-header" id="headingOne">
-							<h5 class="mb-0">
-								<button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									<div class="row background-yellow">
-										<div class="col-md-2">
-											<img src="~/Content/Image/meeting_white.png" alt="Typ" height="40" width="40" />
-										</div>
-										<div class="col-md-8 font-white">
-											Spotkanie #1 <br />
-											08:30
-										</div>
-										<div class="col-md-2">
-											@* tu bêdzie avatar!!!! *@
-										</div>
-									</div>
-								</button>
-							</h5>
-						</div>
-
-						<div id="collapseOne" class="collapse margin-top-minus10" aria-labelledby="headingOne" data-parent="#accordion">
-							<div class="card-body">
-								<div class="border-type-yellow">
-									<b>Miejsce:</b> Sala nr 2 <br />
-									<b>Autor:</b> Harold Mikołajczak <br />
-									<b>Priorytet:</b> Normalny <img src="~/Content/Image/priority_normal.png" alt="Priorytet" height="20" width="20" />  <br />
-									<b>Opis:</b>
-									Pizza Party!!! Dzisiaj tylko hawajka.
-									<div class="row text-center">
-										<input type="image" src="~/Content/Image/cross.png" height="35" width="35" />
-										<input type="image" src="~/Content/Image/tick.png" height="35" width="35" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card">
-						<div class="card-header" id="headingTwo">
-							<h5 class="mb-0">
-								<button class="btn btn-link collapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-									<div class="row background-lightblue">
-										<div class="col-md-2">
-											<img src="~/Content/Image/phone_white.png" alt="Typ" height="40" width="40" />
-										</div>
-										<div class="col-md-8 font-white">
-											Spotkanie #2 <br />
-											12:00
-										</div>
-										<div class="col-md-2">
-											@*tu bêdzie avatar!!!!*@
-										</div>
-									</div>
-								</button>
-							</h5>
-						</div>
-						<div id="collapseTwo" class="collapse margin-top-minus10" aria-labelledby="headingTwo" data-parent="#accordion">
-							<div class="card-body">
-								<div class="border-type-lightblue">
-									<b>Miejsce:</b> Sala nr 1 <br />
-									<b>Autor:</b> Edward Szyszka <br />
-									<b>Priorytet:</b> Pilny <img src="~/Content/Image/priority_important.png" alt="Priorytet" height="20" width="20" />  <br />
-									<b>Opis:</b>
-									Ważne spotkanie z nowym klientem.
-									<div class="row text-center">
-										<input class="btn background-blue font-white" type="submit" value="Edytuj" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
+				<div id="col1"></div>
 			</div>
 			<div class="meeting-bar"></div>
 			<div class="meeting-container">
 				<div class="date-container">
-					<div class="date-text">04.04.2018</div>
-					Jutro
+					<div id="col-date-2" class="date-text"></div>
+					<div id="col-today-2"></div>
 				</div>
+				<div id="col2"></div>
 			</div>
 			<div class="meeting-bar"></div>
 			<div class="meeting-container">
 				<div class="date-container">
-					<div class="date-text">05.04.2018</div>
-					Pojutrze
+					<div id="col-date-3" class="date-text"></div>
+					<div id="col-today-3"></div>
 				</div>
+				<div id="col3"></div>
 			</div>
 			<div class="meeting-bar"></div>
 		</div>
@@ -213,7 +199,9 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Dodaj użytkownika</h5>
+				<div id="modal-head">
+
+				</div>
 			</div>
 			<div class="modal-body">
 				<div id="modal-body" class="modal-inner-body">
