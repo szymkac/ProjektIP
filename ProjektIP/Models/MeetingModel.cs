@@ -37,6 +37,7 @@ namespace ProjektIP.Models
 
 		public string Title { get; set; }
 
+        public List<EmployeeModel> Members { get; set; }
 
 		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title)
 		{
@@ -60,7 +61,7 @@ namespace ProjektIP.Models
         /// <summary>
         /// Utworzone na potrzeby kontrolera, bez dodatkowych pól
         /// </summary>
-        public MeetingModel(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId,  string location, string note, long priorityId, string title)
+        public MeetingModel(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId,  string location, string note, long priorityId, string title, List<EmployeeModel> members)
         {
             Id = id;
             MeetingTypeId = meetingTypeId;
@@ -74,6 +75,7 @@ namespace ProjektIP.Models
             Note = note;
             PriorityId = priorityId;
             Title = title;
+            Members = members;
         }
 
     }

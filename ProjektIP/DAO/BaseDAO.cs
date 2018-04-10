@@ -218,7 +218,24 @@ namespace ProjektIP.DAO
 			}
 		}
 
-		private static string GetWhereClause(Dictionary<string, object> filters)
+        public static void Delete(string table, Dictionary<string, object> filters)
+        {
+            using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
+            {
+                using (SqlCommand command = new SqlCommand("", conn))
+                {
+                    string sqlQuery = String.Format("DELETE FROM {0} {1} ", table, GetWhereClause(filters));
+
+                    conn.Open();
+                    command.CommandText = sqlQuery;
+                    command.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+        }
+
+        private static string GetWhereClause(Dictionary<string, object> filters)
 		{
 			string clause = string.Empty;
 			if (filters != null && filters.Count > 0)
