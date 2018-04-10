@@ -19,11 +19,11 @@ namespace ProjektIP.Models
 
 		public bool Active { get; set; }
 
-		public long PositionId { get; set; }
+		public long? PositionId { get; set; }
 
 		public string PositionName { get; set; }
 
-		public EmployeeModel(long id, string name, string surName, string email, string phone, bool active, long positionId, string positionName)
+		public EmployeeModel(long id, string name, string surName, string email, string phone, bool active, long? positionId, string positionName)
 		{
 			Id = id;
 			Name = name;
@@ -34,5 +34,15 @@ namespace ProjektIP.Models
 			PositionId = positionId;
 			PositionName = positionName;
 		}
-	}
+        public EmployeeModel(long id, string name, string surName, string email, string phone, bool active, long? positionId)
+        {
+            Id = id;
+            Name = name;
+            SurName = surName;
+            Email = email;
+            Phone = phone;
+            Active = active;
+            PositionId = positionId;
+        }
+    }
 }
