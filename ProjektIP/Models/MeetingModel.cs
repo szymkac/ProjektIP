@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace ProjektIP.Models
 {
-    public class MeetingModel
-    {
+	public class MeetingModel
+	{
 		public long Id { get; set; }
 
 		public long MeetingTypeId { get; set; }
@@ -17,11 +17,11 @@ namespace ProjektIP.Models
 
 		public DateTime? DateEnd { get; set; }
 
-        	public DateTime HourStart { get; set; }
+		public DateTime HourStart { get; set; }
 
 		public DateTime? HourEnd { get; set; }
 
-        public long EmployeeAuthorId { get; set; }
+		public long EmployeeAuthorId { get; set; }
 
 		public string EmployeeAuthorName { get; set; }
 
@@ -39,7 +39,7 @@ namespace ProjektIP.Models
 
 		public string Title { get; set; }
 
-        public List<EmployeeModel> Members { get; set; }
+		public List<EmployeeModel> Members { get; set; }
 
 		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title)
 		{
@@ -50,7 +50,7 @@ namespace ProjektIP.Models
 			DateEnd = dateEnd;
 			HourStart = hourStart;
 			HourEnd = hourEnd;
-            EmployeeAuthorId = employeeAuthorId;
+			EmployeeAuthorId = employeeAuthorId;
 			RoomId = roomId;
 			RoomName = roomName;
 			Location = location;
@@ -60,25 +60,25 @@ namespace ProjektIP.Models
 			Title = title;
 		}
 
-        /// <summary>
-        /// Utworzone na potrzeby kontrolera, bez dodatkowych pól
-        /// </summary>
-        public MeetingModel(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId,  string location, string note, long priorityId, string title)
-        {
-            Id = id;
-            MeetingTypeId = meetingTypeId;
-            DateStart = dateStart;
-            DateEnd = dateEnd;
+		/// <summary>
+		/// Utworzone na potrzeby kontrolera, bez dodatkowych pól
+		/// </summary>
+		public MeetingModel(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, DateTime hourStart, DateTime? hourEnd, long employeeAuthorId, long? roomId, string location, string note, long priorityId, string title, List<EmployeeModel> members)
+		{
+			Id = id;
+			MeetingTypeId = meetingTypeId;
+			DateStart = dateStart;
+			DateEnd = dateEnd;
 			HourStart = hourStart;
 			HourEnd = hourEnd;
 			EmployeeAuthorId = employeeAuthorId;
-            RoomId = roomId;
-            Location = location;
-            Note = note;
-            PriorityId = priorityId;
-            Title = title;
-            Members = members;
-        }
+			RoomId = roomId;
+			Location = location;
+			Note = note;
+			PriorityId = priorityId;
+			Title = title;
+			Members = members;
+		}
 
-    }
+	}
 }
