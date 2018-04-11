@@ -64,31 +64,13 @@ namespace ProjektIP.DAO
 			return result;
 		}
 
-        public static List<object[]> SelectWithOutWhereClause(string table, List<string> columns)
+        public static List<object[]> SelectWithOutWhereClause(string sqlQuery)
         {
             List<object[]> result = null;
             using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
             {
                 using (SqlCommand command = new SqlCommand("", conn))
                 {
-                    string cols = "";
-                    if (columns != null && columns.Count > 0)
-                    {
-                        for (int i = 0; i < columns.Count; i++)
-                        {
-                            if (i == columns.Count - 1)
-                                cols += columns[i];
-                            else
-                                cols += columns[i] + ", ";
-                        }
-                    }
-                    else
-                        cols = "*";
-
-
-                    string sqlQuery = String.Format("SELECT {0} FROM {1}", cols, table);
-
-
                     conn.Open();
                     command.CommandText = sqlQuery;
                     SqlDataReader reader = command.ExecuteReader();
@@ -101,7 +83,6 @@ namespace ProjektIP.DAO
                             res[i] = reader[i];
                         result.Add(res);
                     }
-
                     conn.Close();
                 }
             }

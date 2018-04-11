@@ -17,6 +17,12 @@ namespace ProjektIP.Controllers
         [HttpGet]
 		public IActionResult AddEmployee()
 		{
+            //EmployeeDAO.Insert(employeeModel);
+            //BaseDAO.Insert("Users", new Dictionary<string, object>
+            //{
+            //    { "Login",login},
+            //    { "Password", password}
+            //})
 			return PartialView();
 		}
 		
@@ -24,6 +30,28 @@ namespace ProjektIP.Controllers
 		{
 			return RedirectToAction("MainPage", "Home");
 		}
+
+        public List<EmployeeModel> GetAllEmployees()
+        {
+            return EmployeeDAO.Select(null);
+        }
+
+        public List<EmployeeModel> GetEmployeesOnPosition(long positionId)
+        {
+            return EmployeeDAO.Select(new Dictionary<string, object>
+            {
+                {EmployeeDAO.Columns.IdPosition, positionId}
+            });
+        }
+
+        public List<EmployeeModel> GetEmployeeWithId(long employeeId)
+        {
+            return EmployeeDAO.Select(new Dictionary<string, object>
+            {
+                {EmployeeDAO.Columns.IdEmployee, employeeId}
+            });
+        }
+
         public static class EmployeeDAO
         {
 
@@ -58,9 +86,9 @@ namespace ProjektIP.Controllers
                     result[0][1].ToString(), 
                     result[0][2].ToString(), 
                     result[0][3].ToString(), 
-                    result[0][4].ToString(), 
-                    Convert.ToBoolean(result[0][5]),
-                    result[0][6] != null ? Convert.ToInt64(result[0][6]) : new long?());
+                    result[0][4].ToString(),
+                    result[0][5].ToString() == "1" ? true : false,
+                    result[0][6] != null && result[0][6] != DBNull.Value ? Convert.ToInt64(result[0][6]) : new long?());
             }
 
             public static List<EmployeeModel> Select(Dictionary<string, object> filters)
@@ -75,8 +103,8 @@ namespace ProjektIP.Controllers
                         res[2].ToString(),
                         res[3].ToString(),
                         res[4].ToString(),
-                        Convert.ToBoolean(res[5]),
-                        res[6] != null ? Convert.ToInt64(res[6]) : new long?()
+                        res[5].ToString() == "1" ? true : false,
+                        res[6] != null && res[6] != DBNull.Value ? Convert.ToInt64(res[6]) : new long?()
                         ));
 
                 return list;

@@ -18,7 +18,7 @@ namespace ProjektIP.Controllers
 		[HttpGet]
 		public IActionResult MeetingDetailsForDay(string date, int column)
 		{
-			DateTime day = Convert.ToDateTime(date);
+			DateTime day = Convert.ToDateTime("03/30/2018");
 			ViewBag.ActualUserId = HomeController.ActualUser.Id;
 			ViewBag.Column = column;
 			//List<MeetingModel> meetingsList = new List<MeetingModel>();
@@ -46,8 +46,13 @@ namespace ProjektIP.Controllers
 		private List<MeetingModel> GetMeetingsForUsers(List<long> id, DateTime dateFrom)
 		{
 			string likeId = "";
-			foreach (long l in id)
-				likeId += String.Format("'{0}' ", l);
+			for(int i= 0; i<id.Count;i++) 
+                {
+                if(i==id.Count-1)
+                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR Mb.IdEmployee LIKE {0}) ", id[i]);
+                else
+                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR Mb.IdEmployee LIKE {0}) OR", id[i]);
+            }
 
 			List<MeetingModel> list = MeetingDAO.Select(new Dictionary<string, object>()
 			{
@@ -57,7 +62,16 @@ namespace ProjektIP.Controllers
 			return list;
 		}
 
-		public static class MeetingDAO
+        private List<MeetingModel> GetMeetingsForAllUsers(DateTime dateFrom)
+        {
+            List<MeetingModel> list = MeetingDAO.Select(new Dictionary<string, object>()
+            {
+                {"DateFrom", dateFrom}
+            });
+            return list;
+        }
+
+        public static class MeetingDAO
 		{
 			public static class Columns
 			{
@@ -104,11 +118,11 @@ namespace ProjektIP.Controllers
 				List<EmployeeModel> memberList = new List<EmployeeModel>();
 				foreach (object[] mem in members)
 				{
-					if (mem[3] == null || (mem[3] != null && Convert.ToBoolean(mem[3]) == true))
+					if (mem[2] == null || (mem[2] != null && Convert.ToBoolean(mem[2]) == true))
 					{
 						List<object[]> employee = BaseDAO.Select("Employees", null, new Dictionary<string, object>()
 							{
-								{"IdEmployee",  Convert.ToInt64(mem[2]) }
+								{"IdEmployee",  Convert.ToInt64(mem[1]) }
 							});
 						memberList.Add(new EmployeeModel(
 							Convert.ToInt64(employee[0][0]),
@@ -116,28 +130,33 @@ namespace ProjektIP.Controllers
 							 employee[0][2].ToString(),
 							 employee[0][3].ToString(),
 							 employee[0][4].ToString(),
-							 Convert.ToBoolean(employee[0][5]),
-							 employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
+                              employee[0][5].ToString() == "1" ? true : false,
+                             employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
 							));
 					}
 				}
 
-				return new MeetingModel(
-					Convert.ToInt64(result[0][0]),
-					Convert.ToInt64(result[0][1]),
-					Convert.ToDateTime(result[0][2]),
-					result[0][3] != null ? Convert.ToDateTime(result[0][3]) : new DateTime?(),
-					Convert.ToDateTime(result[0][4]),
-					result[0][5] != null ? Convert.ToDateTime(result[0][5]) : new DateTime?(),
-					Convert.ToInt64(result[0][6]),
-					result[0][7] != null ? Convert.ToInt64(result[0][7]) : new long?(),
-					result[0][8].ToString(),
-					result[0][9].ToString(),
-					Convert.ToInt64(result[0][10]),
-					result[0][11].ToString(),
-					memberList
-					);
-			}
+                string[] HourFrom = result[0][10].ToString().Split(':');
+                string[] HourTo = new string[3];
+                if (result[0][11] != null && result[0][11] != DBNull.Value)
+                    HourTo = result[0][11].ToString().Split(':');
+
+                return new MeetingModel(
+                Convert.ToInt64(result[0][0]),
+                Convert.ToInt64(result[0][1]),
+                Convert.ToDateTime(result[0][2]),
+                result[0][3] != null && result[0][3] != DBNull.Value ? Convert.ToDateTime(result[0][3]) : new DateTime?(),
+                new TimeSpan(0, Convert.ToInt32(HourFrom[0]), Convert.ToInt32(HourFrom[1]), Convert.ToInt32(HourFrom[2])),
+                result[0][11] != null && result[0][11] != DBNull.Value ? new TimeSpan(0, Convert.ToInt32(HourTo[0]), Convert.ToInt32(HourTo[1]), Convert.ToInt32(HourTo[2])) : new TimeSpan?(),
+                Convert.ToInt64(result[0][4]),
+                result[0][5] != null && result[0][5] != DBNull.Value ? Convert.ToInt64(result[0][5]) : new long?(),
+                result[0][6].ToString(),
+                result[0][7].ToString(),
+                Convert.ToInt64(result[0][8]),
+                result[0][9] != null && result[0][9] != DBNull.Value ? result[0][9].ToString() : string.Empty,
+                memberList
+                );
+            }
 
 			public static List<MeetingModel> Select(Dictionary<string, object> filters)
 			{
@@ -146,9 +165,9 @@ namespace ProjektIP.Controllers
 
 				List<object[]> result;
 				if (filters.ContainsKey("IdEmployee"))
-					result = BaseDAO.SelectWithOutWhereClause(String.Format("Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE (Mt.IdAuthor LIKE {0} OR Mb.IdEmployee LIKE {0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]), null);
+					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE ({0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]));
 				else
-					result = BaseDAO.SelectWithOutWhereClause(String.Format("Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]), null);
+					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]));
 
 				foreach (object[] res in result)
 				{
@@ -160,11 +179,11 @@ namespace ProjektIP.Controllers
 					List<EmployeeModel> memberList = new List<EmployeeModel>();
 					foreach (object[] mem in members)
 					{
-						if (mem[3] == null || (mem[3] != null && Convert.ToBoolean(mem[3]) == true))
+						if (mem[2] == null || mem[2] == DBNull.Value || (mem[2] != null && Convert.ToBoolean(mem[2]) == true))
 						{
 							List<object[]> employee = BaseDAO.Select("Employees", null, new Dictionary<string, object>()
 							{
-								{"IdEmployee",  Convert.ToInt64(mem[2]) }
+								{"IdEmployee",  Convert.ToInt64(mem[1]) }
 							});
 							memberList.Add(new EmployeeModel(
 								Convert.ToInt64(employee[0][0]),
@@ -172,26 +191,30 @@ namespace ProjektIP.Controllers
 								 employee[0][2].ToString(),
 								 employee[0][3].ToString(),
 								 employee[0][4].ToString(),
-								 Convert.ToBoolean(employee[0][5]),
+								 employee[0][5].ToString()=="1" ? true:false,
 								 employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
 								));
 						}
 					}
+                    string[] HourFrom = res[10].ToString().Split(':');
+                    string[] HourTo = new string[3];
+                    if (res[11] != null && res[11] != DBNull.Value)
+                        HourTo = res[11].ToString().Split(':');
 
-					list.Add(new MeetingModel(
-						Convert.ToInt64(res[0]),
-						Convert.ToInt64(res[1]),
-						Convert.ToDateTime(res[2]),
-						result[3] != null ? Convert.ToDateTime(result[3]) : new DateTime?(),
-						Convert.ToDateTime(res[4]),
-						result[5] != null ? Convert.ToDateTime(result[5]) : new DateTime?(),
-						Convert.ToInt64(res[6]),
-						result[7] != null ? Convert.ToInt64(result[7]) : new long?(),
-						res[8].ToString(),
-						res[9].ToString(),
-						Convert.ToInt64(res[10]),
-						res[11].ToString(),
-						memberList
+                        list.Add(new MeetingModel(
+                        Convert.ToInt64(res[0]),
+                        Convert.ToInt64(res[1]),
+                        Convert.ToDateTime(res[2]),
+                        res[3] != null && res[3] != DBNull.Value ? Convert.ToDateTime(res[3]) : new DateTime?(),
+                        new TimeSpan(0,Convert.ToInt32(HourFrom[0]), Convert.ToInt32(HourFrom[1]), Convert.ToInt32(HourFrom[2])),
+                        res[11] != null && res[11] != DBNull.Value ? new TimeSpan(0, Convert.ToInt32(HourTo[0]), Convert.ToInt32(HourTo[1]), Convert.ToInt32(HourTo[2])) : new TimeSpan?(),
+                        Convert.ToInt64(res[4]),
+						res[5] != null && res[5] != DBNull.Value ? Convert.ToInt64(res[5]) : new long?(),
+						res[6].ToString(),
+						res[7].ToString(),
+						Convert.ToInt64(res[8]),
+                        res[9] != null && res[9] != DBNull.Value ? res[9].ToString() : string.Empty,
+                        memberList
 						));
 				}
 				return list;
