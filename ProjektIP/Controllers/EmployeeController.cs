@@ -31,12 +31,12 @@ namespace ProjektIP.Controllers
 			return RedirectToAction("MainPage", "Home");
 		}
 
-        public List<EmployeeModel> GetAllEmployees()
+        public static List<EmployeeModel> GetAllEmployees()
         {
             return EmployeeDAO.Select(null);
         }
 
-        public List<EmployeeModel> GetEmployeesOnPosition(long positionId)
+        public static List<EmployeeModel> GetEmployeesOnPosition(long positionId)
         {
             return EmployeeDAO.Select(new Dictionary<string, object>
             {
@@ -44,7 +44,7 @@ namespace ProjektIP.Controllers
             });
         }
 
-        public List<EmployeeModel> GetEmployeeWithId(long employeeId)
+        public static List<EmployeeModel> GetEmployeeWithId(long employeeId)
         {
             return EmployeeDAO.Select(new Dictionary<string, object>
             {

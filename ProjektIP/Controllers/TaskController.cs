@@ -19,10 +19,16 @@ namespace ProjektIP.Controllers
 		{
 			return PartialView();
 		}
-		[HttpPost]
+        [HttpGet]
+        public IActionResult GetEmployees()
+        {
+            List<EmployeeModel> listEmployee = EmployeeController.GetAllEmployees();
+            return PartialView(listEmployee);
+        }
+        [HttpPost]
 		public IActionResult PushAddTaskToDB(string name, long typeId, long employeeId, long priorityId, string comment)
 		{
-			TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, 1, name, null, null, comment, 1, priorityId));
+			TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
 			return RedirectToAction("MainPage", "Home");
 		}
 		public static class TaskDAO

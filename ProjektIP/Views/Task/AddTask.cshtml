@@ -7,7 +7,24 @@
 					trigger: 'hover'
 				}
 			);
-	});
+    });
+
+    $.ajax({
+        
+        type: "GET",
+        url: "/Task/GetEmployees/",
+        success: function (viewHTML) {
+            debugger;
+            alert(viewHTML);
+            $("#employees").html(viewHTML);
+        },
+        error: function (errorData) {
+            debugger;
+            alert(errorData);
+            console.log(errorData);
+        }
+    });
+
 </script>
 
 <div class="row">
@@ -33,14 +50,17 @@
 				<td rowspan="4" valign="top" align="center">
 					<div style="margin-left:75px" class="form-group" id="employee">
 						<label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label>
-						<table onclick="chooseEmployee(this)">
+						<div id="employees">
+
+                        </div>
+                        <table onclick="chooseEmployee(this)">
 							<tr>
 								<td rowspan="2">
 									<img style="margin:10px" src="~/Content/Image/tick.png" alt="Typ" height="40" width="40" />
 								</td>
 								<td>
 									<div class="col-md-25 font-black" style="margin-right:10px; font-size:medium">
-										Edward Szyszka
+										Edward Klocek
 									</div>
 								</td>
 							</tr>

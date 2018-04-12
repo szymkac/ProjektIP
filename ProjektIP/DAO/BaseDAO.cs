@@ -225,19 +225,29 @@ namespace ProjektIP.DAO
 				int i = 0;
 				foreach (KeyValuePair<string, object> pair in filters)
 				{
+                    object value = pair.Value;
+                    if(pair.Key.Contains("Data"))
+                    {
+                        DateTime date = (DateTime)pair.Value;
+                        value = String.Format(
+                            "{1}-{0}-{2}", 
+                            date.Day.ToString().Length == 1 ? "0"+ date.Day.ToString() : date.Day.ToString(),
+                            date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
+                            date.Year);
+                    }
 					if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
 					{
 						if (i == 0)
-							flt += pair.Key + " = '" + pair.Value + "'";
+							flt += pair.Key + " = '" + value + "'";
 						else
-							flt += " AND " + pair.Key + " = '" + pair.Value + "'";
+							flt += " AND " + pair.Key + " = '" + value + "'";
 					}
 					else
 					{
 						if (i == 0)
-							flt += pair.Key + " = " + pair.Value;
+							flt += pair.Key + " = " + value;
 						else
-							flt += " AND " + pair.Key + " = " + pair.Value;
+							flt += " AND " + pair.Key + " = " + value;
 					}
 					i++;
 				}

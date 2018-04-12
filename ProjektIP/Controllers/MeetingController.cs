@@ -18,24 +18,13 @@ namespace ProjektIP.Controllers
 		[HttpGet]
 		public IActionResult MeetingDetailsForDay(string date, int column)
 		{
-			DateTime day = Convert.ToDateTime("03/30/2018");
+			DateTime day = DateTime.ParseExact(date,"dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture); 
 			ViewBag.ActualUserId = HomeController.ActualUser.Id;
 			ViewBag.Column = column;
-			//List<MeetingModel> meetingsList = new List<MeetingModel>();
-			//meetingsList.Add(new MeetingModel(0, 1, "Spotkanie", new DateTime(2018, 4, 9), null, new DateTime(2018, 4, 9, 10, 20, 0), new DateTime(2018, 4, 9, 20, 20, 0), 4, 1, "sala 123", "", "Notatka", 1, "Pilny", "SPOTKANIE"));
-			//meetingsList.Add(new MeetingModel(1, 2, "Wyjazd", new DateTime(2018, 4, 9), null, new DateTime(2018, 4, 9, 10, 20, 0), null, 3, 1, "", "Ustrzyki", "Notatka", 2, "Normalny", "WYJAZD"));
-			//meetingsList.Add(new MeetingModel(2, 3, "Telekonferencja", new DateTime(2018, 4, 9), null, new DateTime(2018, 4, 9, 10, 20, 0), null, 2, 1, "sala 123", "", "Notatka", 3, "Niski", "TELE"));
-			//meetingsList.Add(new MeetingModel(3, 4, "Szkolenie", new DateTime(2018, 4, 9), null, new DateTime(2018, 4, 9, 10, 20, 0), null, 1, 1, "sala 123", "", "Notatka", 4, "Opjonalny", "SZKOLENIE"));
-			//meetingsList.Add(new MeetingModel(4, 1, "Spotkanie", new DateTime(2018, 4, 9), null, new DateTime(2018, 4, 9, 10, 20, 0), null, 4, 1, "sala 123", "", "Notatka", 1, "Pilny", "SPOTKANIE"));
 
 			List<MeetingModel> meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
 			return PartialView(meetingsList);
 		}
-		//List<MeetingModel> lista = MeetingDAO.Select(new Dictionary<string, object>()
-		//	{
-		//		{"DateFrom", dateFrom}
-		//	});
-
 
 		/// <summary>
 		/// Pobiera listę spotkań danego dnia dla danych użytkowników.
@@ -162,12 +151,20 @@ namespace ProjektIP.Controllers
 			{
 				List<MeetingModel> list = new List<MeetingModel>();
 
-
-				List<object[]> result;
+                if (filters.ContainsKey("DateFrom"))
+                {
+                    DateTime date = (DateTime)filters["DateFrom"];
+                    filters["DateFrom"] = String.Format(
+                        "{1}-{0}-{2}",
+                        date.Day.ToString().Length == 1 ? "0" + date.Day.ToString() : date.Day.ToString(),
+                        date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
+                        date.Year);
+                }
+                List<object[]> result;
 				if (filters.ContainsKey("IdEmployee"))
-					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE ({0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]));
+					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE ({0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]));
 				else
-					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]));
+					result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]));
 
 				foreach (object[] res in result)
 				{
