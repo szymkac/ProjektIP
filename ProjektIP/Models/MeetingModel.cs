@@ -41,7 +41,7 @@ namespace ProjektIP.Models
 
 		public List<EmployeeModel> Members { get; set; }
 
-		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long employeeAuthorId, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title)
+		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long employeeAuthorId, string employeeAuthorName, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title, List<EmployeeModel> members)
 		{
 			Id = id;
 			MeetingTypeId = meetingTypeId;
@@ -51,14 +51,16 @@ namespace ProjektIP.Models
 			HourStart = hourStart;
 			HourEnd = hourEnd;
 			EmployeeAuthorId = employeeAuthorId;
-			RoomId = roomId;
+            EmployeeAuthorName = employeeAuthorName;
+            RoomId = roomId;
 			RoomName = roomName;
 			Location = location;
 			Note = note;
 			PriorityId = priorityId;
 			PriorityName = priorityName;
 			Title = title;
-		}
+            Members = members;
+        }
 
 		/// <summary>
 		/// Utworzone na potrzeby kontrolera, bez dodatkowych pól
@@ -72,7 +74,7 @@ namespace ProjektIP.Models
 			HourStart = hourStart;
 			HourEnd = hourEnd;
 			EmployeeAuthorId = employeeAuthorId;
-			RoomId = roomId;
+            RoomId = roomId;
 			Location = location;
 			Note = note;
 			PriorityId = priorityId;
