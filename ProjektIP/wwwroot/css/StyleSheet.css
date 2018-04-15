@@ -73,6 +73,14 @@ a {
 	height: calc(100% - 55px);
 }
 
+.title-height {
+    height: 45px;
+}
+
+.half-height {
+    height: calc(50%-55px);
+}
+
 .button-container {
 	height: 55px;
 }
@@ -96,6 +104,16 @@ a {
 	overflow: hidden;
 }
 
+.title-container {
+    text-align: center;
+    border-bottom: 3px solid #4472c4 ;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    overflow: hidden;
+}
+
 .date-text {
 	font-size: x-large;
 	width: 100%;
@@ -111,6 +129,12 @@ a {
 	float: left;
 }
 
+.task-container {
+    width: 100%;
+    height: 100%;
+}
+
+
 .meeting-bar {
 	width: 3px;
 	background-color: #4472c4;
@@ -120,6 +144,17 @@ a {
 	position: sticky;
 	top: 0;
 	margin: 0 3px;
+}
+
+.task-bar {
+    width: 100%;
+    background-color: #4472c4;
+    height: 3px;
+    float: left;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin: 0 0px;
 }
 
 .background-lightblue {

@@ -171,24 +171,47 @@ namespace ProjektIP.DAO
 				{
 					string columns = string.Empty;
 
+                    int i = 0;
 					foreach (KeyValuePair<string, object> pair in values)
 					{
-						if (pair.Value != null)
+
+                        if (pair.Value != null)
 						{
-							if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
-							{
-								columns += pair.Key + " = '" + pair.Value + "',";
-							}
-							else
-							{
-								columns += pair.Key + " = " + pair.Value + ",";
-							}
+                            if (i == values.Count - 1)
+                            {
+                                if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime"))
+                                {
+                                    if(pair.Value.GetType() == Type.GetType("System.DateTime") && (DateTime)pair.Value == new DateTime())
+                                        columns += pair.Key + " = null";
+                                    else
+                                        columns += pair.Key + " = '" + pair.Value + "'";
+                                }
+                                else
+                                {
+                                    columns += pair.Key + " = " + pair.Value ;
+                                }
+                            }
+                            else
+                            {
+                                if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime"))
+                                {
+                                    if (pair.Value.GetType() == Type.GetType("System.DateTime") && (DateTime)pair.Value == new DateTime())
+                                        columns += pair.Key + " = null,";
+                                    else
+                                        columns += pair.Key + " = '" + pair.Value + "',";
+                                }
+                                else
+                                {
+                                    columns += pair.Key + " = " + pair.Value + ",";
+                                }
+                            }
 						}
+                        i++;
 					}
 					if (columns.Length > 0)
 						columns.Remove(columns.Length - 1);
 
-					string sqlQuery = String.Format("UPDATE {0} SET{1} WHERE {2} = {3} ", table, columns, id.Key, id.Value);
+					string sqlQuery = String.Format("UPDATE {0} SET {1} WHERE {2} = {3} ", table, columns, id.Key, id.Value);
 
 					conn.Open();
 					command.CommandText = sqlQuery;
@@ -216,7 +239,7 @@ namespace ProjektIP.DAO
             }
         }
 
-        private static string GetWhereClause(Dictionary<string, object> filters)
+        public static string GetWhereClause(Dictionary<string, object> filters)
 		{
 			string clause = string.Empty;
 			if (filters != null && filters.Count > 0)
@@ -235,7 +258,7 @@ namespace ProjektIP.DAO
                             date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
                             date.Year);
                     }
-					if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char"))
+					if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime"))
 					{
 						if (i == 0)
 							flt += pair.Key + " = '" + value + "'";
