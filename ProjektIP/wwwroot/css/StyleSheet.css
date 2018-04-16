@@ -89,11 +89,13 @@ a {
 .date-container {
 	text-align: center;
 	border-bottom: 3px solid #4472c4;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
+	height: 55px;
+	position: absolute;
+	top: 61px;
 	background-color: white;
 	overflow: hidden;
+	width: calc(33.33333% - 36px);
+	z-index: 5;
 }
 
 .date-text {
@@ -106,9 +108,10 @@ a {
 }
 
 .meeting-container {
-	width: calc(33.33333% - 12px);
+	width: calc(33.33333% - 4px);
 	height: 100%;
 	float: left;
+	padding-top: 55px;
 }
 
 .meeting-bar {
@@ -119,7 +122,33 @@ a {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
-	margin: 0 3px;
+	margin: 0;
+	z-index: 6;
+}
+
+.border-corners.scroll-container {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.meeting-container .colapsed {
+	margin-left: 7px;
+	margin-right: 7px;
+	width: calc(100% - 14px);
+}
+
+.meeting-fill-container {
+	height: 20px;
+	width: 100%;
+	background-color: white;
+	position: sticky;
+	bottom: 0;
+}
+
+.meeting-container .card-body {
+	margin-left: 6px;
+	margin-right: 6px;
+	width: calc(100% - 12px);
 }
 
 .background-lightblue {
@@ -256,12 +285,12 @@ a {
 
 
 .grey-tooltip + .tooltip > .tooltip-inner {
-    background-color: #c1bdc3;
-    max-width: 70px;
+	background-color: #c1bdc3;
+	max-width: 70px;
 }
 
 .grey-tooltip + .tooltip > .tooltip-arrow {
-    border-top-color: #c1bdc3;
+	border-top-color: #c1bdc3;
 }
 
 .scroll5::-webkit-scrollbar {

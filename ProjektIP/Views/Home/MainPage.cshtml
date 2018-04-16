@@ -5,10 +5,8 @@
 				trigger: 'hover'
 			}
 		);
-
 		getMeetingColumnsForThreeDays(getDate(new Date()));
 	});
-
 	function getMeetingColumnsForThreeDays(firstDayDate) {
 		var today = getDate(new Date());
 		for (var i = 1; i < 4; i++) {
@@ -162,33 +160,35 @@
 				</button>
 			</div>
 		</div>
-		<div class="border-corners task-height scroll-container scroll5 all-meeting-container">
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div id="col-date-1" class="date-text"></div>
-					<div id="col-today-1"></div>
+		<div class="border-corners task-height scroll-container scroll5">
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-1" class="date-text"></div>
+						<div id="col-today-1"></div>
+					</div>
+					<div id="col1"></div>
 				</div>
-				<div id="col1"></div>
-			</div>
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div id="col-date-2" class="date-text"></div>
-					<div id="col-today-2"></div>
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-2" class="date-text"></div>
+						<div id="col-today-2"></div>
+					</div>
+					<div id="col2"></div>
 				</div>
-				<div id="col2"></div>
-			</div>
-			<div class="meeting-bar"></div>
-			<div class="meeting-container">
-				<div class="date-container">
-					<div id="col-date-3" class="date-text"></div>
-					<div id="col-today-3"></div>
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-3" class="date-text"></div>
+						<div id="col-today-3"></div>
+					</div>
+					<div id="col3"></div>
 				</div>
-				<div id="col3"></div>
-			</div>
-			<div class="meeting-bar"></div>
+				<div class="meeting-bar"></div>
+			<div class="meeting-fill-container"></div>
 		</div>
+
 	</div>
 	<div class="col-md-3 border-corners max-height">
 		@*zadania*@

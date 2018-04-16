@@ -19,8 +19,6 @@ namespace ProjektIP.Controllers
 		}
 		public IActionResult Info()
 		{
-			ViewData["Message"] = "Informacje";
-
 			return View();
 		}
 		public IActionResult MainPage()

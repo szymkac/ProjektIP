@@ -71,11 +71,13 @@
 								<img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
 							</div>
 							@{ 
-								string dates = item.HourStart.Hour.ToString() + ":" + item.HourStart.Minute.ToString();
+								string dates = (item.HourStart.Hours.ToString().Length == 1 ? "0" + item.HourStart.Hours.ToString() : item.HourStart.Hours.ToString()) +
+									":" + (item.HourStart.Minutes.ToString().Length == 1 ? "0" + item.HourStart.Minutes.ToString() : item.HourStart.Minutes.ToString());
 								if (item.HourEnd.HasValue)
 								{
 									dates += " - ";
-									dates += item.HourEnd.Value.Hour.ToString() + ":" + item.HourEnd.Value.Minute.ToString();
+									dates += (item.HourEnd.Value.Hours.ToString().Length == 1 ? "0" + item.HourEnd.Value.Hours.ToString() : item.HourEnd.Value.Hours.ToString()) +
+									":" + (item.HourEnd.Value.Minutes.ToString().Length == 1 ? "0" + item.HourEnd.Value.Minutes.ToString() : item.HourEnd.Value.Minutes.ToString());
 								}
 							}
 							<div class="col-md-8 font-white">
