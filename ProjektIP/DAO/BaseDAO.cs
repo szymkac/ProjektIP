@@ -117,23 +117,33 @@ namespace ProjektIP.DAO
 
 							if (pair.Value != null)
 							{
-								Type t = pair.Value.GetType();
-								if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
+                                object value_obj = pair.Value;
+                                if (pair.Key.Contains("Date"))
+                                {
+                                    DateTime date = (DateTime)pair.Value;
+                                    value_obj = String.Format(
+                                        "{1}-{0}-{2}",
+                                        date.Day.ToString().Length == 1 ? "0" + date.Day.ToString() : date.Day.ToString(),
+                                        date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
+                                        date.Year);
+                                }
+                                Type t = value_obj.GetType();
+								if (value_obj.GetType() == Type.GetType("System.String") || value_obj.GetType() == Type.GetType("System.Char") || value_obj.GetType() == Type.GetType("System.DateTime") || value_obj.GetType() == Type.GetType("System.TimeSpan"))
                                 {
 									if (i != values.Count - 1)
-										value += "'" + pair.Value + "'" + ",";
+										value += "'" + value_obj + "'" + ",";
 									else
-										value += "'" + pair.Value + "'";
+										value += "'" + value_obj + "'";
 
 								}
 								else
 								{
-                                    if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+                                    if (value_obj.GetType() == Type.GetType("System.Boolean"))
                                     {
                                         int? val = null;
-                                        if ((Boolean)pair.Value == false)
+                                        if ((Boolean)value_obj == false)
                                             val = 0;
-                                        else if((Boolean)pair.Value == false)
+                                        else if((Boolean)value_obj == false)
                                             val = 1;                            
                                         if (i != values.Count - 1)
                                             value += val + ",";
@@ -143,9 +153,9 @@ namespace ProjektIP.DAO
                                     else
                                     {
                                         if (i != values.Count - 1)
-                                            value += pair.Value + ",";
+                                            value += value_obj + ",";
                                         else
-                                            value += pair.Value;
+                                            value += value_obj;
                                     }
 								}
 							}
@@ -192,56 +202,66 @@ namespace ProjektIP.DAO
 
                         if (pair.Value != null)
 						{
+                            object value = pair.Value;
+                            if (pair.Key.Contains("Date"))
+                            {
+                                DateTime date = (DateTime)pair.Value;
+                                value = String.Format(
+                                    "{1}-{0}-{2}",
+                                    date.Day.ToString().Length == 1 ? "0" + date.Day.ToString() : date.Day.ToString(),
+                                    date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
+                                    date.Year);
+                            }
                             if (i == values.Count - 1)
                             {
-                                if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
+                                if (value.GetType() == Type.GetType("System.String") || value.GetType() == Type.GetType("System.Char") || value.GetType() == Type.GetType("System.DateTime") || value.GetType() == Type.GetType("System.TimeSpan"))
                                 {
-                                    if(pair.Value.GetType() == Type.GetType("System.DateTime") && (DateTime)pair.Value == new DateTime())
+                                    if(value.GetType() == Type.GetType("System.DateTime") && (DateTime)value == new DateTime())
                                         columns += pair.Key + " = null";
                                     else
-                                        columns += pair.Key + " = '" + pair.Value + "'";
+                                        columns += pair.Key + " = '" + value + "'";
                                 }
                                 else
                                 {
-                                    if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+                                    if (value.GetType() == Type.GetType("System.Boolean"))
                                     {
                                         int? val = null;
-                                        if ((Boolean)pair.Value == false)
+                                        if ((Boolean)value == false)
                                             val = 0;
-                                        else if ((Boolean)pair.Value == false)
+                                        else if ((Boolean)value == false)
                                             val = 1;
                                      
                                             columns += pair.Key + " = " + val;
                                     }
                                     else
                                     {
-                                        columns += pair.Key + " = " + pair.Value;
+                                        columns += pair.Key + " = " + value;
                                     }
                                 }
                             }
                             else
                             {
-                                if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
+                                if (value.GetType() == Type.GetType("System.String") || value.GetType() == Type.GetType("System.Char") || value.GetType() == Type.GetType("System.DateTime") || value.GetType() == Type.GetType("System.TimeSpan"))
                                 {
-                                    if (pair.Value.GetType() == Type.GetType("System.DateTime") && (DateTime)pair.Value == new DateTime())
+                                    if (value.GetType() == Type.GetType("System.DateTime") && (DateTime)value == new DateTime())
                                         columns += pair.Key + " = null,";
                                     else
-                                        columns += pair.Key + " = '" + pair.Value + "',";
+                                        columns += pair.Key + " = '" + value + "',";
                                 }
                                 else
                                 {
-                                    if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+                                    if (value.GetType() == Type.GetType("System.Boolean"))
                                     {
                                         int? val = null;
-                                        if ((Boolean)pair.Value == false)
+                                        if ((Boolean)value == false)
                                             val = 0;
-                                        else if ((Boolean)pair.Value == false)
+                                        else if ((Boolean)value == false)
                                             val = 1;
 
                                         columns += pair.Key + " = " + val + ",";
                                     }
                                     else
-                                    columns += pair.Key + " = " + pair.Value + ",";
+                                    columns += pair.Key + " = " + value + ",";
                                 }
                             }
 						}
@@ -288,7 +308,7 @@ namespace ProjektIP.DAO
 				foreach (KeyValuePair<string, object> pair in filters)
 				{
                     object value = pair.Value;
-                    if(pair.Key.Contains("Data"))
+                    if(pair.Key.Contains("Date"))
                     {
                         DateTime date = (DateTime)pair.Value;
                         value = String.Format(

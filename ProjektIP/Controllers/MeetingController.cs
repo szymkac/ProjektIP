@@ -30,6 +30,10 @@ namespace ProjektIP.Controllers
         [HttpPost]
         public IActionResult PushEditMeetingToDB(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long? roomId, string location, string note, long priorityId, string title, List<EmployeeModel> members)
         {
+            //string newDate = DateTime.ParseExact(dateStart.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString();
+            //DateTime dayStart = DateTime.ParseExact(newDate,"MM/dd/yyyy", CultureInfo.InvariantCulture);
+            //DateTime dayEnd = DateTime.ParseExact(DateTime.ParseExact(dateEnd.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString(), "MM/dd/yyyy", CultureInfo.InvariantCulture);
+
             MeetingModel model = new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
             //TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
             // MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
@@ -38,7 +42,15 @@ namespace ProjektIP.Controllers
             //MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
 
             //MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, 1, new DateTime(2018,05,16), new DateTime(2018, 05, 16), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
+            MeetingDAO.Update((int)id,model);
+            return RedirectToAction("MainPage", "Home");
+        }
 
+        [HttpGet]
+        public IActionResult DeleteMeetingFromDB(long id)
+        {
+            //MeetingDAO.D
+            MeetingDAO.Delete(id);
             return RedirectToAction("MainPage", "Home");
         }
 
@@ -273,6 +285,18 @@ namespace ProjektIP.Controllers
                 }
             }
 
+            public static void Delete(long id)
+            {
+                BaseDAO.Delete("Meetings", new Dictionary<string, object>()
+                {
+                    { Columns.IdMeeting, id}
+                });
+                BaseDAO.Delete("Members", new Dictionary<string, object>()
+                {
+                    { MembersDAO.Columns.IdMeeting, id}
+                });
+            }
+
             public static class MembersDAO
             {
                 public static class Columns
@@ -291,6 +315,7 @@ namespace ProjektIP.Controllers
                     }
                 }
             }
+
         }
     }
 }

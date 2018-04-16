@@ -8,6 +8,7 @@
         getMeetingColumnsForThreeDays(getDate(new Date()));
         getTasks();
     });
+
     function getMeetingColumnsForThreeDays(firstDayDate) {
         var today = getDate(new Date());
         for (var i = 1; i < 4; i++) {
@@ -174,68 +175,68 @@
                     <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
                 </button>
                 <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
-                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                    <img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
                 </button>
                 <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip">
-                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                    <img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
                 </button>
                 <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip">
-                    <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+                    <img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
                 </button>
             </div>
         </div>
-		<div class="border-corners task-height scroll-container scroll5">
-				<div class="meeting-bar"></div>
-				<div class="meeting-container">
-					<div class="date-container">
-						<div id="col-date-1" class="date-text"></div>
-						<div id="col-today-1"></div>
-					</div>
-					<div id="col1"></div>
-				</div>
-				<div class="meeting-bar"></div>
-				<div class="meeting-container">
-					<div class="date-container">
-						<div id="col-date-2" class="date-text"></div>
-						<div id="col-today-2"></div>
-					</div>
-					<div id="col2"></div>
-				</div>
-				<div class="meeting-bar"></div>
-				<div class="meeting-container">
-					<div class="date-container">
-						<div id="col-date-3" class="date-text"></div>
-						<div id="col-today-3"></div>
-					</div>
-					<div id="col3"></div>
-				</div>
-				<div class="meeting-bar"></div>
-			<div class="meeting-fill-container"></div>
+        <div class="border-corners task-height scroll-container scroll5">
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div id="col-date-1" class="date-text"></div>
+                    <div id="col-today-1"></div>
+                </div>
+                <div id="col1"></div>
+            </div>
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div id="col-date-2" class="date-text"></div>
+                    <div id="col-today-2"></div>
+                </div>
+                <div id="col2"></div>
+            </div>
+            <div class="meeting-bar"></div>
+            <div class="meeting-container">
+                <div class="date-container">
+                    <div id="col-date-3" class="date-text"></div>
+                    <div id="col-today-3"></div>
+                </div>
+                <div id="col3"></div>
+            </div>
+            <div class="meeting-bar"></div>
+            <div class="meeting-fill-container"></div>
         </div>
 
     </div>
     <div class="col-md-3 border-corners max-height scroll5 scroll-container ">
         <div class="task-container">
-        <div class="row title-height title-container">
-            ZADANIA
-            <img class="modal-button-img" src="~/Content/Image/tasks_color.png"  width="20" height="20" />
-        </div>
-        <div style="text-align:center; margin-top:10px">
-            DO ZROBIENIA:
-            <div class="task-bar"></div>
-        </div>
+            <div class="row title-height title-container">
+                ZADANIA
+                <img class="modal-button-img" src="~/Content/Image/tasks_color.png" width="20" height="20" />
+            </div>
+            <div style="text-align:center; margin-top:10px">
+                DO ZROBIENIA:
+                <div class="task-bar"></div>
+            </div>
             <div class="row" id="task1"></div>
-        <div style="text-align:center; margin-top:10px">
-            W TRAKCIE:
-            <div class="task-bar"></div>                
-        </div>
+            <div style="text-align:center; margin-top:10px">
+                W TRAKCIE:
+                <div class="task-bar"></div>
+            </div>
             <div class="row" id="task2"></div>
-        <div style="text-align:center; margin-top:10px">
-            OSTATNIO WYKONANE:
-            <div class="task-bar"></div>
-        </div>
+            <div style="text-align:center; margin-top:10px">
+                OSTATNIO WYKONANE:
+                <div class="task-bar"></div>
+            </div>
             <div class="row" id="task3">
-        </div>
+            </div>
         </div>
     </div>
 </div>

@@ -17,27 +17,30 @@
 
     function setHiddenData()
     {
-        switch (document.getElementById('typeId').value) {
-            case 1:
+        var typeid = document.getElementById('typeId').value;
+        var priorityid = document.getElementById('priorityId').value;
+        console.log(typeid);
+        switch (typeid) {
+            case "1":
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
                 break;
-            case 2:
+            case "2":
                 document.getElementById("imgCar").src = "../Content/Image/car_color.png";
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
                 break;
-            case 3:
+            case "3":
                 document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
 
                 break;
-            case 4:
+            case "4":
                 document.getElementById("imgSchool").src = "../Content/Image/school_color.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
@@ -50,6 +53,27 @@
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
                 break;
         }
+
+
+        switch (priorityid) {
+            case "1":
+                $("#priority").val(1);
+                break;
+            case "2":
+                $("#priority").val(2);
+                break;
+            case "3":
+                $("#priority").val(3);
+                break;
+            case "4":
+                $("#priority").val(4);
+                break;
+            default:
+                $("#priority").val(4);
+                break;
+        }
+
+
      }
 
     //TYP Spotkania
@@ -147,7 +171,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden>
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control"/>
+                <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             @*<div hidden>
@@ -155,7 +179,7 @@
             <input asp-for="MeetingTypeName" class="form-control" />
             <span asp-validation-for="MeetingTypeName" class="text-danger"></span>
         </div>*@
-            <div>
+            <div hidden>
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
             </div>
             <div row>
@@ -166,7 +190,7 @@
                 <img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip" />
                 <img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip" />
             </div>
-            <div class="form-group">
+            <div class="form-group margin-top-20">
                 <input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
@@ -174,7 +198,7 @@
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateStart" class="form-control" />
-                  @*  <span asp-validation-for="DateStart" class="text-danger"></span>*@
+                    @*  <span asp-validation-for="DateStart" class="text-danger"></span>*@
                 </div>
                 <div class="col-md-6 form-group">
                     <input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
@@ -186,7 +210,7 @@
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateEnd" class="form-control" />
-                 @*   <span asp-validation-for="DateEnd" class="text-danger"></span>*@
+                    @*   <span asp-validation-for="DateEnd" class="text-danger"></span>*@
                 </div>
 
                 <div class="col-md-6 form-group">
@@ -210,35 +234,37 @@
                 <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group" id="room">
-                <label asp-for="RoomName" class="control-label">Pokój:</label>
+               @* <label asp-for="RoomName" class="control-label">Pokój:</label>*@
                 <span asp-validation-for="RoomName" class="text-danger"></span>
                 <select class="custom-select form-control" onchange="changeRoom()" id="changeRoom">
+                    <option value="" disabled selected>Pokój:</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
             </div>
-            <div hidden class="form-group" id="location">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
+            <div class="form-group" id="location">
+                @*<label asp-for="Location" class="control-label"></label>*@
+                <input asp-for="Location" class="form-control" placeholder="Lokalizacja"/>
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
+                @*<label asp-for="Note" class="control-label"></label>*@
+                <input asp-for="Note" class="form-control"  placeholder="Opis"/>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div hidden>
-                <label asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId"></label>
+                <input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
             </div>
             @*<div class="form-group">
             <input asp-for="PriorityId" class="form-control" />
             <span asp-validation-for="PriorityId" class="text-danger"></span>
         </div>*@
 
-            <label asp-for="PriorityId" class="control-label">Priorytet: </label>
+            @*<label asp-for="PriorityId" class="control-label"></label>*@
             <span asp-validation-for="PriorityId" class="text-danger"></span>
-            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+            <select class="custom-select form-control margin-bottom-20 " onchange="changePriority()" id="priority">
+                <option value="" disabled selected>Priorytet:</option>
                 <option value="1">Pilny</option>
                 <option value="2">Normalny</option>
                 <option value="3">Niski</option>
@@ -254,7 +280,15 @@
             @*<div class="form-group">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>*@
-        </form>
+
+        @*    <button class="btn btn-login font-white" action="/Meeting/DeleteMeetingFromDB" method="get">Odwołaj wydarzenie</button>*@
+
+            <button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
+                
+                
+       </form>
+
+        
     </div>
 </div>
 
