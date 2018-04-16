@@ -292,7 +292,7 @@ a {
 
 .grey-tooltip + .tooltip > .tooltip-inner {
     background-color: #c1bdc3;
-    max-width: 70px;
+    max-width: 75px;
 }
 
 .grey-tooltip + .tooltip > .tooltip-arrow {
