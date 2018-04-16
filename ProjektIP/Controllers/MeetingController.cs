@@ -23,7 +23,7 @@ namespace ProjektIP.Controllers
             ViewBag.Column = column;
 
             List<MeetingModel> meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
-
+           
             return PartialView(meetingsList);
         }
 
@@ -152,7 +152,7 @@ namespace ProjektIP.Controllers
             {
                 List<MeetingModel> list = new List<MeetingModel>();
 
-                if (filters.ContainsKey("DateFrom"))
+                if (filters!=null && filters.ContainsKey("DateFrom"))
                 {
                     DateTime date = (DateTime)filters["DateFrom"];
                     filters["DateFrom"] = String.Format(
@@ -162,10 +162,12 @@ namespace ProjektIP.Controllers
                         date.Year);
                 }
                 List<object[]> result;
-                if (filters.ContainsKey("IdEmployee"))
+                if (filters!=null && filters.ContainsKey("IdEmployee"))
                     result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting LEFT JOIN Priorities P ON Mt.IdPriority = P.IdPriority  LEFT JOIN Rooms R ON Mt.IdRoom = R.IdRoom LEFT JOIN Employees E ON Mt.IdAuthor = E.IdEmployee LEFT JOIN MeetingTypes Mtt ON Mt.IdMeetingType = Mtt.IdMeetingType WHERE ({0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]));
-                else
+                else if (filters != null && filters.ContainsKey("DateFrom"))
                     result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting LEFT JOIN Priorities P ON Mt.IdPriority = P.IdPriority  LEFT JOIN Rooms R ON Mt.IdRoom = R.IdRoom LEFT JOIN Employees E ON Mt.IdAuthor = E.IdEmployee LEFT JOIN MeetingTypes Mtt ON Mt.IdMeetingType = Mtt.IdMeetingType WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]));
+                else
+                    result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting LEFT JOIN Priorities P ON Mt.IdPriority = P.IdPriority  LEFT JOIN Rooms R ON Mt.IdRoom = R.IdRoom LEFT JOIN Employees E ON Mt.IdAuthor = E.IdEmployee LEFT JOIN MeetingTypes Mtt ON Mt.IdMeetingType = Mtt.IdMeetingType"));
 
                 foreach (object[] res in result)
                 {
@@ -222,23 +224,23 @@ namespace ProjektIP.Controllers
                 return list;
             }
 
-            public static void Insert(MeetingModel Meeting, List<EmployeeModel> MemberList)
+            public static void Insert(MeetingModel Meeting)
             {
                 BaseDAO.Insert("Meetings", Columns.Fill(Meeting));
                 MeetingModel meeting = SelectFirst(Columns.Fill(Meeting));
                 long idMeeting = meeting.Id;
-                foreach (EmployeeModel employee in MemberList)
-                    BaseDAO.Insert("Members", MembersDAO.Columns.Fill(idMeeting, employee.Id));
+                foreach (EmployeeModel employee in Meeting.Members)
+                    BaseDAO.Insert("Members", MembersDAO.Columns.Fill(employee.Id,idMeeting));
             }
 
-            public static void Update(int id, MeetingModel Meeting, List<EmployeeModel> MemberList)
+            public static void Update(int id, MeetingModel Meeting)
             {
                 BaseDAO.Update("Meetings", new KeyValuePair<string, object>(Columns.IdMeeting, id), Columns.Fill(Meeting));
                 BaseDAO.Delete("Members", new Dictionary<string, object>()
                 {
                     {"IdMeeting",id }
                 });
-                foreach (EmployeeModel employee in MemberList)
+                foreach (EmployeeModel employee in Meeting.Members)
                 {
                     BaseDAO.Insert("Members", MembersDAO.Columns.Fill(employee.Id, id));
                 }
