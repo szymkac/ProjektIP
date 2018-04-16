@@ -15,6 +15,33 @@ namespace ProjektIP.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult EditMeeting(long Id)
+        {
+           // MeetingModel model = new MeetingModel(1, 1, new DateTime(2016, 05, 15), new DateTime(2016, 05, 15), new TimeSpan(0, 8, 25, 0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1, "Pizza", new List<EmployeeModel>()); //select po id
+            MeetingModel model = MeetingDAO.SelectFirst(new Dictionary<string, object>()
+            {
+                {"IdMeeting", Id }
+            });
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public IActionResult PushEditMeetingToDB(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long? roomId, string location, string note, long priorityId, string title, List<EmployeeModel> members)
+        {
+            MeetingModel model = new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
+            //TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
+            // MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
+            // MeetingController.MeetingDAO.Update(1, new MeetingModel(1, 1, new DateTime(2016,05,15), new DateTime(2016, 05, 15), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
+            //MeetingDAO.Insert(new MeetingModel(1, 1, new DateTime(2018, 05, 15), new DateTime(2018, 05, 15), new TimeSpan(0, 8, 25, 0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1, "Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
+            //MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
+
+            MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, 1, new DateTime(2018,05,16), new DateTime(2018, 05, 16), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
+
+            return RedirectToAction("MainPage", "Home");
+        }
+
         [HttpGet]
         public IActionResult MeetingDetailsForDay(string date, int column)
         {
