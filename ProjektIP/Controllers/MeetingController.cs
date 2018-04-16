@@ -37,7 +37,7 @@ namespace ProjektIP.Controllers
             //MeetingDAO.Insert(new MeetingModel(1, 1, new DateTime(2018, 05, 15), new DateTime(2018, 05, 15), new TimeSpan(0, 8, 25, 0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1, "Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
             //MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
 
-            MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, 1, new DateTime(2018,05,16), new DateTime(2018, 05, 16), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
+            //MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, 1, new DateTime(2018,05,16), new DateTime(2018, 05, 16), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
 
             return RedirectToAction("MainPage", "Home");
         }
