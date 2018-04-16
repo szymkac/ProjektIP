@@ -104,16 +104,16 @@
 						<b>Opis:</b>
 						@Html.DisplayFor(modelItem => item.Note)
 						@if (item.EmployeeAuthorId != ViewBag.ActualUserId)
-						{
+                        {
 							<div class="row text-center">
 								<img src="~/Content/Image/cross.png" height="35" width="35" />
 								<img src="~/Content/Image/tick.png" height="35" width="35" />
 							</div>
-						}
-						else
-						{
+                        }
+                        else
+                        {
 							<div class="row text-center">
-								<button class="btn btn-login background-blue font-white" onclick="openEditMeetingModal()">Edytuj</button>
+								<button class="btn btn-login background-blue font-white" onclick="openEditMeetingModal(@item.Id)">Edytuj</button>
 							</div>
 
 						}

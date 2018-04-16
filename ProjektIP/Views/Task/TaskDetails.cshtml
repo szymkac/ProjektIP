@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ProjektIP.Models.TaskModel>
+<script src="~/js/Task.js"></script>
+<div id="@("accordion" + ViewBag.Column)">
+    @foreach (var item in Model)
+    {
+        string colorClass;
+        string borderClass;
+        string imagePath;
+        string priorityPath;
+        switch (item.TaskTypeId)
+        {
+            case 2:
+                colorClass = "background-red";
+                borderClass = "border-type-red";
+                imagePath = "~/Content/Image/bug_white.png";
+                break;
+
+            case 1:
+                colorClass = "background-yellow";
+                borderClass = "border-type-yellow";
+                imagePath = "~/Content/Image/problem_white.png";
+                break;
+
+            case 3:
+
+                colorClass = "background-lightblue";
+                borderClass = "border-type-lightblue";
+                imagePath = "~/Content/Image/task_white.png";
+                break;
+
+            case 4:
+                colorClass = "background-green";
+                borderClass = "border-type-green";
+                imagePath = "~/Content/Image/change_white.png";
+                break;
+
+            default:
+                colorClass = "background-blue";
+                borderClass = "";
+                imagePath = "~/Content/Image/car_white.png";
+                break;
+        }
+        switch (item.PriorityId)
+        {
+            case 1:
+                priorityPath = "~/Content/Image/priority_important.png";
+                break;
+
+            case 2:
+                priorityPath = "~/Content/Image/priority_normal.png";
+                break;
+
+            case 3:
+                priorityPath = "~/Content/Image/priority_low.png";
+                break;
+
+            case 4:
+                priorityPath = "~/Content/Image/priority_optional.png";
+                break;
+
+            default:
+                priorityPath = "~/Content/Image/priority_normal.png";
+                break;
+        }
+        <div class="card">
+            <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
+                <h5 class="mb-0">
+                    <button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="@(@"#" + ViewBag.Column + "collapse" + item.Id)" aria-expanded="true" aria-controls="@(ViewBag.Column + "collapse" + item.Id)">
+                        <div class="@("row " + colorClass)">
+                            <div class="col-md-2">
+                                <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
+                            </div>
+                            <div class="col-md-7 font-white">
+                                #@Html.DisplayFor(modelItem => item.Id) <br />
+                                @Html.DisplayFor(modelItem => item.Title) <br />
+                            </div>
+                            @if (item.StatusId == 1 || item.StatusId == 5)
+    {
+                        <div class="row text-center">
+                            <img src="~/Content/Image/tasks_start.png" height="35" width="35" onclick="changeStatus(@item.Id, 2)" />
+                        </div>
+}
+else if (item.StatusId == 2)
+{
+                        <div class="row text-center">
+                            <img src="~/Content/Image/tasks_end.png" height="35" width="35" onclick="changeStatus(@item.Id,3)" />
+                        </div>
+
+                            }
+                        </div>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="@(ViewBag.Column + "collapse" + item.Id)" class="collapse margin-top-minus10" aria-labelledby="@(ViewBag.Column + "heading" + item.Id)" data-parent="@(@"#" + ViewBag.Column + "accordion" + ViewBag.Column)">
+                <div class="card-body">
+                    <div class="@(borderClass)">
+                        <b>Autor:</b> @Html.DisplayFor(modelItem => item.AuthorName) <br />
+                        <b>Priorytet:</b> @Html.DisplayFor(modelItem => item.PriorityName) <img src="@Url.Content(priorityPath)" alt="Priorytet" height="20" width="20" />  <br />
+                        <b>Opis:</b>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

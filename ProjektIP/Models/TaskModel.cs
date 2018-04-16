@@ -15,7 +15,9 @@ namespace ProjektIP.Models
 
 		public long AuthorId { get; set; }
 
-		public long EmployeeId { get; set; }
+        public string AuthorName { get; set; }
+
+        public long EmployeeId { get; set; }
 
 		public string Title { get; set; }
 
@@ -33,13 +35,14 @@ namespace ProjektIP.Models
 
 		public string PriorityName { get; set; }
 
-		public TaskModel(long id, long taskTypeId, string taskTypeName, long authorId, long employeeId, string title, DateTime? dateStart, DateTime? dateEnd, string comment, long statusId, string statusName, long priorityId, string priorityName)
+		public TaskModel(long id, long taskTypeId, string taskTypeName, long authorId, string authorName, long employeeId, string title, DateTime? dateStart, DateTime? dateEnd, string comment, long statusId, string statusName, long priorityId, string priorityName)
 		{
 			Id = id;
 			TaskTypeId = taskTypeId;
 			TaskTypeName = taskTypeName;
 			AuthorId = authorId;
-			EmployeeId = employeeId;
+            AuthorName = authorName;
+            EmployeeId = employeeId;
 			Title = title;
 			DateStart = dateStart;
 			DateEnd = dateEnd;
