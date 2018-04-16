@@ -1,27 +1,34 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 <hr />
 <div class="row marging-top-70">
 
-    <div class="col-md-6 ">
-        <div class="marging-top-50 border-corners">
-            <h2 class="font-blue">Logowanie</h2>
-            <hr />
-            <form action="/Home/MainPage" method="post">
-                <div class="row">
-                    <input class="form-control login-control" type="text" name="login" placeholder="Login" />
-                </div>
-                <div class="row">
-                    <input class="form-control login-control" type="password" name="password" placeholder="Hasło" />
-                </div>
-                <div class="row">
-                    <input class="btn background-blue font-white pull-right margin-right-10p btn-login" type="submit" value="Zaloguj" />
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <img src="~/Content/Image/login_image.png" alt="Logo" class="center-block img-responsive hidden-image" height="400" width="400">
-    </div>
+	<div class="col-md-6 ">
+		<div class="marging-top-50 border-corners">
+			<h2 class="font-blue">Logowanie</h2>
+			<hr />
+			<form action="/Home/MainPage" method="post">
+				@if (ViewBag.notLogIn != "OK")
+				{
+				<div class="alert alert-danger login-alert" role="alert">
+					@ViewBag.notLogIn
+				</div>
+				}
+
+				<div class="row">
+					<input class="form-control login-control" type="text" name="login" placeholder="Login" />
+				</div>
+				<div class="row">
+					<input class="form-control login-control" type="password" name="password" placeholder="Hasło" />
+				</div>
+				<div class="row">
+					<input class="btn background-blue font-white pull-right margin-right-10p btn-login" type="submit" value="Zaloguj" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<img src="~/Content/Image/login_image.png" alt="Logo" class="center-block img-responsive hidden-image" height="400" width="400">
+	</div>
 </div>

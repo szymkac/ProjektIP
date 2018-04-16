@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-ProjektIP-29A5F22A-2B9E-4A50-9A37-76EF2D794086</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Common\node_modules\**" />
+    <Content Remove="Common\node_modules\**" />
+    <EmbeddedResource Remove="Common\node_modules\**" />
+    <None Remove="Common\node_modules\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
