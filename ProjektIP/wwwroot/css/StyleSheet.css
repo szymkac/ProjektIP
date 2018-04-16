@@ -74,11 +74,11 @@ a {
 }
 
 .title-height {
-    height: 45px;
+	height: 45px;
 }
 
 .half-height {
-    height: calc(50%-55px);
+	height: calc(50%-55px);
 }
 
 .button-container {
@@ -107,13 +107,13 @@ a {
 }
 
 .title-container {
-    text-align: center;
-    border-bottom: 3px solid #4472c4 ;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    overflow: hidden;
+	text-align: center;
+	border-bottom: 3px solid #4472c4;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background-color: white;
+	overflow: hidden;
 }
 
 .date-text {
@@ -126,15 +126,15 @@ a {
 }
 
 .meeting-container {
-	width: calc(33.33333% - 4px);
+	width: calc(33.33333% - 25px);
 	height: 100%;
 	float: left;
 	padding-top: 55px;
 }
 
 .task-container {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 
@@ -150,9 +150,19 @@ a {
 	z-index: 6;
 }
 
+.side-button-container {
+	width: 30px;
+	float: left;
+	height: 100%;
+	z-index: 5;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background-color: white;
+}
+
 .border-corners.scroll-container {
-	padding-bottom: 0;
-	padding-top: 0;
+	padding: 0;
 }
 
 .meeting-container .colapsed {
@@ -176,14 +186,14 @@ a {
 }
 
 .task-bar {
-    width: 100%;
-    background-color: #4472c4;
-    height: 3px;
-    float: left;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    margin: 0 0px;
+	width: 100%;
+	background-color: #4472c4;
+	height: 3px;
+	float: left;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin: 0 0px;
 }
 
 .background-lightblue {
@@ -338,7 +348,7 @@ a {
 /* ---------- Tooltip --------------- */
 .grey-tooltip + .tooltip > .tooltip-inner {
 	background-color: #c1bdc3;
-    max-width: 75px;
+	max-width: 75px;
 }
 
 .grey-tooltip + .tooltip > .tooltip-arrow {
@@ -370,18 +380,8 @@ a {
 	border-radius: 50%;
 }
 
-.scroll4::-webkit-scrollbar {
-	width: 10px;
-}
-
-.scroll4::-webkit-scrollbar-thumb {
-	background: #4472c4;
-	border-radius: 20px;
-}
-
-.scroll4::-webkit-scrollbar-track {
-	background: #ddd;
-	border-radius: 20px;
+.login-alert {
+	margin: 10px 10%;
 }
 /* ---------- Scrollbar --------------- */
 /* ----------    END    --------------- */
