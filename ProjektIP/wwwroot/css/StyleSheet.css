@@ -73,6 +73,10 @@ a {
 	height: calc(100% - 55px);
 }
 
+.employee-height {
+    height: calc(100% - 75px);
+}
+
 .title-height {
 	height: 45px;
 }

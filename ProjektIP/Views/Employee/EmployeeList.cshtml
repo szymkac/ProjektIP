@@ -42,7 +42,7 @@
                 imagePath = "~/Content/Image/avatar_null.png";
                 break;
         }
-        <div class="card" onclick="changeEmployee(@(item.Id))">
+        <div class="card margin-left-20 margin-right-10p" id="listEmployee@(item.Id)" onclick="changeEmployee(@(item.Id))">
             <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
                 <h5 class="mb-0">
                     <div class="row">
