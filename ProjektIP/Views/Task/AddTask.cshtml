@@ -1,175 +1,175 @@
 ﻿@model ProjektIP.Models.TaskModel
 
-    <script>
-        $(function () {
-            $('[data-toggle="tooltipTask"]').tooltip(
-                {
-                    trigger: 'hover'
-                }
-            );
-            getEmployees();
-        });
+<script>
+    $(function () {
+        $('[data-toggle="tooltipTask"]').tooltip(
+            {
+                trigger: 'hover'
+            }
+        );
+        getEmployees();
+    });
 
-        function getEmployees() {
-            $.ajax({
-                type: "GET",
-                url: "/Task/GetEmployees/",
-                success: function (viewHTML) {
-                    $("#employees").html(viewHTML);
-                },
-                error: function (errorData) {
-                    console.log(errorData);
-                }
-            });
-        }
+    function getEmployees() {
+        $.ajax({
+            type: "GET",
+            url: "/Employee/EmployeeList/",
+            success: function (viewHTML) {
+                $("#employees").html(viewHTML);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    }
 
 </script>
 
 <div class="row">
-	<form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
-		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<table>
-			<tr>
-				<td>
-					<div hidden>
-						<input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
-					</div>
-					<label asp-for="TaskTypeId" class="control-label">Typ zadania: </label>
-					<span asp-validation-for="TaskTypeId" class="text-danger"></span>
-					<br />
-					<img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip" />
-					<img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip" />
-					<img id="imgProblem" height="50" width="50" onclick="switchProblem(this)" title="Problem" data-toggle="tooltipTask" class="grey-tooltip" />
-					<img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip" />
+    <form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <table>
+            <tr>
+                <td>
+                    <div hidden>
+                        <input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
+                    </div>
+                    <label asp-for="TaskTypeId" class="control-label">Typ zadania: </label>
+                    <span asp-validation-for="TaskTypeId" class="text-danger"></span>
+                    <br />
+                    <img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip" />
+                    <img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip" />
+                    <img id="imgProblem" height="50" width="50" onclick="switchProblem(this)" title="Problem" data-toggle="tooltipTask" class="grey-tooltip" />
+                    <img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip" />
 
 
 
-				</td>
-				<td rowspan="4" valign="top" align="center">
-					<div style="margin-left:75px" class="form-group" id="employee">
-						<label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label>
-						<div id="employees"></div>
-					</div>
-					<div hidden>
-						<input asp-for="EmployeeId" name="employeeId" class="form-control" />
-						<span asp-validation-for="EmployeeId" class="text-danger"></span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="form-group" style="margin-top:10px;">
-						<input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" />
-						<span asp-validation-for="Title" class="text-danger"></span>
-					</div>
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					<div class="form-group" style="margin-top:10px">
-						<input asp-for="Comment" name="comment" class="form-control" placeholder="Opis" />
-						<span asp-validation-for="Comment" class="text-danger"></span>
-					</div>
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					<div hidden>
-						<input asp-for="PriorityId" name="priorityId" id="priorityId" value="2" class="form-control" />
+                </td>
+                <td rowspan="4" valign="top" align="center">
+                    <div style="margin-left:75px" class="form-group" id="employee">
+                        <label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label>
+                        <div class="border-corners employeelist-height scroll-container" id="employees"></div>
+                    </div>
+                    <div hidden>
+                        <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" />
+                        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group" style="margin-top:10px;">
+                        <input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group" style="margin-top:10px">
+                        <input asp-for="Comment" name="comment" class="form-control" placeholder="Opis" />
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <div hidden>
+                        <input asp-for="PriorityId" name="priorityId" id="priorityId" value="2" class="form-control" />
 
-					</div>
-					<label asp-for="PriorityId" class="control-label">Priorytet: </label>
-					<span asp-validation-for="PriorityId" class="text-danger"></span>
-					<select class="custom-select form-control" onchange="changePriority()" id="priority">
+                    </div>
+                    <label asp-for="PriorityId" class="control-label">Priorytet: </label>
+                    <span asp-validation-for="PriorityId" class="text-danger"></span>
+                    <select class="custom-select form-control" onchange="changePriority()" id="priority">
 
-						<option value="1">Pilny</option>
-						<option selected value="2">Normalny</option>
-						<option value="3">Niski</option>
-						<option value="4">Opcjonalny</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-	</form>
+                        <option value="1">Pilny</option>
+                        <option selected value="2">Normalny</option>
+                        <option value="3">Niski</option>
+                        <option value="4">Opcjonalny</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 
 <script>
 
-	//TYP ZADANIA
-	document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
-	function switchProblem(img) {
-		if (img.src.substr(-8) === "grey.png") {
-			img.src = "../Content/Image/problem_color.png";
-			document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
-			document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
-			document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
-			$("#typeId").val(1);
-		}
-		else {
-			img.src = "../Content/Image/problem_grey.png";
-			$("#typeId").val(0);
-		}
-	}
+    //TYP ZADANIA
+    document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
+    function switchProblem(img) {
+        if (img.src.substr(-8) === "grey.png") {
+            img.src = "../Content/Image/problem_color.png";
+            document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
+            document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
+            document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
+            $("#typeId").val(1);
+        }
+        else {
+            img.src = "../Content/Image/problem_grey.png";
+            $("#typeId").val(0);
+        }
+    }
 
-	document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
-	function switchBlad(img) {
-		if (img.src.substr(-8) === "grey.png") {
-			img.src = "../Content/Image/bug_color.png";
-			document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
-			document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
-			document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
-			$("#typeId").val(2);
-		}
-		else {
-			img.src = "../Content/Image/bug_grey.png";
-			$("#typeId").val(0);
-		}
-	}
+    document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
+    function switchBlad(img) {
+        if (img.src.substr(-8) === "grey.png") {
+            img.src = "../Content/Image/bug_color.png";
+            document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
+            document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
+            document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
+            $("#typeId").val(2);
+        }
+        else {
+            img.src = "../Content/Image/bug_grey.png";
+            $("#typeId").val(0);
+        }
+    }
 
-	document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
-	function switchZmiana(img) {
-		if (img.src.substr(-8) === "grey.png") {
-			img.src = "../Content/Image/change_color.png";
-			document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
-			document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
-			document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
-			$("#typeId").val(3);
-		}
-		else {
-			img.src = "../Content/Image/change_grey.png";
-			$("#typeId").val(0);
-		}
-	}
+    document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
+    function switchZmiana(img) {
+        if (img.src.substr(-8) === "grey.png") {
+            img.src = "../Content/Image/change_color.png";
+            document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
+            document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
+            document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
+            $("#typeId").val(3);
+        }
+        else {
+            img.src = "../Content/Image/change_grey.png";
+            $("#typeId").val(0);
+        }
+    }
 
-	document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
-	function switchZadanie(img) {
-		if (img.src.substr(-8) === "grey.png") {
-			img.src = "../Content/Image/task_color.png";
-			document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
-			document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
-			document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
-			$("#typeId").val(4);
-		}
-		else {
-			img.src = "../Content/Image/task_grey.png";
-			$("#typeId").val(0);
-		}
-	}
+    document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
+    function switchZadanie(img) {
+        if (img.src.substr(-8) === "grey.png") {
+            img.src = "../Content/Image/task_color.png";
+            document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
+            document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
+            document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
+            $("#typeId").val(4);
+        }
+        else {
+            img.src = "../Content/Image/task_grey.png";
+            $("#typeId").val(0);
+        }
+    }
 
 
-	//PRIORYTET
+    //PRIORYTET
 
-	function changePriority() {
-		var value = $("#priority").val();
-		$("#priorityId").val(value);
-	}
+    function changePriority() {
+        var value = $("#priority").val();
+        $("#priorityId").val(value);
+    }
 
-	//PRACOWNIK
-	function chooseEmployee(employee) {
-
-	}
+    //PRACOWNIK
+    function changeEmployee(id) {
+        $("#employeeId").val(id);
+    }
 
 </script>
 

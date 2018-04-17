@@ -1,0 +1,120 @@
+﻿@model ProjektIP.Models.TaskModel
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltipTask"]').tooltip(
+            {
+                trigger: 'hover'
+            }
+        );
+        getEmployees();
+        getTasks();
+    });
+
+    function getEmployees() {
+        $.ajax({
+            type: "GET",
+            url: "/Employee/EmployeeList/",
+            success: function (viewHTML) {
+                $("#employees").html(viewHTML);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    };
+
+    function getTasks() {
+        for (var i = 1; i < 4; i++) {
+            (function (i) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Task/TaskList/",
+                    data: {
+                        mode: i,
+                    },
+                    success: function (viewHTML) {
+                        var section = "#tasklist" + i;
+                        $(section).html(viewHTML);
+                    },
+                    error: function (errorData) {
+                        console.log(errorData);
+                    }
+                });
+            })(i);
+        }
+    };
+    function changeEmployee(id) {
+        $("#employeeId").val(id);
+    };
+
+    function taskChange(id, nazwa, statusid, statusname, priorytetId, employeeId, opis) {
+        debugger;
+        $("#employeeId").val(employeeid);
+        $("#taskId").val(id);
+        $("#name").val(nazwa);
+        $("#statusId").val(statusId);
+        $("#statusName").val(statusname);
+        $("#priorityId").val(priorytetId);
+        $("#comment").val(opis);
+    };
+
+</script>
+
+
+<div class="row">
+    <form id="partialViewForm" action="/Task/PushUpdateTaskToDB" method="post">
+        <div class="col-md-5 border-corners max-height scroll5 scroll-container">
+            <div class="task-container">
+                <div class="row title-height title-container">
+                    WYBIERZ ZADANIE:
+                </div>
+                <div style="text-align:center; margin-top:10px">
+                    NIEROZPOCZĘTE:
+                    <div class="task-bar"></div>
+                </div>
+                <div class="row" id="tasklist1"></div>
+                <div style="text-align:center; margin-top:10px">
+                    ROZPOCZĘTE:
+                    <div class="task-bar"></div>
+                </div>
+                <div class="row" id="tasklist2"></div>
+                <div style="text-align:center; margin-top:10px">
+                    WYKONANE:
+                    <div class="task-bar"></div>
+                </div>
+                <div class="row" id="tasklist3"> </div>
+            </div>
+        </div>
+        <div class="col-md-5 max-height">
+            <div class="row text-center">
+                EDYTUJ ZADANIE:
+            </div>
+            <input asp-for="Title" style="margin-top:10px" name="name" id="name" class="form-control" placeholder="Nazwa" /><br />
+            <div style="margin-bottom:3px;">Aktualny status: <div id="statusName"></div></div><br />
+            <label asp-for="StatusId" class="control-label">Zmień status: </label><br />
+            <div hidden><input asp-for="StatusId" style="margin-top:10px" name="statusId" id="statusId" class="form-control" /></div>
+            <span asp-validation-for="StatusId" class="text-danger"></span>
+            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+                <option value="4">Zakończone</option>
+                <option selected value="5">Ponownie otwarte</option>
+                <option value="6">Anulowane</option>
+            </select><br />
+            <label asp-for="PriorityId" class="control-label">Priorytet: </label><br />
+            <div hidden><input asp-for="PriorityId" style="margin-top:10px" name="priorityId" id="priorityId" class="form-control" /></div>
+            <span asp-validation-for="PriorityId" class="text-danger"></span>
+            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+                <option value="1">Pilny</option>
+                <option selected value="2">Normalny</option>
+                <option value="3">Niski</option>
+                <option value="4">Opcjonalny</option>
+            </select><br />
+            <input asp-for="Comment" name="comment" id="comment" class="form-control" placeholder="Opis" /><br />
+            <label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label><br />
+            <div hidden>  <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" /><br /></div>
+            <div class="border-corners employeelist-height scroll5 scroll-container" id="employees"></div>
+            <input asp-for="Id" name="taskId" id="taskId" class="form-control" />
+        </div>
+    </form>
+</div>
+

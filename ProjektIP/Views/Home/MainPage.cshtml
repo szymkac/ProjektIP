@@ -122,7 +122,11 @@
 	function openModalAddUser() {
 		$('#modal-head').html('<h3>Dodaj pracownika</h3>');
 		this.openModal("/Employee/AddEmployee/");
-	}
+    }
+    function openModalTaskManager() {
+        $('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
+        this.openModal("/Task/TaskManager/");
+    }
 	function openModalAddTask() {
 		$('#modal-head').html('<h3>Dodaj zadanie</h3>');
 		this.openModal("/Task/AddTask/");
@@ -193,7 +197,7 @@
 				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
 					<img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
 				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip">
+				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
 					<img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
 				</button>
 				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip">

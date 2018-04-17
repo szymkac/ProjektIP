@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ProjektIP.Models.TaskModel>
+
+@{
+    ViewData["Title"] = "TaskList";
+}
+
+<div id="@("accordion" + ViewBag.Column)">
+    @foreach (var item in Model)
+    {
+        string colorClass;
+        string borderClass;
+        string imagePath;
+        string priorityPath;
+        switch (item.TaskTypeId)
+        {
+            case 2:
+                colorClass = "background-red";
+                borderClass = "border-type-red";
+                imagePath = "~/Content/Image/bug_color.png";
+                break;
+
+            case 1:
+                colorClass = "background-yellow";
+                borderClass = "border-type-yellow";
+                imagePath = "~/Content/Image/problem_color.png";
+                break;
+
+            case 3:
+
+                colorClass = "background-lightblue";
+                borderClass = "border-type-lightblue";
+                imagePath = "~/Content/Image/task_color.png";
+                break;
+
+            case 4:
+                colorClass = "background-green";
+                borderClass = "border-type-green";
+                imagePath = "~/Content/Image/change_color.png";
+                break;
+
+            default:
+                colorClass = "background-blue";
+                borderClass = "";
+                imagePath = "~/Content/Image/car_color.png";
+                break;
+        }
+        switch (item.PriorityId)
+        {
+            case 1:
+                priorityPath = "~/Content/Image/priority_important.png";
+                break;
+
+            case 2:
+                priorityPath = "~/Content/Image/priority_normal.png";
+                break;
+
+            case 3:
+                priorityPath = "~/Content/Image/priority_low.png";
+                break;
+
+            case 4:
+                priorityPath = "~/Content/Image/priority_optional.png";
+                break;
+
+            default:
+                priorityPath = "~/Content/Image/priority_normal.png";
+                break;
+        }
+        <div class="card" onclick="taskChange(@(item.Id), @(item.Title), @(item.StatusId), @(item.StatusName), @(item.PriorityId), @(item.EmployeeId), @(item.Comment))">
+            <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
+                <h5 class="mb-0">
+                    <div class="@("row " + colorClass)">
+                        <div class="col-md-2">
+                            <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
+                        </div>
+                        <div class="col-md-8 font-white text-center">
+                            #@Html.DisplayFor(modelItem => item.Id) <br />
+                            @Html.DisplayFor(modelItem => item.Title) <br />
+                        </div>
+                    </div>
+                </h5>
+            </div>
+        </div>
+    }
+</div>
+
+

@@ -7,65 +7,53 @@
 <div id="@("accordion" + ViewBag.Column)">
     @foreach (var item in Model)
     {
-        string colorClass;
         string imagePath;
         switch (item.PositionId)
         {
             case 1:
-                colorClass = "background-yellow";
-                imagePath = "~/Content/Image/meeting_white.png";
+                imagePath = "~/Content/Image/meeting_color.png";
                 break;
 
             case 2:
-                colorClass = "background-green";
-                imagePath = "~/Content/Image/car_white.png";
+                imagePath = "~/Content/Image/car_color.png";
                 break;
 
             case 3:
-
-                colorClass = "background-lightblue";
-                imagePath = "~/Content/Image/phone_white.png";
+                imagePath = "~/Content/Image/phone_color.png";
                 break;
 
             case 4:
-                colorClass = "background-red";
-                imagePath = "~/Content/Image/school_white.png";
+                imagePath = "~/Content/Image/school_color.png";
                 break;
 
             case 5:
-                colorClass = "background-red";
-                imagePath = "~/Content/Image/school_white.png";
+                imagePath = "~/Content/Image/school_color.png";
                 break;
 
             case 6:
-                colorClass = "background-red";
-                imagePath = "~/Content/Image/school_white.png";
+                imagePath = "~/Content/Image/school_color.png";
                 break;
 
             case 7:
-                colorClass = "background-red";
-                imagePath = "~/Content/Image/school_white.png";
+                imagePath = "~/Content/Image/school_color.png";
                 break;
 
             default:
-                colorClass = "background-blue";
-                imagePath = "~/Content/Image/car_white.png";
+                imagePath = "~/Content/Image/car_color.png";
                 break;
         }
-        <div class="card">
+        <div class="card" onclick="changeEmployee(@(item.Id))">
             <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
                 <h5 class="mb-0">
-                    <button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="@(@"#" + ViewBag.Column + "collapse" + item.Id)" aria-expanded="true" aria-controls="@(ViewBag.Column + "collapse" + item.Id)">
-                        <div class="@("row " + colorClass)">
-                            <div class="col-md-2">
-                                <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
-                            </div>
-                            <div class="col-md-8 font-white">
-                                @Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.SurName) <br />
-                                @Html.DisplayFor(modelItem => item.PositionName)
-                            </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
                         </div>
-                    </button>
+                        <div class="col-md-8 font-black">
+                            @Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.SurName) <br />
+                            @Html.DisplayFor(modelItem => item.PositionName)
+                        </div>
+                    </div>
                 </h5>
             </div>
         </div>
