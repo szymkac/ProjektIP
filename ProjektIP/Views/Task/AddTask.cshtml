@@ -80,12 +80,11 @@
                         <input asp-for="PriorityId" name="priorityId" id="priorityId" value="2" class="form-control" />
 
                     </div>
-                    <label asp-for="PriorityId" class="control-label">Priorytet: </label>
                     <span asp-validation-for="PriorityId" class="text-danger"></span>
                     <select class="custom-select form-control" onchange="changePriority()" id="priority">
-
+                        <option value="" disabled selected>Priorytet:</option>
                         <option value="1">Pilny</option>
-                        <option selected value="2">Normalny</option>
+                        <option value="2">Normalny</option>
                         <option value="3">Niski</option>
                         <option value="4">Opcjonalny</option>
                     </select>

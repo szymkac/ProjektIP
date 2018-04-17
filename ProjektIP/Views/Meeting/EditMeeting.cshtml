@@ -10,8 +10,6 @@
         );
 
         setHiddenData();
-        
-        //switch - jakie id w typie zadania i zmienić obrazek odpowiedni 
     });
 
 
@@ -26,31 +24,40 @@
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+                document.getElementById("location").style.display = "none";
+                document.getElementById("roomName").style.display = "initial";
                 break;
             case "2":
                 document.getElementById("imgCar").src = "../Content/Image/car_color.png";
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+                document.getElementById("location").style.display = "initial";
+                document.getElementById("roomName").style.display = "none";
                 break;
             case "3":
                 document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-
+                document.getElementById("location").style.display = "none";
+                document.getElementById("roomName").style.display = "initial";
                 break;
             case "4":
                 document.getElementById("imgSchool").src = "../Content/Image/school_color.png";
                 document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
                 document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
                 document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+                document.getElementById("location").style.display = "none";
+                document.getElementById("roomName").style.display = "initial";
                 break;
             default:
                 document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-                document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
-                document.getElementById("imgCar").src = "../Content/Image/car_color.png";
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
+                document.getElementById("imgPhone").src = "../Content/Image/phone__grey.png";
+                document.getElementById("imgCar").src = "../Content/Image/car__grey.png";
+                document.getElementById("imgMeeting").src = "../Content/Image/meeting__grey.png";
+                document.getElementById("location").style.display = "initial";
+                document.getElementById("roomName").style.display = "initial";
                 break;
         }
 
@@ -86,8 +93,8 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(3);
 
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
+            document.getElementById("location").style.display = "none";
+            document.getElementById("roomName").style.display = "initial";
         }
         else {
             img.src = "../Content/Image/phone_grey.png";
@@ -104,14 +111,15 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(2);
 
-            document.getElementById("location").style.visibility = 'visible';
-            document.getElementById("room").style.visibility = 'hidden';
+            document.getElementById("location").style.display = "initial";
+            document.getElementById("roomName").style.display = "none";
+            $("#roomId").val(null);
         }
         else {
             img.src = "../Content/Image/car_grey.png";
             $("#typeId").val(0);
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
+            document.getElementById("location").style.display = "none";
+            document.getElementById("roomName").style.display = "initial";
         }
     }
 
@@ -124,8 +132,8 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(1);
 
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
+            document.getElementById("location").style.display = "none";
+            document.getElementById("roomName").style.display = "initial";
         }
         else {
             img.src = "../Content/Image/meeting_grey.png";
@@ -142,8 +150,8 @@
             document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
             $("#typeId").val(4);
 
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
+            document.getElementById("location").style.display = "none";
+            document.getElementById("roomName").style.display = "initial";
         }
         else {
             img.src = "../Content/Image/school_grey.png";
@@ -163,6 +171,20 @@
 
     }
 
+    //POKOJE
+    function changeRoom() {
+        var value = $("#roomName").val();
+        if (value != "inne") {
+            $("#roomId").val(value);
+            document.getElementById("location").style.display = "none";
+            $("#locationName").val("");
+        }
+        else {
+            $("#roomId").val(null);
+            document.getElementById("location").style.display = "initial";
+        }
+    }
+
 
 </script>
 <div class="row">
@@ -174,11 +196,6 @@
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
-            @*<div hidden>
-            <label asp-for="MeetingTypeName" class="control-label"></label>
-            <input asp-for="MeetingTypeName" class="form-control" />
-            <span asp-validation-for="MeetingTypeName" class="text-danger"></span>
-        </div>*@
             <div hidden>
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
             </div>
@@ -198,9 +215,9 @@
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateStart" class="form-control" />
-                    @*  <span asp-validation-for="DateStart" class="text-danger"></span>*@
+                    <span asp-validation-for="DateStart" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group ">
                     <input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
                     <span asp-validation-for="HourStart" class="text-danger"></span>
                 </div>
@@ -210,78 +227,51 @@
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateEnd" class="form-control" />
-                    @*   <span asp-validation-for="DateEnd" class="text-danger"></span>*@
+                    <span asp-validation-for="DateEnd" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group ">
                     <input asp-for="HourEnd" class="form-control" placeholder="00:00:00" />
                     <span asp-validation-for="HourEnd" class="text-danger"></span>
                 </div>
             </div>
-            @*<div hidden>
-            <label asp-for="EmployeeAuthorId" class="control-label"></label>
-            <input asp-for="EmployeeAuthorId" class="form-control" />
-            <span asp-validation-for="EmployeeAuthorId" class="text-danger"></span>
-        </div>
-        <div hidden>
-            <label asp-for="EmployeeAuthorName" class="control-label"></label>
-            <input asp-for="EmployeeAuthorName" class="form-control" />
-            <span asp-validation-for="EmployeeAuthorName" class="text-danger"></span>
-        </div>*@
             <div hidden>
                 <label asp-for="RoomId" class="control-label"></label>
-                <input asp-for="RoomId" class="form-control" />
+                <input asp-for="RoomId" class="form-control" id="roomId" />
                 <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
-            <div class="form-group" id="room">
+            <div class="form-group margin-top-20" id="room">
                @* <label asp-for="RoomName" class="control-label">Pokój:</label>*@
                 <span asp-validation-for="RoomName" class="text-danger"></span>
-                <select class="custom-select form-control" onchange="changeRoom()" id="changeRoom">
+                <select class="custom-select form-control" onchange="changeRoom()" id="roomName">
                     <option value="" disabled selected>Pokój:</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    @foreach (var item in ViewBag.listOfRooms)
+                    {
+                        <option value=@(item[0])>@(item[1])</option>
+                    }
+                    <option value="inne">Inne</option>
                 </select>
             </div>
-            <div class="form-group" id="location">
+            <div class="form-group margin-top-20" id="location">
                 @*<label asp-for="Location" class="control-label"></label>*@
-                <input asp-for="Location" class="form-control" placeholder="Lokalizacja"/>
+                <input asp-for="Location" class="form-control " placeholder="Lokalizacja" id="locationName"/>
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                @*<label asp-for="Note" class="control-label"></label>*@
+            <div class="form-group margin-top-20">
                 <input asp-for="Note" class="form-control"  placeholder="Opis"/>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div hidden>
                 <input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
             </div>
-            @*<div class="form-group">
-            <input asp-for="PriorityId" class="form-control" />
             <span asp-validation-for="PriorityId" class="text-danger"></span>
-        </div>*@
-
-            @*<label asp-for="PriorityId" class="control-label"></label>*@
-            <span asp-validation-for="PriorityId" class="text-danger"></span>
-            <select class="custom-select form-control margin-bottom-20 " onchange="changePriority()" id="priority">
+            <select class="custom-select form-control margin-bottom-20 margin-top-20" onchange="changePriority()" id="priority">
                 <option value="" disabled selected>Priorytet:</option>
                 <option value="1">Pilny</option>
                 <option value="2">Normalny</option>
                 <option value="3">Niski</option>
                 <option value="4">Opcjonalny</option>
             </select>
-
-
-            @*<div hidden>
-            <label asp-for="PriorityName" class="control-label"></label>
-            <input asp-for="PriorityName" class="form-control" />
-            <span asp-validation-for="PriorityName" class="text-danger"></span>
-        </div>*@
-            @*<div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>*@
-
-        @*    <button class="btn btn-login font-white" action="/Meeting/DeleteMeetingFromDB" method="get">Odwołaj wydarzenie</button>*@
 
             <button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
                 
