@@ -9,7 +9,8 @@ function changeStatus(id, newStatus) {
             date: getDate(new Date())
         }
     });
-    location.reload(true); 
+    getTasks();
+    getTasks();
 }
 function getDate(myDate) {
     var dd = myDate.getDate();

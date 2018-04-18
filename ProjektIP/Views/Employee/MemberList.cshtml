@@ -4,6 +4,12 @@
     ViewData["Title"] = "EmployeeList";
 }
 
+<script>
+    $(function () {
+        selectOldEmployee();
+    });
+</script>
+
 <div id="@("accordion" + ViewBag.Column)">
     @foreach (var item in Model)
     {
@@ -42,6 +48,24 @@
                 imagePath = "~/Content/Image/avatar_null.png";
                 break;
         }
+
+        //string imagePathTickCross;
+        //switch (item.PositionId) //member decision
+        //{
+        //    case 1:
+        //        imagePathTickCross = "~/Content/Image/tick_without.png";
+        //        break;
+
+        //    case 2:
+        //        imagePathTickCross = "~/Content/Image/cross_without.png";
+        //        break;
+
+        //    case 3:
+        //        imagePathTickCross = "~/Content/Image/question.png";
+        //        break;
+
+        //}
+
         <div class="card margin-left-20 margin-right-10p" id="listEmployee@(item.Id)" onclick="changeEmployee(@(item.Id))">
             <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
                 <h5 class="mb-0">
@@ -53,7 +77,9 @@
                             @Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.SurName) <br />
                             @Html.DisplayFor(modelItem => item.PositionName)
                         </div>
-                    </div>
+                        @*<div class="col-md-2">
+                            <img src="@Url.Content(imagePathTickCross)" alt="Typ" height="40" width="40" />
+                        </div>*@
                 </h5>
             </div>
         </div>

@@ -6,9 +6,8 @@
 		var imagepath = "avatar" + value + ".png";
 		document.getElementById("avatar").src = "../Content/Image/" + imagepath;
 	}
-
-
 </script>
+
 <div class="row">
 	<form id="partialViewForm" action="/Employee/PushAddEmployeeToDB" method="post">
 		<div class="col-md-7">
@@ -19,7 +18,7 @@
 				<input class="form-control control-margin" type="text" name="email" placeholder="E-mail" />
 				<input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />
 				<input hidden id="positionId" />
-				<select class="custom-select form-control control-margin" id="position" onchange="changePosition()">
+                <select class="custom-select form-control control-margin" name="positionId" id="positionId" onchange="changePosition()">
 					<option value="" disabled selected>Stanowisko:</option>
 					<option value="1">Kierownik</option>
 					<option value="2">Programista</option>
@@ -33,7 +32,7 @@
 
 		</div>
 		<div class="col-md-5">
-			<img id="avatar" src="~/Content/Image/avatar_null.png" width="300" height="300" class="border-corners" />
+            <img id="avatar" src="~/Content/Image/avatar_null.png" width="300" height="300" class="border-corners" />
 		</div>
 
 		<div class="col-md-12">
@@ -43,28 +42,28 @@
 				<div class="row">
 					<label class="check-container">
 						Dodanie nowego pracownika
-						<input type="checkbox" id="addNewEmployee">
+                        <input type="checkbox" value="true" name="addNewEmpleyeePermission" id="addNewEmployee">
 						<span class="checkmark"></span>
 					</label>
 				</div>
 				<div class="row">
 					<label class="check-container">
 						Dodanie nowego zadania
-						<input type="checkbox" id="addNewTask">
+                        <input type="checkbox" value="true" name="addNewTaskPermission" id="addNewTask">
 						<span class="checkmark"></span>
 					</label>
 				</div>
 				<div class="row">
 					<label class="check-container">
-						Dodajanie nowego wydarzenia
-						<input type="checkbox" id="addNewEvent">
+                        Dodanie nowego wydarzenia
+                        <input type="checkbox" value="true" name="addNewEventPermission" id="addNewEvent">
 						<span class="checkmark"></span>
 					</label>
 				</div>
 				<div class="row">
 					<label class="check-container">
 						Podgląd innych pracowników
-						<input type="checkbox" id="previewEmployees">
+                        <input type="checkbox" value="true" name="previewEmployeesPermission" id="previewEmployees">
 						<span class="checkmark"></span>
 					</label>
 				</div>

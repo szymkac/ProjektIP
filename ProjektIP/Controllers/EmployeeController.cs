@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjektIP.DAO;
 using ProjektIP.Models;
@@ -19,59 +20,76 @@ namespace ProjektIP.Controllers
         {
             return PartialView();
         }
+
+        [HttpGet]
+        public IActionResult MemberList()
+        {
+            return PartialView(GetAllEmployees());
+        }
+
+
         [HttpGet]
         public IActionResult EmployeeList()
         {
             return PartialView(GetAllEmployees());
         }
 
-        public IActionResult PushAddEmployeeToDB()
+        public IActionResult PushAddEmployeeToDB(string name, string surname, string email, string phone, long positionId, bool addNewEmpleyeePermission, bool addNewTaskPermission, bool addNewEventPermission, bool previewEmployeesPermission)
         {
+            Random random = new Random();
+            EmployeeModel employeeModel = new EmployeeModel(0, name, surname, email, phone, true, positionId);
 
-            //bool losuj = true;
-            //while (losuj)
-            //{
-            //    Random r = new Random();
-            //    string wylosowany_login = employeeModel.Name.Substring(0, 3) + employeeModel.SurName.Substring(0, 3) + r.Next();
-            //    string wylosowany_password = r.Next().ToString() + r.Next().ToString() + r.Next().ToString() + r.Next().ToString() + r.Next().ToString();
-            //    List<object[]> lista = BaseDAO.Select("Users", null, new Dictionary<string, object>() { { "Login", wylosowany_login } });
-            //    if (lista.Count == 0)
-            //    {
-            //        EmployeeDAO.Insert(employeeModel);
-            //        BaseDAO.Insert("Users", new Dictionary<string, object>
-            //        {
-            //            { "Login",wylosowany_login},
-            //            { "Password", wylosowany_password}
-            //        });
-            //        EmployeeModel addedEmployee = EmployeeDAO.SelectFirst(EmployeeDAO.Columns.Fill(EmployeeModel));
-            //        if (addingUserPermission)
-            //            BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
-            //        {
-            //            { "IdEmployees",addedEmployee.Id},
-            //            { "IdPermission", 1}
-            //        });
-            //        if (addingTaskPermission)
-            //            BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
-            //        {
-            //            { "IdEmployees",addedEmployee.Id},
-            //            { "IdPermission", 2}
-            //        });
-            //        if (addingMeetingPermission)
-            //            BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
-            //        {
-            //            { "IdEmployees",addedEmployee.Id},
-            //            { "IdPermission", 3}
-            //        });
-            //        if (previewUserPermission)
-            //            BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
-            //        {
-            //            { "IdEmployees",addedEmployee.Id},
-            //            { "IdPermission", 4}
-            //        });
-            //        losuj = false;
-            //        //TO DO: WYSYŁANIE MAILA
-            //    }
-            //}
+            bool randomLoginAndPassword = true;
+            string login = string.Empty;
+            string password = string.Empty;
+         
+            do
+            {
+                login = name.Substring(0, 3).ToLower() + surname.Substring(0, 3).ToLower() + random.Next(0, 9999).ToString("D4");
+                password = Extensions.GeneratePasswordExtensions.GenerateRandomPassword();
+
+                List<object[]> usersList = BaseDAO.Select("Users", null, new Dictionary<string, object>() { { "Login", login } });
+                if(!usersList.Any())
+                {
+                    EmployeeDAO.Insert(employeeModel);
+                    employeeModel = EmployeeDAO.SelectFirst(EmployeeDAO.Columns.Fill(employeeModel));
+                    BaseDAO.Insert("Users", new Dictionary<string, object>
+                    {
+                        {"Login", login },
+                        {"Password", password },
+                        { "IdEmployee",employeeModel.Id} // Zła wartość
+                    });
+
+                    if (addNewEmpleyeePermission)
+                        BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
+                            {
+                                { "IdEmployee",employeeModel.Id},
+                                { "IdPermission", 1}
+                            });
+                    if (addNewTaskPermission)
+                        BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
+                            {
+                                { "IdEmployee",employeeModel.Id},
+                                { "IdPermission", 2}
+                            });
+                    if (addNewEventPermission)
+                        BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
+                            {
+                                { "IdEmployee",employeeModel.Id},
+                                { "IdPermission", 3}
+                            });
+                    if (previewEmployeesPermission)
+                        BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
+                            {
+                                { "IdEmployee",employeeModel.Id},
+                                { "IdPermission", 4}
+                            });
+
+                    randomLoginAndPassword = false;
+                }
+            }
+            while (randomLoginAndPassword);
+            
             return RedirectToAction("MainPage", "Home");
         }
 
@@ -107,7 +125,7 @@ namespace ProjektIP.Controllers
                 public static string Email = "Email";
                 public static string Phone = "Phone";
                 public static string Active = "Active";
-                public static string IdPosition = "IdPostition";
+                public static string IdPosition = "IdPosition";
 
                 public static Dictionary<string, object> Fill(EmployeeModel employee)
                 {
@@ -124,7 +142,7 @@ namespace ProjektIP.Controllers
 
             public static EmployeeModel SelectFirst(Dictionary<string, object> filters)
             {
-                List<object[]> result = BaseDAO.Select("Employees", null, null);
+                List<object[]> result = BaseDAO.Select("Employees", null, filters);
                 return new EmployeeModel(
                     Convert.ToInt64(result[0][0]),
                     result[0][1].ToString(),
