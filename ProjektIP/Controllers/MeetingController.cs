@@ -16,32 +16,93 @@ namespace ProjektIP.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult PushChangeConfirmation(long meetingId, bool confirmationofPresence)
+        {
+            BaseDAO.Update("Members", new KeyValuePair<string, object>("IdMeeting", meetingId), new Dictionary<string, object>()
+            {
+                {"IdEmployee",HomeController.ActualUser.Id },
+                { "IdMeeting", meetingId},
+                { "ConfirmationOfPresence", confirmationofPresence}
+            });
+
+            return RedirectToAction("MainPage", "Home");
+        }
+
         [HttpGet]
         public IActionResult EditMeeting(long Id)
         {
-           // MeetingModel model = new MeetingModel(1, 1, new DateTime(2016, 05, 15), new DateTime(2016, 05, 15), new TimeSpan(0, 8, 25, 0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1, "Pizza", new List<EmployeeModel>()); //select po id
             MeetingModel model = MeetingDAO.SelectFirst(new Dictionary<string, object>()
             {
                 {"IdMeeting", Id }
             });
+
+            List<object[]> roomList=BaseDAO.Select("Rooms", null,null);
+            ViewBag.listOfRooms = roomList;
+
+
+            List<object[]> membersList = BaseDAO.Select("Members", new List<string>() { "IdEmployee", "IdMeeting", "ConfirmationOfPresence" },
+                new Dictionary<string, object>()
+            {
+                {"IdMeeting", Id }
+            });
+            List<int> listMembersId = new List<int>();
+
+            string membersId = "";
+            //foreach (EmployeeModel item in model.Members)
+            //{
+            //    membersId += item.Id + ",";
+            //}
+
+
+            foreach (object[] i in membersList)
+            {
+                //      listMembersId.Add((int)i[0]);
+                membersId += (int)i[0] + ",";
+            }
+
+            ViewBag.membersId = membersId;
+
+
             return PartialView(model);
         }
 
         [HttpPost]
-        public IActionResult PushEditMeetingToDB(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long? roomId, string location, string note, long priorityId, string title, List<EmployeeModel> members)
+        public IActionResult PushEditMeetingToDB(long id, long meetingTypeId, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long? roomId, string location, string note, long priorityId, string title, string oldIdMembers, string newIdMembers)
         {
-            //string newDate = DateTime.ParseExact(dateStart.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString();
-            //DateTime dayStart = DateTime.ParseExact(newDate,"MM/dd/yyyy", CultureInfo.InvariantCulture);
-            //DateTime dayEnd = DateTime.ParseExact(DateTime.ParseExact(dateEnd.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString(), "MM/dd/yyyy", CultureInfo.InvariantCulture);
+
+            string[] newMembers = new string[0];
+            if (newIdMembers != null)
+            {
+                newMembers = newIdMembers.Split(",");
+            }
+
+
+            List<EmployeeModel> all = EmployeeController.GetAllEmployees();
+
+            List<EmployeeModel> members = new List<EmployeeModel>();
+
+            foreach(EmployeeModel employee in all)
+            {
+                bool newMemberCheck = false;
+
+                foreach (string newM in newMembers)
+                {
+                    if (newM != "") {
+                        if (employee.Id == long.Parse(newM))
+                            newMemberCheck = true;
+                    }
+                }
+
+                if (newMemberCheck == true)
+                { //zostawia
+                    members.Add(employee);
+                }
+
+            }
 
             MeetingModel model = new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
-            //TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
-            // MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
-            // MeetingController.MeetingDAO.Update(1, new MeetingModel(1, 1, new DateTime(2016,05,15), new DateTime(2016, 05, 15), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
-            //MeetingDAO.Insert(new MeetingModel(1, 1, new DateTime(2018, 05, 15), new DateTime(2018, 05, 15), new TimeSpan(0, 8, 25, 0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1, "Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
-            //MeetingDAO.Update((int)id, new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members), members);
 
-            //MeetingController.MeetingDAO.Update((int)id, new MeetingModel(id, 1, new DateTime(2018,05,16), new DateTime(2018, 05, 16), new TimeSpan(0,8,25,0), new TimeSpan(0, 11, 25, 0), HomeController.ActualUser.Id, null, "Sala nr 5", "Nowe promocje w pizza truck - Kto składa się na pizze?", 1,"Pizza", new List<EmployeeModel>()), new List<EmployeeModel>());
             MeetingDAO.Update((int)id,model);
             return RedirectToAction("MainPage", "Home");
         }
@@ -49,20 +110,26 @@ namespace ProjektIP.Controllers
         [HttpGet]
         public IActionResult DeleteMeetingFromDB(long id)
         {
-            //MeetingDAO.D
             MeetingDAO.Delete(id);
             return RedirectToAction("MainPage", "Home");
         }
 
         [HttpGet]
-        public IActionResult MeetingDetailsForDay(string date, int column)
+        public IActionResult MeetingDetailsForDay(string date, int column, int mode)
         {
             DateTime day = DateTime.ParseExact(date, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             ViewBag.Column = column;
-
-            List<MeetingModel> meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
-           
+            List<MeetingModel> meetingsList = new List<MeetingModel>();
+            switch (mode)
+            {
+                case 1:
+                    meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
+                    break;
+                case 2:
+                    meetingsList = GetMeetingsForAllUsers(day);
+                    break;
+            }
             return PartialView(meetingsList);
         }
 
@@ -93,6 +160,7 @@ namespace ProjektIP.Controllers
 
         private List<MeetingModel> GetMeetingsForAllUsers(DateTime dateFrom)
         {
+
             List<MeetingModel> list = MeetingDAO.Select(new Dictionary<string, object>()
             {
                 {"DateFrom", dateFrom}
@@ -147,11 +215,11 @@ namespace ProjektIP.Controllers
                 List<EmployeeModel> memberList = new List<EmployeeModel>();
                 foreach (object[] mem in members)
                 {
-                    if (mem[2] == null || (mem[2] != null && Convert.ToBoolean(mem[2]) == true))
+                    if (mem[2] == null || mem[2] == DBNull.Value || (mem[2] != null && Convert.ToBoolean(mem[2]) == true))
                     {
                         List<object[]> employee = BaseDAO.Select("Employees", null, new Dictionary<string, object>()
                             {
-                                {"IdEmployee",  Convert.ToInt64(mem[1]) }
+                                {"IdEmployee",  Convert.ToInt64(mem[0]) }
                             });
                         memberList.Add(new EmployeeModel(
                             Convert.ToInt64(employee[0][0]),
@@ -159,7 +227,7 @@ namespace ProjektIP.Controllers
                              employee[0][2].ToString(),
                              employee[0][3].ToString(),
                              employee[0][4].ToString(),
-                              employee[0][5].ToString() == "1" ? true : false,
+                             employee[0][5].ToString() == "1" ? true : false,
                              employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
                             ));
                     }
@@ -191,7 +259,7 @@ namespace ProjektIP.Controllers
             {
                 List<MeetingModel> list = new List<MeetingModel>();
 
-                if (filters!=null && filters.ContainsKey("DateFrom"))
+                if (filters != null && filters.ContainsKey("DateFrom"))
                 {
                     DateTime date = (DateTime)filters["DateFrom"];
                     filters["DateFrom"] = String.Format(
@@ -201,7 +269,7 @@ namespace ProjektIP.Controllers
                         date.Year);
                 }
                 List<object[]> result;
-                if (filters!=null && filters.ContainsKey("IdEmployee"))
+                if (filters != null && filters.ContainsKey("IdEmployee"))
                     result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting LEFT JOIN Priorities P ON Mt.IdPriority = P.IdPriority  LEFT JOIN Rooms R ON Mt.IdRoom = R.IdRoom LEFT JOIN Employees E ON Mt.IdAuthor = E.IdEmployee LEFT JOIN MeetingTypes Mtt ON Mt.IdMeetingType = Mtt.IdMeetingType WHERE ({0}) AND Mt.DateFrom = '{1}'", filters["IdEmployee"], filters["DateFrom"]));
                 else if (filters != null && filters.ContainsKey("DateFrom"))
                     result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Meetings Mt LEFT JOIN Members Mb ON Mb.IdMeeting = Mt.IdMeeting LEFT JOIN Priorities P ON Mt.IdPriority = P.IdPriority  LEFT JOIN Rooms R ON Mt.IdRoom = R.IdRoom LEFT JOIN Employees E ON Mt.IdAuthor = E.IdEmployee LEFT JOIN MeetingTypes Mtt ON Mt.IdMeetingType = Mtt.IdMeetingType WHERE Mt.DateFrom = '{0}'", filters["DateFrom"]));
@@ -222,7 +290,7 @@ namespace ProjektIP.Controllers
                         {
                             List<object[]> employee = BaseDAO.Select("Employees", null, new Dictionary<string, object>()
                             {
-                                {"IdEmployee",  Convert.ToInt64(mem[1]) }
+                                {"IdEmployee",  Convert.ToInt64(mem[0]) }
                             });
                             memberList.Add(new EmployeeModel(
                                 Convert.ToInt64(employee[0][0]),
@@ -240,7 +308,7 @@ namespace ProjektIP.Controllers
                     if (res[11] != null && res[11] != DBNull.Value)
                         HourTo = res[11].ToString().Split(':');
 
-                    list.Add(new MeetingModel(
+                    MeetingModel modelDoDodania = new MeetingModel(
                     Convert.ToInt64(res[0]),
                     Convert.ToInt64(res[1]),
                     res[27].ToString(),
@@ -258,11 +326,18 @@ namespace ProjektIP.Controllers
                      res[16].ToString(),
                         res[9] != null && res[9] != DBNull.Value ? res[9].ToString() : string.Empty,
                         memberList
-                        ));
+                        );
+                    bool dodaj = true;
+                    foreach (MeetingModel mm in list)
+                    {
+                        if (mm.Id == modelDoDodania.Id)
+                            dodaj = false;
+                    }
+                    if (dodaj)
+                        list.Add(modelDoDodania);
                 }
                 return list;
             }
-
             public static void Insert(MeetingModel Meeting)
             {
                 BaseDAO.Insert("Meetings", Columns.Fill(Meeting));

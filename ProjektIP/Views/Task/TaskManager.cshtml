@@ -44,76 +44,101 @@
             })(i);
         }
     };
+
     function changeEmployee(id) {
         $("#employeeId").val(id);
+        $("#listEmployee" + id).attr('style', 'border:dotted 2px #4472c4;border-radius:10px');
+        $('.card').each(function () {
+            if (this.id.match('^listEmployee') && this.id != "listEmployee" + id) {
+                $("#" + this.id).attr('style', 'border:solid 0px');
+            };
+        });
+    }
+
+  
+    function taskChange(id) {
+        $("#taskId").val(id);
+        $("#name").val($("#Name" + id).html());
+        $("#comment").val($("#Comment" + id).html());
+        $("#statusName").html($("#StatusName" + id).html());
+        $("#statusId").val($("#Status" + id).html());
+        $("#employeeId").val($("#Employee" + id).html());
+        $("#priorityId").val($("#Priority" + id).html());
+        $("#priority").val($("#Priority" + id).html());
+        $("#typeId").val($("#Type" + id).html());
+        $("#listTask" + id).attr('style', 'border:dotted 2px #000000');
+        $('.row').each(function () {
+            if (this.id.match('^listTask') && this.id != "listTask" + id) {
+                $("#" + this.id).attr('style', 'border:solid 0px');
+            };
+        });
     };
 
-    function taskChange(id, nazwa, statusid, statusname, priorytetId, employeeId, opis) {
-        debugger;
-        $("#employeeId").val(employeeid);
-        $("#taskId").val(id);
-        $("#name").val(nazwa);
-        $("#statusId").val(statusId);
-        $("#statusName").val(statusname);
-        $("#priorityId").val(priorytetId);
-        $("#comment").val(opis);
+    function changeStatus() {
+
+        $("#statusId").val($("#status").val());
     };
+
+    function changePriority() {
+        $("#priorityId").val($("#priority").val());
+    }
+
 
 </script>
 
 
 <div class="row">
     <form id="partialViewForm" action="/Task/PushUpdateTaskToDB" method="post">
-        <div class="col-md-5 border-corners max-height scroll5 scroll-container">
-            <div class="task-container">
-                <div class="row title-height title-container">
-                    WYBIERZ ZADANIE:
+        <div class="col-md-4 main-height">
+            <div class="border-corners max-height scroll5 scroll-container">
+                <div class="task-container">
+                    <div style="text-align:center; margin-top:10px">
+                        NIEROZPOCZĘTE:
+                        <div class="task-bar"></div>
+                    </div>
+                    <div class="row" id="tasklist1"></div>
+                    <div style="text-align:center; margin-top:10px">
+                        ROZPOCZĘTE:
+                        <div class="task-bar"></div>
+                    </div>
+                    <div class="row" id="tasklist2"></div>
+                    <div style="text-align:center; margin-top:10px">
+                        WYKONANE:
+                        <div class="task-bar"></div>
+                    </div>
+                    <div class="row" id="tasklist3"> </div>
                 </div>
-                <div style="text-align:center; margin-top:10px">
-                    NIEROZPOCZĘTE:
-                    <div class="task-bar"></div>
-                </div>
-                <div class="row" id="tasklist1"></div>
-                <div style="text-align:center; margin-top:10px">
-                    ROZPOCZĘTE:
-                    <div class="task-bar"></div>
-                </div>
-                <div class="row" id="tasklist2"></div>
-                <div style="text-align:center; margin-top:10px">
-                    WYKONANE:
-                    <div class="task-bar"></div>
-                </div>
-                <div class="row" id="tasklist3"> </div>
             </div>
         </div>
-        <div class="col-md-5 max-height">
-            <div class="row text-center">
-                EDYTUJ ZADANIE:
-            </div>
+        <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-left:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:10px 0px 0px 10px">
+            <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" placeholder="Nazwa" /><br /></div>
             <input asp-for="Title" style="margin-top:10px" name="name" id="name" class="form-control" placeholder="Nazwa" /><br />
             <div style="margin-bottom:3px;">Aktualny status: <div id="statusName"></div></div><br />
-            <label asp-for="StatusId" class="control-label">Zmień status: </label><br />
             <div hidden><input asp-for="StatusId" style="margin-top:10px" name="statusId" id="statusId" class="form-control" /></div>
             <span asp-validation-for="StatusId" class="text-danger"></span>
-            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+            <select class="custom-select form-control" onchange="changeStatus()" id="status">
+                <option value="" disabled selected>Status:</option>
                 <option value="4">Zakończone</option>
-                <option selected value="5">Ponownie otwarte</option>
+                <option value="5">Ponownie otwarte</option>
                 <option value="6">Anulowane</option>
             </select><br />
-            <label asp-for="PriorityId" class="control-label">Priorytet: </label><br />
             <div hidden><input asp-for="PriorityId" style="margin-top:10px" name="priorityId" id="priorityId" class="form-control" /></div>
             <span asp-validation-for="PriorityId" class="text-danger"></span>
             <select class="custom-select form-control" onchange="changePriority()" id="priority">
+                <option value="" disabled selected>Priorytet:</option>
                 <option value="1">Pilny</option>
-                <option selected value="2">Normalny</option>
+                <option value="2">Normalny</option>
                 <option value="3">Niski</option>
                 <option value="4">Opcjonalny</option>
             </select><br />
             <input asp-for="Comment" name="comment" id="comment" class="form-control" placeholder="Opis" /><br />
-            <label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label><br />
-            <div hidden>  <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" /><br /></div>
-            <div class="border-corners employeelist-height scroll5 scroll-container" id="employees"></div>
-            <input asp-for="Id" name="taskId" id="taskId" class="form-control" />
+           
+        </div>
+        <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-right:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:0px 10px 10px 0px">
+            <label asp-for="EmployeeId" style="margin-top:5px;margin-bottom:5px" class="control-label">Wybierz zleceniobiorcę:</label><br />
+            <div hidden>  <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" /> <input asp-for="Id" name="taskId" id="taskId" class="form-control" /><br /></div>
+            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
+
         </div>
     </form>
 </div>

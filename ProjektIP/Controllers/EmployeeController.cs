@@ -20,6 +20,14 @@ namespace ProjektIP.Controllers
         {
             return PartialView();
         }
+
+        [HttpGet]
+        public IActionResult MemberList()
+        {
+            return PartialView(GetAllEmployees());
+        }
+
+
         [HttpGet]
         public IActionResult EmployeeList()
         {
