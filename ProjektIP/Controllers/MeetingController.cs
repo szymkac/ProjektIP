@@ -16,6 +16,19 @@ namespace ProjektIP.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult PushChangeConfirmation(long meetingId, bool confirmationofPresence)
+        {
+            BaseDAO.Update("Members", new KeyValuePair<string, object>("IdMeeting", meetingId), new Dictionary<string, object>()
+            {
+                {"IdEmployee",HomeController.ActualUser.Id },
+                { "IdMeeting", meetingId},
+                { "ConfirmationOfPresence", confirmationofPresence}
+            });
+
+            return RedirectToAction("MainPage", "Home");
+        }
+
         [HttpGet]
         public IActionResult EditMeeting(long Id)
         {
