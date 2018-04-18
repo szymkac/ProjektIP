@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace ProjektIP.Models
 		public long Id { get; set; }
 
 		public long MeetingTypeId { get; set; }
-
 		public string MeetingTypeName { get; set; }
 
 		public DateTime DateStart { get; set; }
@@ -36,7 +36,7 @@ namespace ProjektIP.Models
 		public long PriorityId { get; set; }
 
 		public string PriorityName { get; set; }
-
+		[Required]
 		public string Title { get; set; }
 
 		public List<EmployeeModel> Members { get; set; }

@@ -1,295 +1,292 @@
 ﻿@model ProjektIP.Models.MeetingModel
-
 <script>
 
-    $(function () {
-        $('[data-toggle="tooltipTask"]').tooltip(
-            {
-                trigger: 'hover'
-            }
-        );
+	$(function () {
+		$('[data-toggle="tooltipTask"]').tooltip(
+			{
+				trigger: 'hover'
+			}
+		);
 
-        setHiddenData();
-        
-        //switch - jakie id w typie zadania i zmienić obrazek odpowiedni 
-    });
+		setHiddenData();
 
-
-    function setHiddenData()
-    {
-        var typeid = document.getElementById('typeId').value;
-        var priorityid = document.getElementById('priorityId').value;
-        console.log(typeid);
-        switch (typeid) {
-            case "1":
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
-                document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-                document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-                document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-                break;
-            case "2":
-                document.getElementById("imgCar").src = "../Content/Image/car_color.png";
-                document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-                document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-                break;
-            case "3":
-                document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
-                document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-                document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-
-                break;
-            case "4":
-                document.getElementById("imgSchool").src = "../Content/Image/school_color.png";
-                document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-                document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-                break;
-            default:
-                document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-                document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
-                document.getElementById("imgCar").src = "../Content/Image/car_color.png";
-                document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
-                break;
-        }
+		//switch - jakie id w typie zadania i zmienić obrazek odpowiedni
+	});
 
 
-        switch (priorityid) {
-            case "1":
-                $("#priority").val(1);
-                break;
-            case "2":
-                $("#priority").val(2);
-                break;
-            case "3":
-                $("#priority").val(3);
-                break;
-            case "4":
-                $("#priority").val(4);
-                break;
-            default:
-                $("#priority").val(4);
-                break;
-        }
+	function setHiddenData() {
+		var typeid = document.getElementById('typeId').value;
+		var priorityid = document.getElementById('priorityId').value;
+		console.log(typeid);
+		switch (typeid) {
+			case "1":
+				document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
+				document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+				document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+				document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+				break;
+			case "2":
+				document.getElementById("imgCar").src = "../Content/Image/car_color.png";
+				document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+				document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+				document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+				break;
+			case "3":
+				document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
+				document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+				document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+				document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+
+				break;
+			case "4":
+				document.getElementById("imgSchool").src = "../Content/Image/school_color.png";
+				document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+				document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+				document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+				break;
+			default:
+				document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+				document.getElementById("imgPhone").src = "../Content/Image/phone_color.png";
+				document.getElementById("imgCar").src = "../Content/Image/car_color.png";
+				document.getElementById("imgMeeting").src = "../Content/Image/meeting_color.png";
+				break;
+		}
 
 
-     }
-
-    //TYP Spotkania
-    //document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-    function switchPhone(img) {
-        if (img.src.substr(-8) === "grey.png") {
-            img.src = "../Content/Image/phone_color.png";
-            document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-            document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-            document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-            $("#typeId").val(3);
-
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
-        }
-        else {
-            img.src = "../Content/Image/phone_grey.png";
-            $("#typeId").val(0);
-        }
-    }
-
-    //document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-    function switchCar(img) {
-        if (img.src.substr(-8) === "grey.png") {
-            img.src = "../Content/Image/car_color.png";
-            document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-            document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-            document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-            $("#typeId").val(2);
-
-            document.getElementById("location").style.visibility = 'visible';
-            document.getElementById("room").style.visibility = 'hidden';
-        }
-        else {
-            img.src = "../Content/Image/car_grey.png";
-            $("#typeId").val(0);
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
-        }
-    }
-
-    //document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-    function switchMeeting(img) {
-        if (img.src.substr(-8) === "grey.png") {
-            img.src = "../Content/Image/meeting_color.png";
-            document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-            document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-            document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-            $("#typeId").val(1);
-
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
-        }
-        else {
-            img.src = "../Content/Image/meeting_grey.png";
-            $("#typeId").val(0);
-        }
-    }
-
-    //document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
-    function switchSchool(img) {
-        if (img.src.substr(-8) === "grey.png") {
-            img.src = "../Content/Image/school_color.png";
-            document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
-            document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
-            document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
-            $("#typeId").val(4);
-
-            document.getElementById("location").style.visibility = 'hidden';
-            document.getElementById("room").style.visibility = 'visible';
-        }
-        else {
-            img.src = "../Content/Image/school_grey.png";
-            $("#typeId").val(0);
-        }
-    }
-
-    //PRIORYTET
-
-    function changePriority() {
-        var value = $("#priority").val();
-        $("#priorityId").val(value);
-    }
-
-    //PRACOWNIK
-    function chooseEmployee(employee) {
-
-    }
+		switch (priorityid) {
+			case "1":
+				$("#priority").val(1);
+				break;
+			case "2":
+				$("#priority").val(2);
+				break;
+			case "3":
+				$("#priority").val(3);
+				break;
+			case "4":
+				$("#priority").val(4);
+				break;
+			default:
+				$("#priority").val(4);
+				break;
+		}
 
 
+	}
+
+	//TYP Spotkania
+	//document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+	function switchPhone(img) {
+		if (img.src.substr(-8) === "grey.png") {
+			img.src = "../Content/Image/phone_color.png";
+			document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+			document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+			document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+			$("#typeId").val(3);
+
+			document.getElementById("location").style.visibility = 'hidden';
+			document.getElementById("room").style.visibility = 'visible';
+		}
+		else {
+			img.src = "../Content/Image/phone_grey.png";
+			$("#typeId").val(0);
+		}
+	}
+
+	//document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+	function switchCar(img) {
+		if (img.src.substr(-8) === "grey.png") {
+			img.src = "../Content/Image/car_color.png";
+			document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+			document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+			document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+			$("#typeId").val(2);
+
+			document.getElementById("location").style.visibility = 'visible';
+			document.getElementById("room").style.visibility = 'hidden';
+		}
+		else {
+			img.src = "../Content/Image/car_grey.png";
+			$("#typeId").val(0);
+			document.getElementById("location").style.visibility = 'hidden';
+			document.getElementById("room").style.visibility = 'visible';
+		}
+	}
+
+	//document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+	function switchMeeting(img) {
+		if (img.src.substr(-8) === "grey.png") {
+			img.src = "../Content/Image/meeting_color.png";
+			document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+			document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+			document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+			$("#typeId").val(1);
+
+			document.getElementById("location").style.visibility = 'hidden';
+			document.getElementById("room").style.visibility = 'visible';
+		}
+		else {
+			img.src = "../Content/Image/meeting_grey.png";
+			$("#typeId").val(0);
+		}
+	}
+
+	//document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+	function switchSchool(img) {
+		if (img.src.substr(-8) === "grey.png") {
+			img.src = "../Content/Image/school_color.png";
+			document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
+			document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+			document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+			$("#typeId").val(4);
+
+			document.getElementById("location").style.visibility = 'hidden';
+			document.getElementById("room").style.visibility = 'visible';
+		}
+		else {
+			img.src = "../Content/Image/school_grey.png";
+			$("#typeId").val(0);
+		}
+	}
+
+	//PRIORYTET
+
+	function changePriority() {
+		var value = $("#priority").val();
+		$("#priorityId").val(value);
+	}
+
+	//PRACOWNIK
+	function chooseEmployee(employee) {
+
+	}
 </script>
+
 <div class="row">
-    <div class="col-md-6">
-        <form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div hidden>
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            @*<div hidden>
-            <label asp-for="MeetingTypeName" class="control-label"></label>
-            <input asp-for="MeetingTypeName" class="form-control" />
-            <span asp-validation-for="MeetingTypeName" class="text-danger"></span>
-        </div>*@
-            <div hidden>
-                <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
-            </div>
-            <div row>
-                <label asp-for="MeetingTypeId" class="control-label">Typ wydarzenia: </label>
-                <br />
-                <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip" />
-            </div>
-            <div class="form-group margin-top-20">
-                <input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <label asp-for="DateStart" class="control-label">Data od:</label>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateStart" class="form-control" />
-                    @*  <span asp-validation-for="DateStart" class="text-danger"></span>*@
-                </div>
-                <div class="col-md-6 form-group">
-                    <input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
-                    <span asp-validation-for="HourStart" class="text-danger"></span>
-                </div>
-            </div>
+	<div class="col-md-6">
+		<form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div hidden>
+				<label asp-for="Id" class="control-label"></label>
+				<input asp-for="Id" class="form-control" />
+				<span asp-validation-for="Id" class="text-danger"></span>
+			</div>
+			@*<div hidden>
+					<label asp-for="MeetingTypeName" class="control-label"></label>
+					<input asp-for="MeetingTypeName" class="form-control" />
+					<span asp-validation-for="MeetingTypeName" class="text-danger"></span>
+				</div>*@
+			<div hidden>
+				<input asp-for="MeetingTypeId" id="typeId" class="form-control" />
+			</div>
+			<div row>
+				<label asp-for="MeetingTypeId" class="control-label">Typ wydarzenia: </label>
+				<br />
+				<img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip" />
+				<img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip" />
+				<img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip" />
+				<img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip" />
+			</div>
+			<div class="form-group margin-top-20">
+				<input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<label asp-for="DateStart" class="control-label">Data od:</label>
+			<div row>
+				<div class="col-md-6 form-group">
+					<input asp-for="DateStart" class="form-control" />
+					@*  <span asp-validation-for="DateStart" class="text-danger"></span>*@
+				</div>
+				<div class="col-md-6 form-group">
+					<input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
+					<span asp-validation-for="HourStart" class="text-danger"></span>
+				</div>
+			</div>
 
-            <label asp-for="DateEnd" class="control-label">Data do:</label>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateEnd" class="form-control" />
-                    @*   <span asp-validation-for="DateEnd" class="text-danger"></span>*@
-                </div>
+			<label asp-for="DateEnd" class="control-label">Data do:</label>
+			<div row>
+				<div class="col-md-6 form-group">
+					<input asp-for="DateEnd" class="form-control" />
+					@*   <span asp-validation-for="DateEnd" class="text-danger"></span>*@
+				</div>
 
-                <div class="col-md-6 form-group">
-                    <input asp-for="HourEnd" class="form-control" placeholder="00:00:00" />
-                    <span asp-validation-for="HourEnd" class="text-danger"></span>
-                </div>
-            </div>
-            @*<div hidden>
-            <label asp-for="EmployeeAuthorId" class="control-label"></label>
-            <input asp-for="EmployeeAuthorId" class="form-control" />
-            <span asp-validation-for="EmployeeAuthorId" class="text-danger"></span>
-        </div>
-        <div hidden>
-            <label asp-for="EmployeeAuthorName" class="control-label"></label>
-            <input asp-for="EmployeeAuthorName" class="form-control" />
-            <span asp-validation-for="EmployeeAuthorName" class="text-danger"></span>
-        </div>*@
-            <div hidden>
-                <label asp-for="RoomId" class="control-label"></label>
-                <input asp-for="RoomId" class="form-control" />
-                <span asp-validation-for="RoomId" class="text-danger"></span>
-            </div>
-            <div class="form-group" id="room">
-               @* <label asp-for="RoomName" class="control-label">Pokój:</label>*@
-                <span asp-validation-for="RoomName" class="text-danger"></span>
-                <select class="custom-select form-control" onchange="changeRoom()" id="changeRoom">
-                    <option value="" disabled selected>Pokój:</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </div>
-            <div class="form-group" id="location">
-                @*<label asp-for="Location" class="control-label"></label>*@
-                <input asp-for="Location" class="form-control" placeholder="Lokalizacja"/>
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @*<label asp-for="Note" class="control-label"></label>*@
-                <input asp-for="Note" class="form-control"  placeholder="Opis"/>
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-            <div hidden>
-                <input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
-            </div>
-            @*<div class="form-group">
-            <input asp-for="PriorityId" class="form-control" />
-            <span asp-validation-for="PriorityId" class="text-danger"></span>
-        </div>*@
+				<div class="col-md-6 form-group">
+					<input asp-for="HourEnd" class="form-control" placeholder="00:00:00" />
+					<span asp-validation-for="HourEnd" class="text-danger"></span>
+				</div>
+			</div>
+			@*<div hidden>
+					<label asp-for="EmployeeAuthorId" class="control-label"></label>
+					<input asp-for="EmployeeAuthorId" class="form-control" />
+					<span asp-validation-for="EmployeeAuthorId" class="text-danger"></span>
+				</div>
+				<div hidden>
+					<label asp-for="EmployeeAuthorName" class="control-label"></label>
+					<input asp-for="EmployeeAuthorName" class="form-control" />
+					<span asp-validation-for="EmployeeAuthorName" class="text-danger"></span>
+				</div>*@
+			<div hidden>
+				<label asp-for="RoomId" class="control-label"></label>
+				<input asp-for="RoomId" class="form-control" />
+				<span asp-validation-for="RoomId" class="text-danger"></span>
+			</div>
+			<div class="form-group" id="room">
+				@* <label asp-for="RoomName" class="control-label">Pokój:</label>*@
+				<span asp-validation-for="RoomName" class="text-danger"></span>
+				<select class="custom-select form-control" onchange="changeRoom()" id="changeRoom">
+					<option value="" disabled selected>Pokój:</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+			</div>
+			<div class="form-group" id="location">
+				@*<label asp-for="Location" class="control-label"></label>*@
+				<input asp-for="Location" class="form-control" placeholder="Lokalizacja" />
+				<span asp-validation-for="Location" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				@*<label asp-for="Note" class="control-label"></label>*@
+				<input asp-for="Note" class="form-control" placeholder="Opis" />
+				<span asp-validation-for="Note" class="text-danger"></span>
+			</div>
+			<div hidden>
+				<input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
+			</div>
+			@*<div class="form-group">
+					<input asp-for="PriorityId" class="form-control" />
+					<span asp-validation-for="PriorityId" class="text-danger"></span>
+				</div>*@
 
-            @*<label asp-for="PriorityId" class="control-label"></label>*@
-            <span asp-validation-for="PriorityId" class="text-danger"></span>
-            <select class="custom-select form-control margin-bottom-20 " onchange="changePriority()" id="priority">
-                <option value="" disabled selected>Priorytet:</option>
-                <option value="1">Pilny</option>
-                <option value="2">Normalny</option>
-                <option value="3">Niski</option>
-                <option value="4">Opcjonalny</option>
-            </select>
+			@*<label asp-for="PriorityId" class="control-label"></label>*@
+			<span asp-validation-for="PriorityId" class="text-danger"></span>
+			<select class="custom-select form-control margin-bottom-20 " onchange="changePriority()" id="priority">
+				<option value="" disabled selected>Priorytet:</option>
+				<option value="1">Pilny</option>
+				<option value="2">Normalny</option>
+				<option value="3">Niski</option>
+				<option value="4">Opcjonalny</option>
+			</select>
 
 
-            @*<div hidden>
-            <label asp-for="PriorityName" class="control-label"></label>
-            <input asp-for="PriorityName" class="form-control" />
-            <span asp-validation-for="PriorityName" class="text-danger"></span>
-        </div>*@
-            @*<div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>*@
+			@*<div hidden>
+					<label asp-for="PriorityName" class="control-label"></label>
+					<input asp-for="PriorityName" class="form-control" />
+					<span asp-validation-for="PriorityName" class="text-danger"></span>
+				</div>*@
+			@*<div class="form-group">
+					<input type="submit" value="Save" class="btn btn-default" />
+				</div>*@
 
-        @*    <button class="btn btn-login font-white" action="/Meeting/DeleteMeetingFromDB" method="get">Odwołaj wydarzenie</button>*@
+			@*    <button class="btn btn-login font-white" action="/Meeting/DeleteMeetingFromDB" method="get">Odwołaj wydarzenie</button>*@
 
-            <button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
-                
-                
-       </form>
+			<button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
 
-        
-    </div>
+
+		</form>
+
+
+	</div>
 </div>
 
 

@@ -13,6 +13,10 @@ namespace ProjektIP.Controllers
 	public class HomeController : Controller
 	{
 		public static User ActualUser;
+		public IActionResult Info()
+		{
+			return View();
+		}
 		public IActionResult Index(bool unCorrectData)
 		{
 			if (unCorrectData)
@@ -27,26 +31,32 @@ namespace ProjektIP.Controllers
 
 			return RedirectToAction("MainPage", "Home");
 		}
-		public IActionResult Info()
-		{
-			return View();
-		}
-		public IActionResult MainPage()
-		{
-			if (ActualUser != null)
-				return View("MainPage");
-			return RedirectToAction("Index", "Home");
-		}
 		[HttpPost]
-		public IActionResult MainPage(string login, string password)
+		public IActionResult Login(string login, string password)
 		{
 			if (AccountController.AccountDAO.CheckUser(login, password))
 			{
 				ActualUser = new User(login, password);
-				return View("MainPage");
+				return RedirectToAction("MainPage", "Home");
 			}
 			ActualUser = null;
 			return RedirectToAction("Index", "Home", new { unCorrectData = true });
+		}
+		public IActionResult UserInfo()
+		{
+			ViewBag.loggedIn = ActualUser;
+			return PartialView();
+		}
+		public IActionResult Logout()
+		{
+			ActualUser = null;
+			return RedirectToAction("Index", "Home");
+		}
+		public IActionResult MainPage()
+		{
+			if (ActualUser != null)
+				return View("MainPage", ActualUser.UserPermission);
+			return RedirectToAction("Index", "Home");
 		}
 		public IActionResult Error()
 		{

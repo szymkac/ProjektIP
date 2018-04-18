@@ -1,81 +1,76 @@
 ﻿@model ProjektIP.Models.EmployeeModel
 <script>
-
-    function changePosition() {
-        var value = $("#position").val();
-        $("#positionId").val(value);
-        var imagepath = "avatar" + value + ".png";
-        document.getElementById("avatar").src = "../Content/Image/" + imagepath;
-    }
+	function changePosition() {
+		var value = $("#position").val();
+		$("#positionId").val(value);
+		var imagepath = "avatar" + value + ".png";
+		document.getElementById("avatar").src = "../Content/Image/" + imagepath;
+	}
 
 
 </script>
 <div class="row">
-    <form id="partialViewForm" action="/Employee/PushAddEmployeeToDB" method="post">
-        <div class="col-md-7">
-            <div>
-                <h4>Dane osobowe:</h4>
-                <input class="form-control control-margin" type="text" name="name" placeholder="Imię" />
-                <input class="form-control control-margin" type="text" name="surname" placeholder="Nazwisko" />
-                <input class="form-control control-margin" type="text" name="email" placeholder="E-mail" />
-                <input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />
-                <input hidden id="positionId"/>
-                <select class="custom-select form-control control-margin" id="position" onchange="changePosition()">
-                    <option value="" disabled selected>Stanowisko:</option>
-                    <option value="1">Kierownik</option>
-                    <option value="2">Programista</option>
-                    <option value="3">Tester</option>
-                    <option value="4">Grafik</option>
-                    <option value="5">Projektant</option>
-                    <option value="6">Analityk</option>
-                    <option value="7">Administrator bazy danych</option>
-                </select>
-            </div>
+	<form id="partialViewForm" action="/Employee/PushAddEmployeeToDB" method="post">
+		<div class="col-md-7">
+			<div>
+				<h4>Dane osobowe:</h4>
+				<input class="form-control control-margin" type="text" name="name" placeholder="Imię" />
+				<input class="form-control control-margin" type="text" name="surname" placeholder="Nazwisko" />
+				<input class="form-control control-margin" type="text" name="email" placeholder="E-mail" />
+				<input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />
+				<input hidden id="positionId" />
+				<select class="custom-select form-control control-margin" id="position" onchange="changePosition()">
+					<option value="" disabled selected>Stanowisko:</option>
+					<option value="1">Kierownik</option>
+					<option value="2">Programista</option>
+					<option value="3">Tester</option>
+					<option value="4">Grafik</option>
+					<option value="5">Projektant</option>
+					<option value="6">Analityk</option>
+					<option value="7">Administrator bazy danych</option>
+				</select>
+			</div>
 
-            @*<div class="row">
-                <input class="btn btn-primary" type="submit" name="cancel" value="Anuluj" />
-                <input class="btn btn-primary" type="submit" name="submit" value="Zatwierdź" />
-            </div>*@
-        </div>
-        <div class="col-md-5">
-            <img id="avatar" src="~/Content/Image/avatar_null.png" width="300" height="300" class="border-corners"/>
-        </div>
+		</div>
+		<div class="col-md-5">
+			<img id="avatar" src="~/Content/Image/avatar_null.png" width="300" height="300" class="border-corners" />
+		</div>
 
-        <div class="col-md-12">
-            <hr />
-            <h4>Uprawnienia:</h4>
-            <div class="margin-left-20">
-                <div class="row">
-                    <label class="check-container">
-                        Dodanie nowego pracownika
-                        <input type="checkbox" id="addNewEmployee">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="row">
-                    <label class="check-container">
-                        Dodanie nowego zadania
-                        <input type="checkbox" id="addNewTask">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="row">
-                    <label class="check-container">
-                        Dodajanie nowego wydarzenia
-                        <input type="checkbox" id="addNewEvent">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="row">
-                    <label class="check-container">
-                        Podgląd innych pracowników
-                        <input type="checkbox" id="previewEmployees">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
+		<div class="col-md-12">
+			<hr />
+			<h4>Uprawnienia:</h4>
+			<div class="margin-left-20">
+				<div class="row">
+					<label class="check-container">
+						Dodanie nowego pracownika
+						<input type="checkbox" id="addNewEmployee">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="row">
+					<label class="check-container">
+						Dodanie nowego zadania
+						<input type="checkbox" id="addNewTask">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="row">
+					<label class="check-container">
+						Dodajanie nowego wydarzenia
+						<input type="checkbox" id="addNewEvent">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="row">
+					<label class="check-container">
+						Podgląd innych pracowników
+						<input type="checkbox" id="previewEmployees">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+			</div>
+		</div>
 
-    </form>
+	</form>
 </div>
 
