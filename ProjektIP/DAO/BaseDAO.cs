@@ -143,12 +143,12 @@ namespace ProjektIP.DAO
                                         int? val = null;
                                         if ((Boolean)value_obj == false)
                                             val = 0;
-                                        else if((Boolean)value_obj == false)
+                                        else if((Boolean)value_obj == true)
                                             val = 1;                            
                                         if (i != values.Count - 1)
-                                            value += val + ",";
+                                            value += val.ToString() + ",";
                                         else
-                                            value += val;
+                                            value += val.ToString();
                                     }
                                     else
                                     {
@@ -228,10 +228,10 @@ namespace ProjektIP.DAO
                                         int? val = null;
                                         if ((Boolean)value == false)
                                             val = 0;
-                                        else if ((Boolean)value == false)
+                                        else if ((Boolean)value == true)
                                             val = 1;
                                      
-                                            columns += pair.Key + " = " + val;
+                                            columns += pair.Key + " = " + val.ToString();
                                     }
                                     else
                                     {
@@ -255,7 +255,7 @@ namespace ProjektIP.DAO
                                         int? val = null;
                                         if ((Boolean)value == false)
                                             val = 0;
-                                        else if ((Boolean)value == false)
+                                        else if ((Boolean)value == true)
                                             val = 1;
 
                                         columns += pair.Key + " = " + val + ",";
@@ -319,17 +319,35 @@ namespace ProjektIP.DAO
                     }
 					if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
                     {
-						if (i == 0)
-							flt += pair.Key + " = '" + value + "'";
-						else
-							flt += " AND " + pair.Key + " = '" + value + "'";
+                        
+                            if (i == 0)
+                                flt += pair.Key + " = '" + value + "'";
+                            else
+                                flt += " AND " + pair.Key + " = '" + value + "'";
+                        
+                       
 					}
 					else
 					{
-						if (i == 0)
-							flt += pair.Key + " = " + value;
-						else
-							flt += " AND " + pair.Key + " = " + value;
+                        if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+                        {
+                            int? val = null;
+                            if ((Boolean)value == false)
+                                val = 0;
+                            else if ((Boolean)value == true)
+                                val = 1;
+                            if (i == 0)
+                                flt += pair.Key + " = " + val;
+                            else
+                                flt += " AND " + pair.Key + " = " + val;
+                        }
+                        else
+                        {
+                            if (i == 0)
+                                flt += pair.Key + " = " + value;
+                            else
+                                flt += " AND " + pair.Key + " = " + value;
+                        }
 					}
 					i++;
 				}

@@ -13124,25 +13124,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lenovo\\.nuget\\packages\\": {},
+    "C:\\Users\\akowa\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lenovo\\Desktop\\odMoniISzymon\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
+      "projectUniqueName": "C:\\Users\\akowa\\Desktop\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
       "projectName": "ProjektIP",
-      "projectPath": "C:\\Users\\lenovo\\Desktop\\odMoniISzymon\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
-      "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lenovo\\Desktop\\odMoniISzymon\\ProjektIP\\ProjektIP\\obj\\",
+      "projectPath": "C:\\Users\\akowa\\Desktop\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
+      "packagesPath": "C:\\Users\\akowa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\akowa\\Desktop\\ProjektIP\\ProjektIP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\akowa\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
