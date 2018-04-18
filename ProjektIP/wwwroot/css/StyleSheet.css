@@ -137,8 +137,9 @@ a {
 }
 
 .task-container {
-	width: 100%;
-	height: 100%;
+    width: calc(100% - 55px);
+    height: 100%;
+    margin-left: 23px;
 }
 
 
@@ -470,4 +471,9 @@ a {
 .border-to-members {
     border: dotted 2px #4472c4;
     border-radius: 10px
+}
+
+.marging-top-bottom-5 {
+    margin-top: 5px;
+    margin-bottom:5px;
 }

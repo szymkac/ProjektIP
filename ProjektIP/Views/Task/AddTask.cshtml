@@ -32,7 +32,7 @@
         <div hidden>
             <input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
         </div>
-        <label asp-for="TaskTypeId" class="control-label">Typ zadania: </label>
+        <h4>Typ zadania:</h4>
         <span asp-validation-for="TaskTypeId" class="text-danger"></span>
         <br />
         <img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip" />
@@ -62,7 +62,7 @@
         </div>
         <div class="col-md-5 main-height">
             <div style="margin-left:75px" class="form-group" id="employee">
-                <label asp-for="EmployeeId" class="control-label">Wybierz zleceniobiorcę:</label>
+                <h4>Wybierz zleceniobiorcę:</h4>
                 <div hidden>
                     <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" />
                     <span asp-validation-for="EmployeeId" class="text-danger"></span>

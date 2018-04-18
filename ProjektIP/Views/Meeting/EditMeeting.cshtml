@@ -260,7 +260,7 @@
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
             </div>
             <div row>
-                <label asp-for="MeetingTypeId" class="control-label">Typ wydarzenia: </label>
+               <h4>Typ wydarzenia:</h4>
                 <br />
                 <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip" />
                 <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip" />
@@ -271,7 +271,7 @@
                 <input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <label asp-for="DateStart" class="control-label">Data od:</label>
+            <h5>Data od:</h5>
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateStart" class="form-control" id="datestart" onchange="changeDate()" />
@@ -283,7 +283,7 @@
                 </div>
             </div>
 
-            <label asp-for="DateEnd" class="control-label">Data do:</label>
+            <h5>Data do:</h5>
             <div row>
                 <div class="col-md-6 form-group">
                     <input asp-for="DateEnd" class="form-control" id="dateend"/>
@@ -338,6 +338,7 @@
         <div class="col-md-6 main-height">
 
             <div style="margin-left:75px" class="form-group" id="employee">
+                <h4>Wybierz uczestników:</h4>
                 @*<label asp-for="Members" class="control-label">Wybierz uczestników:</label>
                 <div hidden>
                     <input asp-for="Members" name="member" id="member" class="form-control" />

@@ -1,10 +1,11 @@
 ﻿@model ProjektIP.Models.EmployeeModel
 <script>
 	function changePosition() {
-		var value = $("#position").val();
-		$("#positionId").val(value);
+		var value = $("#positionId").val();
+	//	$("#positionId").val(value);
 		var imagepath = "avatar" + value + ".png";
-		document.getElementById("avatar").src = "../Content/Image/" + imagepath;
+        document.getElementById("avatar").src = "../Content/Image/" + imagepath;
+        console.log(imagepath);
 	}
 </script>
 
@@ -17,7 +18,7 @@
 				<input class="form-control control-margin" type="text" name="surname" placeholder="Nazwisko" />
 				<input class="form-control control-margin" type="text" name="email" placeholder="E-mail" />
 				<input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />
-				<input hidden id="positionId" />
+				@*<input hidden id="positionId" />*@
                 <select class="custom-select form-control control-margin" name="positionId" id="positionId" onchange="changePosition()">
 					<option value="" disabled selected>Stanowisko:</option>
 					<option value="1">Kierownik</option>

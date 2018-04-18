@@ -111,6 +111,7 @@
             </div>
         </div>
         <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-left:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:10px 0px 0px 10px">
+            <h4>Wprowadź zmiany:</h4>
             <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" placeholder="Nazwa" /><br /></div>
             <input asp-for="Title" style="margin-top:10px" name="name" id="name" class="form-control" placeholder="Nazwa" /><br />
             <div style="margin-bottom:3px;">Aktualny status: <div id="statusName"></div></div><br />
@@ -132,10 +133,10 @@
                 <option value="4">Opcjonalny</option>
             </select><br />
             <input asp-for="Comment" name="comment" id="comment" class="form-control" placeholder="Opis" /><br />
-           
+
         </div>
         <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-right:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:0px 10px 10px 0px">
-            <label asp-for="EmployeeId" style="margin-top:5px;margin-bottom:5px" class="control-label">Wybierz zleceniobiorcę:</label><br />
+            <h4>Wybierz zleceniobiorcę:</h4>
             <div hidden>  <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" /> <input asp-for="Id" name="taskId" id="taskId" class="form-control" /><br /></div>
             <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
 
