@@ -107,7 +107,7 @@ namespace ProjektIP.Controllers
                 public static string Email = "Email";
                 public static string Phone = "Phone";
                 public static string Active = "Active";
-                public static string IdPosition = "IdPostition";
+                public static string IdPosition = "IdPosition";
 
                 public static Dictionary<string, object> Fill(EmployeeModel employee)
                 {

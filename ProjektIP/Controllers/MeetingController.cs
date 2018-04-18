@@ -51,14 +51,21 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
-        public IActionResult MeetingDetailsForDay(string date, int column)
+        public IActionResult MeetingDetailsForDay(string date, int column, int mode)
         {
             DateTime day = DateTime.ParseExact(date, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             ViewBag.Column = column;
-
-            List<MeetingModel> meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
-           
+            List<MeetingModel> meetingsList = new List<MeetingModel>();
+            switch (mode)
+            {
+                case 1:
+                    meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
+                    break;
+                case 2:
+                    meetingsList = GetMeetingsForAllUsers(day);
+                    break;
+            }
             return PartialView(meetingsList);
         }
 
@@ -147,7 +154,7 @@ namespace ProjektIP.Controllers
                     {
                         List<object[]> employee = BaseDAO.Select("Employees", null, new Dictionary<string, object>()
                             {
-                                {"IdEmployee",  Convert.ToInt64(mem[1]) }
+                                {"IdEmployee",  Convert.ToInt64(mem[0]) }
                             });
                         memberList.Add(new EmployeeModel(
                             Convert.ToInt64(employee[0][0]),
