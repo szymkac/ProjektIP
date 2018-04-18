@@ -102,14 +102,21 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
-        public IActionResult MeetingDetailsForDay(string date, int column)
+        public IActionResult MeetingDetailsForDay(string date, int column, int mode)
         {
             DateTime day = DateTime.ParseExact(date, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             ViewBag.Column = column;
-
-            List<MeetingModel> meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
-           
+            List<MeetingModel> meetingsList = new List<MeetingModel>();
+            switch (mode)
+            {
+                case 1:
+                    meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
+                    break;
+                case 2:
+                    meetingsList = GetMeetingsForAllUsers(day);
+                    break;
+            }
             return PartialView(meetingsList);
         }
 
