@@ -421,13 +421,13 @@ namespace ProjektIP.Controllers
 
             public static void Delete(long id)
             {
-                BaseDAO.Delete("Meetings", new Dictionary<string, object>()
-                {
-                    { Columns.IdMeeting, id}
-                });
                 BaseDAO.Delete("Members", new Dictionary<string, object>()
                 {
                     { MembersDAO.Columns.IdMeeting, id}
+                });
+                BaseDAO.Delete("Meetings", new Dictionary<string, object>()
+                {
+                    { Columns.IdMeeting, id}
                 });
             }
 
