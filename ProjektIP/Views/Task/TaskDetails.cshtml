@@ -75,16 +75,16 @@
                                 @Html.DisplayFor(modelItem => item.Title) <br />
                             </div>
                             @if (item.StatusId == 1 || item.StatusId == 5)
-    {
-                        <div class="row text-center">
-                            <img src="~/Content/Image/tasks_start.png" height="35" width="35" onclick="changeStatus(@item.Id, 2)" />
-                        </div>
-}
-else if (item.StatusId == 2)
-{
-                        <div class="row text-center">
-                            <img src="~/Content/Image/tasks_end.png" height="35" width="35" onclick="changeStatus(@item.Id,3)" />
-                        </div>
+                            {
+                                <div class="row text-center marging-top-bottom-5">
+                                    <img src="~/Content/Image/tasks_start.png" height="34" width="34" onclick="changeStatus(@item.Id, 2)" />
+                                </div>
+                            }
+                            else if (item.StatusId == 2)
+                            {
+                                <div class="row text-center marging-top-bottom-5">
+                                    <img src="~/Content/Image/tasks_end.png" height="34" width="34" onclick="changeStatus(@item.Id,3)" />
+                                </div>
 
                             }
                         </div>
