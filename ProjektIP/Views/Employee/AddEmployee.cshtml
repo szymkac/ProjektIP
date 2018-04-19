@@ -14,7 +14,8 @@
 		<div class="col-md-7">
 			<div>
 				<h4>Dane osobowe:</h4>
-				<input class="form-control control-margin" type="text" name="name" placeholder="Imię" />
+				<input class="form-control control-margin" type="text" name="name" placeholder="Imię" data-validationRules="required,maxLength20" onchange="validateField(this)"/>
+				<span data-validator="name" class="text-danger"></span>
 				<input class="form-control control-margin" type="text" name="surname" placeholder="Nazwisko" />
 				<input class="form-control control-margin" type="text" name="email" placeholder="E-mail" />
 				<input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />

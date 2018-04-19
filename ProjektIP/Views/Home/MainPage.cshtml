@@ -30,8 +30,8 @@
 					url: "/Meeting/MeetingDetailsForDay/",
 					data: {
 						date: colDate,
-                        column: i,
-                        mode: 1
+						column: i,
+						mode: 1
 					},
 					success: function (viewHTML) {
 						var col = '#col' + i;
@@ -45,40 +45,40 @@
 		}
 	}
 
-     function getAllMeetings(firstDayDate) {
-        var today = getDate(new Date());
-        for (var i = 1; i < 4; i++) {
-            (function (i) {
-                var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
-                if (colDate === changeDateFormat(today))
-                    $('#col-today-' + i).html("Dzisiaj");
-                else if (colDate === changeDateFormat(dateIncrease(today, 1)))
-                    $('#col-today-' + i).html("Jutro");
-                else if (colDate === changeDateFormat(dateIncrease(today, 2)))
-                    $('#col-today-' + i).html("Pojutrze");
-                else
-                    $('#col-today-' + i).html(null);
+	function getAllMeetings(firstDayDate) {
+		var today = getDate(new Date());
+		for (var i = 1; i < 4; i++) {
+			(function (i) {
+				var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
+				if (colDate === changeDateFormat(today))
+					$('#col-today-' + i).html("Dzisiaj");
+				else if (colDate === changeDateFormat(dateIncrease(today, 1)))
+					$('#col-today-' + i).html("Jutro");
+				else if (colDate === changeDateFormat(dateIncrease(today, 2)))
+					$('#col-today-' + i).html("Pojutrze");
+				else
+					$('#col-today-' + i).html(null);
 
-                $('#col-date-' + i).html(colDate);
-                $.ajax({
-                    type: "GET",
-                    url: "/Meeting/MeetingDetailsForDay/",
-                    data: {
-                        date: colDate,
-                        column: i,
-                        mode: 2
-                    },
-                    success: function (viewHTML) {
-                        var col = '#col' + i;
-                        $(col).html(viewHTML);
-                    },
-                    error: function (errorData) {
-                        console.log(errorData);
-                    }
-                });
-            })(i);
-        }
-    }
+				$('#col-date-' + i).html(colDate);
+				$.ajax({
+					type: "GET",
+					url: "/Meeting/MeetingDetailsForDay/",
+					data: {
+						date: colDate,
+						column: i,
+						mode: 2
+					},
+					success: function (viewHTML) {
+						var col = '#col' + i;
+						$(col).html(viewHTML);
+					},
+					error: function (errorData) {
+						console.log(errorData);
+					}
+				});
+			})(i);
+		}
+	}
 
 	function getTasks() {
 		for (var i = 1; i < 4; i++) {
@@ -171,6 +171,11 @@
 	function closeModal() {
 		$('#modal-window').modal('hide');
 	}
+	function saveModal() {
+		var val = validateForm();
+		if (val)
+			$("#partialViewForm").submit();
+	}
 	function showHideButtonsMenu() {
 		if ($("#menu").hasClass("modal-button-menu-white")) {
 			$(".right-button-group").find(".modal-button").addClass("modal-button-visible");
@@ -215,10 +220,10 @@
 					<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
 				</button>
 				<div class="left-button-group">
-				<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=getMeetingColumnsForThreeDays(meetingColOneDate)>
+					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=getMeetingColumnsForThreeDays(meetingColOneDate)>
 						<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
 					</button>
-				<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=getAllMeetings(meetingColOneDate)>
+					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=getAllMeetings(meetingColOneDate)>
 						<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
 					</button>
 					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip">
@@ -337,7 +342,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
-				<input class="btn btn-primary" type="submit" form="partialViewForm" value="ZAPISZ" onclick="closeModal()" />
+				<button class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
+
 			</div>
 		</div>
 	</div>
