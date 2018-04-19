@@ -1,4 +1,5 @@
-﻿<script>
+﻿@model IEnumerable<long>
+<script>
 	var meetingColOneDate = getDate(new Date());
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip(
@@ -29,8 +30,8 @@
 					url: "/Meeting/MeetingDetailsForDay/",
 					data: {
 						date: colDate,
-                        column: i,
-                        mode: 1
+						column: i,
+						mode: 1
 					},
 					success: function (viewHTML) {
 						var col = '#col' + i;
@@ -44,40 +45,40 @@
 		}
 	}
 
-     function getAllMeetings(firstDayDate) {
-        var today = getDate(new Date());
-        for (var i = 1; i < 4; i++) {
-            (function (i) {
-                var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
-                if (colDate === changeDateFormat(today))
-                    $('#col-today-' + i).html("Dzisiaj");
-                else if (colDate === changeDateFormat(dateIncrease(today, 1)))
-                    $('#col-today-' + i).html("Jutro");
-                else if (colDate === changeDateFormat(dateIncrease(today, 2)))
-                    $('#col-today-' + i).html("Pojutrze");
-                else
-                    $('#col-today-' + i).html(null);
+	function getAllMeetings(firstDayDate) {
+		var today = getDate(new Date());
+		for (var i = 1; i < 4; i++) {
+			(function (i) {
+				var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
+				if (colDate === changeDateFormat(today))
+					$('#col-today-' + i).html("Dzisiaj");
+				else if (colDate === changeDateFormat(dateIncrease(today, 1)))
+					$('#col-today-' + i).html("Jutro");
+				else if (colDate === changeDateFormat(dateIncrease(today, 2)))
+					$('#col-today-' + i).html("Pojutrze");
+				else
+					$('#col-today-' + i).html(null);
 
-                $('#col-date-' + i).html(colDate);
-                $.ajax({
-                    type: "GET",
-                    url: "/Meeting/MeetingDetailsForDay/",
-                    data: {
-                        date: colDate,
-                        column: i,
-                        mode: 2
-                    },
-                    success: function (viewHTML) {
-                        var col = '#col' + i;
-                        $(col).html(viewHTML);
-                    },
-                    error: function (errorData) {
-                        console.log(errorData);
-                    }
-                });
-            })(i);
-        }
-    }
+				$('#col-date-' + i).html(colDate);
+				$.ajax({
+					type: "GET",
+					url: "/Meeting/MeetingDetailsForDay/",
+					data: {
+						date: colDate,
+						column: i,
+						mode: 2
+					},
+					success: function (viewHTML) {
+						var col = '#col' + i;
+						$(col).html(viewHTML);
+					},
+					error: function (errorData) {
+						console.log(errorData);
+					}
+				});
+			})(i);
+		}
+	}
 
 	function getTasks() {
 		for (var i = 1; i < 4; i++) {
@@ -158,11 +159,11 @@
 	function openModalAddUser() {
 		$('#modal-head').html('<h3>Dodaj pracownika</h3>');
 		this.openModal("/Employee/AddEmployee/");
-    }
-    function openModalTaskManager() {
-        $('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
-        this.openModal("/Task/TaskManager/");
-    }
+	}
+	function openModalTaskManager() {
+		$('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
+		this.openModal("/Task/TaskManager/");
+	}
 	function openModalAddTask() {
 		$('#modal-head').html('<h3>Dodaj zadanie</h3>');
 		this.openModal("/Task/AddTask/");
@@ -173,6 +174,11 @@
     }
 	function closeModal() {
 		$('#modal-window').modal('hide');
+	}
+	function saveModal() {
+		var val = validateForm();
+		if (val)
+			$("#partialViewForm").submit();
 	}
 	function showHideButtonsMenu() {
 		if ($("#menu").hasClass("modal-button-menu-white")) {
@@ -212,38 +218,52 @@
 <div class="row main-height">
 	<div class="col-md-9 max-height">
 		<div class="button-container">
-			<button id="filter" class="btn background-blue modal-button left modal-button-menu-white grey-tooltip" title="Filtry" data-toggle="tooltip">
-				<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
-			</button>
-			<div class="left-button-group">
-				<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=getMeetingColumnsForThreeDays(meetingColOneDate)>
-					<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+			@if (Model.Contains(4))
+			{
+				<button id="filter" class="btn background-blue modal-button left modal-button-menu-white grey-tooltip" title="Filtry" data-toggle="tooltip">
+					<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
 				</button>
-				<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=getAllMeetings(meetingColOneDate)>
-					<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
-				</button>
-				<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip">
-					<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
-				</button>
-			</div>
+				<div class="left-button-group">
+					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=getMeetingColumnsForThreeDays(meetingColOneDate)>
+						<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+					</button>
+					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=getAllMeetings(meetingColOneDate)>
+						<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
+					</button>
+					<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip">
+						<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+					</button>
+				</div>
+			}
 
-			<button id="menu" class="btn background-blue modal-button right modal-button-menu-white grey-tooltip" title="Menu" data-toggle="tooltip">
-				<img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
-			</button>
-			<div class="right-button-group">
-				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj pracownika" data-toggle="tooltip" onclick="openModalAddUser()">
-					<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+			@if (Model.Contains(1) || Model.Contains(2) || Model.Contains(3))
+			{
+				<button id="menu" class="btn background-blue modal-button right modal-button-menu-white grey-tooltip" title="Menu" data-toggle="tooltip">
+					<img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
 				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
-					<img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
-				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
-					<img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
-				</button>
+				<div class="right-button-group">
+					@if (Model.Contains(1))
+					{
+						<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj pracownika" data-toggle="tooltip" onclick="openModalAddUser()">
+							<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+						</button>
+					}
+					@if (Model.Contains(2))
+					{
+						<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
+							<img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
+						</button>
+						<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
+							<img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
+						</button>
 				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip" onclick="openModalAddMeeting()">
-					<img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
-				</button>
-			</div>
+					@if (Model.Contains(3))
+					{
+							<img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
+						</button>
+					}
+				</div>
+			}
 		</div>
 		<div class="border-corners task-height scroll-container scroll5">
 			<div class="side-button-container">
@@ -325,7 +345,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
-				<input class="btn btn-primary" type="submit" form="partialViewForm" value="ZAPISZ" onclick="closeModal()" />
+				<button class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
+
 			</div>
 		</div>
 	</div>
