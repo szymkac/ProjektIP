@@ -1,6 +1,14 @@
-﻿
-<button class="btn tn-login font-white background-blue center-block"
-		onclick="location.href='@Url.Action("Logout","Home")'">
-	Wyloguj
-</button>
+﻿<script>
+	$(function () {
+		if ($('#main-page').length > 0)
+			$('#logout').removeClass('display-none');
+		else
+			$('#logout').addClass('display-none');
+
+	})
+</script>
+
+<li><a id="logout" onclick="location.href='@Url.Action("Logout","Home")'"><span class="glyphicon glyphicon-off"></span></a></li>
+
+
 
