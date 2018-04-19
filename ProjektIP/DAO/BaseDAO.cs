@@ -355,7 +355,7 @@ namespace ProjektIP.DAO
                                 else
                                     flt += " AND " + pair.Key + " = " + value;
                             }
-
+                        }
                     }
                     i++;
 
