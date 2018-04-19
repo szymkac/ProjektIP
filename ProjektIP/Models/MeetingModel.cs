@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace ProjektIP.Models
 
 		public string Location { get; set; }
 
-		public string Note { get; set; }
+        public string Note { get; set; }
 
 		public long PriorityId { get; set; }
 

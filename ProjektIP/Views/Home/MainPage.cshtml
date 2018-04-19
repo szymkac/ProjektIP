@@ -166,7 +166,11 @@
 	function openModalAddTask() {
 		$('#modal-head').html('<h3>Dodaj zadanie</h3>');
 		this.openModal("/Task/AddTask/");
-	}
+    }
+    function openModalAddMeeting() {
+        $('#modal-head').html('<h3>Dodaj spotkanie</h3>');
+        this.openModal("/Meeting/AddMeeting/");
+    }
 	function closeModal() {
 		$('#modal-window').modal('hide');
 	}
@@ -236,7 +240,7 @@
 				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
 					<img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
 				</button>
-				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip">
+				<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip" onclick="openModalAddMeeting()">
 					<img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
 				</button>
 			</div>

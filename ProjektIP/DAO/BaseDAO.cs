@@ -308,49 +308,58 @@ namespace ProjektIP.DAO
                 foreach (KeyValuePair<string, object> pair in filters)
                 {
                     object value = pair.Value;
-                    if (pair.Key.Contains("Date"))
+                    if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || string.IsNullOrEmpty(value.ToString()))
                     {
-                        DateTime date = (DateTime)pair.Value;
-                        value = String.Format(
-                            "{1}-{0}-{2}",
-                            date.Day.ToString().Length == 1 ? "0" + date.Day.ToString() : date.Day.ToString(),
-                            date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
-                            date.Year);
-                    }
-                    if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
-                    {
-
-                        if (i == 0)
-                            flt += pair.Key + " = '" + value + "'";
-                        else
-                            flt += " AND " + pair.Key + " = '" + value + "'";
-
-
+                       
                     }
                     else
                     {
-                        if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+
+                        if (pair.Key.Contains("Date"))
                         {
-                            int? val = null;
-                            if ((Boolean)value == false)
-                                val = 0;
-                            else if ((Boolean)value == true)
-                                val = 1;
+                            DateTime date = (DateTime)pair.Value;
+                            value = String.Format(
+                                "{1}-{0}-{2}",
+                                date.Day.ToString().Length == 1 ? "0" + date.Day.ToString() : date.Day.ToString(),
+                                date.Month.ToString().Length == 1 ? "0" + date.Month.ToString() : date.Month.ToString(),
+                                date.Year);
+                        }
+                        if (pair.Value.GetType() == Type.GetType("System.String") || pair.Value.GetType() == Type.GetType("System.Char") || pair.Value.GetType() == Type.GetType("System.DateTime") || pair.Value.GetType() == Type.GetType("System.TimeSpan"))
+                        {
+
                             if (i == 0)
-                                flt += pair.Key + " = " + val;
+                                flt += pair.Key + " = '" + value + "'";
                             else
-                                flt += " AND " + pair.Key + " = " + val;
+                                flt += " AND " + pair.Key + " = '" + value + "'";
+
+
                         }
                         else
                         {
-                            if (i == 0)
-                                flt += pair.Key + " = " + value;
+                            if (pair.Value.GetType() == Type.GetType("System.Boolean"))
+                            {
+                                int? val = null;
+                                if ((Boolean)value == false)
+                                    val = 0;
+                                else if ((Boolean)value == true)
+                                    val = 1;
+                                if (i == 0)
+                                    flt += pair.Key + " = " + val;
+                                else
+                                    flt += " AND " + pair.Key + " = " + val;
+                            }
                             else
-                                flt += " AND " + pair.Key + " = " + value;
-                        }
+                            {
+                                if (i == 0)
+                                    flt += pair.Key + " = " + value;
+                                else
+                                    flt += " AND " + pair.Key + " = " + value;
+                            }
+
                         }
                     }
                     i++;
+
                 }
                 clause += String.Format(" WHERE {0}", flt);
             }

@@ -16,6 +16,54 @@ namespace ProjektIP.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AddMeeting()
+        {
+            List<object[]> roomList = BaseDAO.Select("Rooms", null, null);
+            ViewBag.listOfRooms = roomList;
+
+            List<object[]> membersList = BaseDAO.Select("Members", new List<string>() { "IdEmployee", "IdMeeting", "ConfirmationOfPresence" }, null);
+            string membersId = string.Empty;
+            foreach (object[] member in membersList)
+                membersId += (int)member[0] + ",";
+            ViewBag.membersId = membersId;
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult PushAddMeetingToDB(long meetingTypeId, string title, DateTime datestart, DateTime? dateend, TimeSpan hourStart, TimeSpan? hourEnd, long? roomId, string location, string note, long priorityId, string newIdMembers)
+        {
+            // TODO
+            string[] newMembers = new string[0];
+            if (newIdMembers != null)
+            {
+                newMembers = newIdMembers.Split(",");
+            }
+
+
+            List<EmployeeModel> all = EmployeeController.GetAllEmployees();
+
+            List<EmployeeModel> members = new List<EmployeeModel>();
+
+            foreach (EmployeeModel employee in all)
+            {
+                foreach (string newM in newMembers)
+                {
+                    if (!string.IsNullOrEmpty(newM))
+                    {
+                        if (employee.Id == long.Parse(newM))
+                            members.Add(employee);
+                    }
+                }
+            }
+
+            MeetingModel meetingModel = new MeetingModel(0, meetingTypeId, datestart, dateend, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
+            MeetingDAO.Insert(meetingModel);
+
+            return RedirectToAction("MainPage", "Home");
+        }
+
         [HttpPost]
         public IActionResult PushChangeConfirmation(long meetingId, bool confirmationofPresence)
         {
@@ -207,10 +255,14 @@ namespace ProjektIP.Controllers
             {
                 List<object[]> result = BaseDAO.Select("Meetings", null, filters);
 
-                List<object[]> members = BaseDAO.Select("Members", null, new Dictionary<string, object>()
+                List<object[]> members = new List<object[]>();
+                if (result.Count > 0)
+                {
+                    members = BaseDAO.Select("Members", null, new Dictionary<string, object>()
                     {
                         { "IdMeeting",  Convert.ToInt64(result[0][0])}
                     });
+                }
 
                 List<EmployeeModel> memberList = new List<EmployeeModel>();
                 foreach (object[] mem in members)
@@ -232,27 +284,31 @@ namespace ProjektIP.Controllers
                             ));
                     }
                 }
+                if (result.Count > 0)
+                {
+                    string[] HourFrom = result[0][10].ToString().Split(':');
+                    string[] HourTo = new string[3];
+                    if (result[0][11] != null && result[0][11] != DBNull.Value)
+                        HourTo = result[0][11].ToString().Split(':');
 
-                string[] HourFrom = result[0][10].ToString().Split(':');
-                string[] HourTo = new string[3];
-                if (result[0][11] != null && result[0][11] != DBNull.Value)
-                    HourTo = result[0][11].ToString().Split(':');
-
-                return new MeetingModel(
-                Convert.ToInt64(result[0][0]),
-                Convert.ToInt64(result[0][1]),
-                Convert.ToDateTime(result[0][2]),
-                result[0][3] != null && result[0][3] != DBNull.Value ? Convert.ToDateTime(result[0][3]) : new DateTime?(),
-                new TimeSpan(0, Convert.ToInt32(HourFrom[0]), Convert.ToInt32(HourFrom[1]), Convert.ToInt32(HourFrom[2])),
-                result[0][11] != null && result[0][11] != DBNull.Value ? new TimeSpan(0, Convert.ToInt32(HourTo[0]), Convert.ToInt32(HourTo[1]), Convert.ToInt32(HourTo[2])) : new TimeSpan?(),
-                Convert.ToInt64(result[0][4]),
-                result[0][5] != null && result[0][5] != DBNull.Value ? Convert.ToInt64(result[0][5]) : new long?(),
-                result[0][6].ToString(),
-                result[0][7].ToString(),
-                Convert.ToInt64(result[0][8]),
-                result[0][9] != null && result[0][9] != DBNull.Value ? result[0][9].ToString() : string.Empty,
-                memberList
-                );
+                    return new MeetingModel(
+                    Convert.ToInt64(result[0][0]),
+                    Convert.ToInt64(result[0][1]),
+                    Convert.ToDateTime(result[0][2]),
+                    result[0][3] != null && result[0][3] != DBNull.Value ? Convert.ToDateTime(result[0][3]) : new DateTime?(),
+                    new TimeSpan(0, Convert.ToInt32(HourFrom[0]), Convert.ToInt32(HourFrom[1]), Convert.ToInt32(HourFrom[2])),
+                    result[0][11] != null && result[0][11] != DBNull.Value ? new TimeSpan(0, Convert.ToInt32(HourTo[0]), Convert.ToInt32(HourTo[1]), Convert.ToInt32(HourTo[2])) : new TimeSpan?(),
+                    Convert.ToInt64(result[0][4]),
+                    result[0][5] != null && result[0][5] != DBNull.Value ? Convert.ToInt64(result[0][5]) : new long?(),
+                    result[0][6].ToString(),
+                    result[0][7].ToString(),
+                    Convert.ToInt64(result[0][8]),
+                    result[0][9] != null && result[0][9] != DBNull.Value ? result[0][9].ToString() : string.Empty,
+                    memberList
+                    );
+                }
+                else
+                    return null;
             }
 
             public static List<MeetingModel> Select(Dictionary<string, object> filters)
@@ -341,10 +397,13 @@ namespace ProjektIP.Controllers
             public static void Insert(MeetingModel Meeting)
             {
                 BaseDAO.Insert("Meetings", Columns.Fill(Meeting));
-                MeetingModel meeting = SelectFirst(Columns.Fill(Meeting));
-                long idMeeting = meeting.Id;
-                foreach (EmployeeModel employee in Meeting.Members)
-                    BaseDAO.Insert("Members", MembersDAO.Columns.Fill(employee.Id,idMeeting));
+                if (Meeting.Members != null && Meeting.Members.Count>0)
+                {
+                    MeetingModel meeting = SelectFirst(Columns.Fill(new MeetingModel(Meeting.Id,Meeting.MeetingTypeId,Meeting.DateStart,Meeting.DateEnd,Meeting.HourStart,Meeting.HourEnd,Meeting.EmployeeAuthorId,Meeting.RoomId,Meeting.Location,Meeting.Note,Meeting.PriorityId,Meeting.Title,new List<EmployeeModel>())));
+                    long idMeeting = meeting.Id;
+                    foreach (EmployeeModel employee in Meeting.Members)
+                        BaseDAO.Insert("Members", MembersDAO.Columns.Fill(employee.Id, idMeeting));
+                }
             }
 
             public static void Update(int id, MeetingModel Meeting)
