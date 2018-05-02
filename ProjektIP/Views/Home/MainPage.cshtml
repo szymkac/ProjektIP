@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<long>
 <script>
+    var mode;
 	var meetingColOneDate = getDate(new Date());
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip(
@@ -9,7 +10,13 @@
 		);
 		getMeetingColumnsForThreeDays(meetingColOneDate);
 		getTasks();
-	});
+    });
+
+    function changeMode(newmode) {
+        mode = newmode;
+        getMeetingColumnsForThreeDays(meetingColOneDate);
+    }
+
 	function getMeetingColumnsForThreeDays(firstDayDate) {
 		var today = getDate(new Date());
 		for (var i = 1; i < 4; i++) {
@@ -31,7 +38,7 @@
 					data: {
 						date: colDate,
 						column: i,
-						mode: 1
+                        mode: mode
 					},
 					success: function (viewHTML) {
 						var col = '#col' + i;
@@ -45,41 +52,7 @@
 		}
 	}
 
-	function getAllMeetings(firstDayDate) {
-		var today = getDate(new Date());
-		for (var i = 1; i < 4; i++) {
-			(function (i) {
-				var colDate = changeDateFormat(dateIncrease(firstDayDate, i - 1));
-				if (colDate === changeDateFormat(today))
-					$('#col-today-' + i).html("Dzisiaj");
-				else if (colDate === changeDateFormat(dateIncrease(today, 1)))
-					$('#col-today-' + i).html("Jutro");
-				else if (colDate === changeDateFormat(dateIncrease(today, 2)))
-					$('#col-today-' + i).html("Pojutrze");
-				else
-					$('#col-today-' + i).html(null);
-
-				$('#col-date-' + i).html(colDate);
-				$.ajax({
-					type: "GET",
-					url: "/Meeting/MeetingDetailsForDay/",
-					data: {
-						date: colDate,
-						column: i,
-						mode: 2
-					},
-					success: function (viewHTML) {
-						var col = '#col' + i;
-						$(col).html(viewHTML);
-					},
-					error: function (errorData) {
-						console.log(errorData);
-					}
-				});
-			})(i);
-		}
-	}
-
+	
 	function getTasks() {
 		for (var i = 1; i < 4; i++) {
 			(function (i) {
@@ -159,7 +132,13 @@
 	function openModalAddUser() {
 		$('#modal-head').html('<h3>Dodaj pracownika</h3>');
 		this.openModal("/Employee/AddEmployee/");
-	}
+    }
+    function openModalChoosenUsers() {
+        mode = 3;
+        $('#modal-head').html('<h3>Wybierz pracownika</h3>');
+        this.openModal("/Employee/ChooseEmployee/");
+    }
+
 	function openModalTaskManager() {
 		$('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
 		this.openModal("/Task/TaskManager/");
@@ -224,13 +203,13 @@
 						<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
 					</button>
 					<div class="left-button-group">
-						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=getMeetingColumnsForThreeDays(meetingColOneDate)>
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=changeMode(1)>
 							<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
 						</button>
-						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=getAllMeetings(meetingColOneDate)>
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=changeMode(2)>
 							<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
 						</button>
-						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip">
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip" onclick="openModalChoosenUsers()">
 							<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
 						</button>
 					</div>
