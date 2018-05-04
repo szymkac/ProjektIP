@@ -1,0 +1,60 @@
+﻿<script>
+
+    $(function () {
+        $('[data-toggle="tooltipTask"]').tooltip(
+            {
+                trigger: 'hover'
+            }
+        );
+        getEmployees();
+    });
+    function getEmployees() {
+        $.ajax({
+            type: "GET",
+            url: "/Employee/EmployeeList/",
+            success: function (viewHTML) {
+                $("#employees").html(viewHTML);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    }
+    function changeEmployee(id) {
+        if ($("#listEmployee" + id).hasClass("border-to-members")) {
+            var string = "";
+            string = newMembers.value;
+
+            var split = string.split(",");
+
+            split.forEach((item, index) => {
+                if (item == id) {
+                    split[index] = null;
+                }
+            });
+            $("#listEmployee" + id).removeClass("border-to-members");
+            var join = split.join();
+            $("#newMembers").val(join);
+        }
+        else {
+            $("#listEmployee" + id).addClass("border-to-members");
+            $("#newMembers").val(newMembers.value + id + ",");
+        }
+    }
+</script>
+
+<div class="row">
+    <form id="partialViewForm" action="/Meeting/Back" method="post">
+       
+        <div class="main-height">
+            <div style="margin-left:75px" class="form-group" id="employee"></div>
+            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
+            <div></div>
+        </div>
+
+        <div hidden>
+            <input name="newMembers" id="newMembers" class="form-control" />
+        </div>
+    </form>
+</div>
+

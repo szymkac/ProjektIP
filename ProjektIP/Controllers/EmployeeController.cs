@@ -22,6 +22,12 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChooseEmployee()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
         public IActionResult MemberList()
         {
             return PartialView(GetAllEmployees());

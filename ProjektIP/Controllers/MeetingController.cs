@@ -155,6 +155,16 @@ namespace ProjektIP.Controllers
             return RedirectToAction("MainPage", "Home");
         }
 
+        public static int actualMode;
+        public static string Members;
+        [HttpPost]
+        public IActionResult Back(string newMembers)
+        {
+            Members = newMembers;
+            actualMode = 3;
+            return RedirectToAction("MainPage", "Home");
+        }
+
         [HttpGet]
         public IActionResult DeleteMeetingFromDB(long id)
         {
@@ -173,9 +183,30 @@ namespace ProjektIP.Controllers
             {
                 case 1:
                     meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
+                    actualMode = 1;
                     break;
                 case 2:
                     meetingsList = GetMeetingsForAllUsers(day);
+                    actualMode = 2;
+                    break;
+                default:
+                    if (actualMode == 3)
+                    {
+                        List<long> employees = new List<long>();
+                        string[] id = Members.Split(',');
+                        foreach (string s in id)
+                        {
+                            if (s != string.Empty)
+                                employees.Add(Convert.ToInt64(s));
+                        }
+                        meetingsList = GetMeetingsForUsers(employees, day);
+                    }
+                    else if (actualMode == 2)
+                    {
+                        meetingsList = GetMeetingsForAllUsers(day);
+                    }
+                    else
+                        meetingsList = GetMeetingsForUsers(new List<long> { HomeController.ActualUser.Id }, day);
                     break;
             }
             return PartialView(meetingsList);
