@@ -404,6 +404,7 @@ namespace ProjektIP.Controllers
                     new TimeSpan(0, Convert.ToInt32(HourFrom[0]), Convert.ToInt32(HourFrom[1]), Convert.ToInt32(HourFrom[2])),
                     res[11] != null && res[11] != DBNull.Value ? new TimeSpan(0, Convert.ToInt32(HourTo[0]), Convert.ToInt32(HourTo[1]), Convert.ToInt32(HourTo[2])) : new TimeSpan?(),
                     Convert.ToInt64(res[4]),
+                     Convert.ToInt64(res[25]),
                     res[20].ToString() + " " + res[21].ToString(),
                     res[5] != null && res[5] != DBNull.Value ? Convert.ToInt64(res[5]) : new long?(),
                     res[18].ToString(),

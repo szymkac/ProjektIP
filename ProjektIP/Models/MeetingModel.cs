@@ -23,7 +23,9 @@ namespace ProjektIP.Models
 
 		public long EmployeeAuthorId { get; set; }
 
-		public string EmployeeAuthorName { get; set; }
+        public long EmployeeAuthorPositionId { get; set; }
+
+        public string EmployeeAuthorName { get; set; }
 
 		public long? RoomId { get; set; }
 
@@ -41,7 +43,7 @@ namespace ProjektIP.Models
 
 		public List<EmployeeModel> Members { get; set; }
 
-		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long employeeAuthorId, string employeeAuthorName, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title, List<EmployeeModel> members)
+		public MeetingModel(long id, long meetingTypeId, string meetingTypeName, DateTime dateStart, DateTime? dateEnd, TimeSpan hourStart, TimeSpan? hourEnd, long employeeAuthorId, long employeeAuthorPositionId, string employeeAuthorName, long? roomId, string roomName, string location, string note, long priorityId, string priorityName, string title, List<EmployeeModel> members)
 		{
 			Id = id;
 			MeetingTypeId = meetingTypeId;
@@ -51,6 +53,7 @@ namespace ProjektIP.Models
 			HourStart = hourStart;
 			HourEnd = hourEnd;
 			EmployeeAuthorId = employeeAuthorId;
+            EmployeeAuthorPositionId = employeeAuthorPositionId;
             EmployeeAuthorName = employeeAuthorName;
             RoomId = roomId;
 			RoomName = roomName;
