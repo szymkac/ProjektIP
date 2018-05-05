@@ -80,13 +80,20 @@
 								":" + (item.HourEnd.Value.Minutes.ToString().Length == 1 ? "0" + item.HourEnd.Value.Minutes.ToString() : item.HourEnd.Value.Minutes.ToString());
 								}
 								}
-								<div class="col-md-8 font-white">
+								<div class="col-md-7 font-white">
 									@Html.DisplayFor(modelItem => item.Title) <br />
 									@Html.DisplayFor(modelItem => dates)
 								</div>
-								<div class="col-md-2">
-									@* tu bêdzie avatar!!!! *@
-								</div>
+                                <div class="col-md-3">
+                                    @* tu bêdzie avatar!!!! *@
+                                    @{
+                                        string path = "../Content/Image/avatar";
+                                        path += item.EmployeeAuthorPositionId;
+                                        path += ".png";
+                                    }
+                                <img src = @path width="30" height="30" class="marging-withoutleft-10"/>
+
+                                </div>
 							</div>
 						</button>
 					</h5>

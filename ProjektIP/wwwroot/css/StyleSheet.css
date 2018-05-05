@@ -478,7 +478,34 @@ a {
     margin-bottom:5px;
 }
 
-a.display-none {
-	visibility: hidden;
+.marging-top-7 {
+    margin-top: 7px;
 }
 
+a.display-none {
+    visibility: hidden;
+}
+
+visible-hidden {
+    visibility: hidden;
+    border:0px;
+}
+
+.marging-withoutleft-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+border-0 {
+    border-style: none;
+}
+
+hidden-avatar-image {
+    width:0px;
+    height:0px;
+}
+
+show-avatar-image {
+    width: 35px;
+    height: 35px;
+}

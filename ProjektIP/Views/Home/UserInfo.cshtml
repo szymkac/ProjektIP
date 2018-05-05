@@ -1,14 +1,28 @@
 ﻿<script>
-	$(function () {
-		if ($('#main-page').length > 0)
-			$('#logout').removeClass('display-none');
-		else
-			$('#logout').addClass('display-none');
+    $(function () {
 
-	})
+        if ($('#main-page').length > 0) {
+            getColorAvatar();
+            $('#logout').removeClass('display-none');
+            $('#logout').removeClass('hidden-avatar-image');
+          //  $('#avatar').addClass('show-avatar-image');
+        }
+        else {
+            $('#logout').addClass('display-none');
+         //   $('#logout').removeClass('show-avatar-image');
+            $('#avatar').addClass('hidden-avatar-image');
+            
+        }
+    });
+
+        function getColorAvatar() {
+        var actualPosition ='@(ViewBag.ActualPosition)';
+        var imagepath = "avatar" + actualPosition+".png";
+        console.log(actualPosition);
+        document.getElementById("avatar").src = "../Content/Image/" + imagepath;
+    }
 </script>
 
+<li><img id="avatar" class="marging-top-7" width="35" height="35"/></li>
 <li><a id="logout" onclick="location.href='@Url.Action("Logout","Home")'"><span class="glyphicon glyphicon-off"></span></a></li>
-
-
 
