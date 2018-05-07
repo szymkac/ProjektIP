@@ -27,7 +27,7 @@
 <div class="row">
     <form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="col-md-5 main-height">
+        <div class="col-md-6 main-height">
         <div hidden>
             <input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
         </div>
@@ -59,7 +59,7 @@
             <option value="4">Opcjonalny</option>
         </select>
         </div>
-        <div class="col-md-5 main-height">
+        <div class="col-md-6 main-height">
             <div style="margin-left:75px" class="form-group" id="employee">
                 <h4>Wybierz zleceniobiorcę:</h4>
                 <div hidden>
@@ -112,7 +112,7 @@
             document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
             document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
             document.getElementById("imgZadanie").src = "../Content/Image/task_grey.png";
-            $("#typeId").val(3);
+            $("#typeId").val(4);
         }
         else {
             img.src = "../Content/Image/change_grey.png";
@@ -127,7 +127,7 @@
             document.getElementById("imgBlad").src = "../Content/Image/bug_grey.png";
             document.getElementById("imgZmiana").src = "../Content/Image/change_grey.png";
             document.getElementById("imgProblem").src = "../Content/Image/problem_grey.png";
-            $("#typeId").val(4);
+            $("#typeId").val(3);
         }
         else {
             img.src = "../Content/Image/task_grey.png";
@@ -145,13 +145,9 @@
 
     //PRACOWNIK
     function changeEmployee(id) {
-        $("#employeeId").val(id);
-        $("#listEmployee" + id).attr('style', 'border:dotted 2px #4472c4;border-radius:10px');
-        $('.card').each(function () {
-            if (this.id.match('^listEmployee') && this.id != "listEmployee"+id) {
-                $("#"+this.id).attr('style', 'border:solid 0px');
-            };
-        });
+		$("#employeeId").val(id);
+		$('.border-to-members').removeClass('border-to-members');
+		$('#listEmployee' + id).addClass('border-to-members');
     }
 
 </script>

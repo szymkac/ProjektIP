@@ -1,61 +1,55 @@
 ﻿@model IEnumerable<ProjektIP.Models.EmployeeModel>
 
 @{
-    ViewData["Title"] = "EmployeeList";
+	ViewData["Title"] = "EmployeeList";
 }
 
 <div id="@("accordion" + ViewBag.Column)">
-    @foreach (var item in Model)
-    {
-        string imagePath;
-        switch (item.PositionId)
-        {
-            case 1:
-                imagePath = "~/Content/Image/avatar1.png";
-                break;
+	@foreach (var item in Model)
+	{
+		string imagePath;
+		switch (item.PositionId)
+		{
+			case 1:
+				imagePath = "~/Content/Image/avatar1.png";
+				break;
 
-            case 2:
-                imagePath = "~/Content/Image/avatar2.png";
-                break;
+			case 2:
+				imagePath = "~/Content/Image/avatar2.png";
+				break;
 
-            case 3:
-                imagePath = "~/Content/Image/avatar3.png";
-                break;
+			case 3:
+				imagePath = "~/Content/Image/avatar3.png";
+				break;
 
-            case 4:
-                imagePath = "~/Content/Image/avatar4.png";
-                break;
+			case 4:
+				imagePath = "~/Content/Image/avatar4.png";
+				break;
 
-            case 5:
-                imagePath = "~/Content/Image/avatar5.png";
-                break;
+			case 5:
+				imagePath = "~/Content/Image/avatar5.png";
+				break;
 
-            case 6:
-                imagePath = "~/Content/Image/avatar6.png";
-                break;
+			case 6:
+				imagePath = "~/Content/Image/avatar6.png";
+				break;
 
-            case 7:
-                imagePath = "~/Content/Image/avatar7.png";
-                break;
+			case 7:
+				imagePath = "~/Content/Image/avatar7.png";
+				break;
 
-            default:
-                imagePath = "~/Content/Image/avatar_null.png";
-                break;
-        }
-        <div class="card margin-left-20 margin-right-10p" id="listEmployee@(item.Id)" onclick="changeEmployee(@(item.Id))">
-            <div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
-                <h5 class="mb-0">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
-                        </div>
-                        <div class="col-md-8 font-black">
-                            @Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.SurName) <br />
-                            @Html.DisplayFor(modelItem => item.PositionName)
-                        </div>
-                    </div>
-                </h5>
-            </div>
-        </div>
-    }
+			default:
+				imagePath = "~/Content/Image/avatar_null.png";
+				break;
+		}
+		<div class="employee-list-item" id="listEmployee@(item.Id)" onclick="changeEmployee(@(item.Id))">
+			<div class="inline">
+				<img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
+			</div>
+			<div class="inline text-container font-black text-overflow-ellipsis">
+				@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.SurName) <br />
+				@Html.DisplayFor(modelItem => item.PositionName)
+			</div>
+		</div>
+	}
 </div>

@@ -74,7 +74,7 @@ a {
 }
 
 .employee-height {
-    height: calc(100% - 75px);
+	height: calc(100% - 75px);
 }
 
 .title-height {
@@ -127,19 +127,20 @@ a {
 
 .scroll-container {
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .meeting-container {
-	width: calc(33.33333% - 25px);
+	width: calc(33.33333% - 26px);
 	height: 100%;
 	float: left;
 	padding-top: 55px;
 }
 
 .task-container {
-    width: calc(100% - 55px);
-    height: 100%;
-    margin-left: 23px;
+	width: calc(100% - 55px);
+	height: 100%;
+	margin: 0 auto;
 }
 
 
@@ -237,15 +238,15 @@ a {
 
 
 .margin-left-20 {
-    margin-left: 20px;
+	margin-left: 20px;
 }
 
 .margin-top-20 {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .margin-bottom-20 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 /* ---------- Bordery --------------- */
@@ -395,117 +396,203 @@ a {
 /* ---------- Check boxy --------------- */
 /* The container */
 .check-container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    font-size: 15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 15px;
+	cursor: pointer;
+	font-size: 15px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-    /* Hide the browser's default checkbox */
-    .check-container input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-    }
+	/* Hide the browser's default checkbox */
+	.check-container input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
 
 /* Create a custom checkbox */
 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #c1bdc3;
-    border: 1px solid #c1bdc3;
-    border-radius: 5px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #c1bdc3;
+	border: 1px solid #c1bdc3;
+	border-radius: 5px;
 }
 
 /* On mouse-over, add a grey background color */
 .check-container:hover input ~ .checkmark {
-    background-color: #ccc;
-    border: 1px  solid #ccc;
-    border-radius: 5px;
+	background-color: #ccc;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 /* When the checkbox is checked, add a blue background */
 .check-container input:checked ~ .checkmark {
-    background-color: #4472c4;
-    border: 1px solid #4472c4;
-    border-radius: 5px;
+	background-color: #4472c4;
+	border: 1px solid #4472c4;
+	border-radius: 5px;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+	content: "";
+	position: absolute;
+	display: none;
 }
 
 /* Show the checkmark when checked */
 .check-container input:checked ~ .checkmark:after {
-    display: block;
+	display: block;
 }
 
 /* Style the checkmark/indicator */
 .check-container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 
 /* ---------- Check boxy --------------- */
 /* ----------     END    --------------- */
 
 .border-to-members {
-    border: dotted 2px #4472c4;
-    border-radius: 10px
+	border: dotted 2px #4472c4;
+	border-radius: 10px
 }
 
 .marging-top-bottom-5 {
-    margin-top: 5px;
-    margin-bottom:5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .marging-top-7 {
-    margin-top: 7px;
+	margin-top: 7px;
 }
 
 a.display-none {
-    visibility: hidden;
+	visibility: hidden;
 }
 
 visible-hidden {
-    visibility: hidden;
-    border:0px;
+	visibility: hidden;
+	border: 0px;
 }
 
 .marging-withoutleft-10 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 border-0 {
-    border-style: none;
+	border-style: none;
 }
 
 hidden-avatar-image {
-    width:0px;
-    height:0px;
+	width: 0px;
+	height: 0px;
 }
 
 show-avatar-image {
-    width: 35px;
-    height: 35px;
+	width: 35px;
+	height: 35px;
+}
+
+img.avatar {
+	display: none;
+}
+
+
+img[src].avatar {
+	display: block;
+}
+
+.employee-list-item {
+	height: 50px;
+	width: calc(100% - 20px);
+	margin: 5px 10px;
+	border: solid 2px transparent;
+	border-radius: 10px;
+	padding: 3px 0;
+}
+
+	.employee-list-item:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.employee-list-item.border-to-members {
+		border: dotted 2px #4472c4;
+		border-radius: 10px;
+	}
+
+.text-overflow-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.inline {
+	display: inline-block;
+	margin: 0 5px;
+	vertical-align: middle;
+}
+
+.text-container {
+	width: calc(100% - 70px);
+}
+
+.loading-panel {
+	background-color: rgba(0, 0, 0, 0.1);
+	width: calc(100% - 30px);
+	height: calc(100% - 55px);
+	position: absolute;
+	z-index: 10;
+	top: 55px;
+	left: 15px;
+	border-radius: 25px;
+	border: 6px solid transparent;
+}
+
+	.loading-panel.task {
+		width: calc(100% + 30px);
+		height: calc(100% + 30px);
+		top: 0;
+		left: 0;
+	}
+
+	.task .loading-circle{
+		margin-top: 50%;
+	}
+.loading-circle {
+	border: 16px double #f3f3f3;
+	border-top: 16px double #4472c4;
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+	margin-left: calc(50% - 70px);
+	margin-top: calc(25% - 60px);
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }

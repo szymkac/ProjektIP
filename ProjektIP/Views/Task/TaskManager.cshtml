@@ -8,7 +8,7 @@
             }
         );
         getEmployees();
-        getTasks();
+		getTasks();
     });
 
     function getEmployees() {
@@ -45,16 +45,16 @@
         }
     };
 
-    function changeEmployee(id) {
-        $("#employeeId").val(id);
-        $("#listEmployee" + id).attr('style', 'border:dotted 2px #4472c4;border-radius:10px');
-        $('.card').each(function () {
-            if (this.id.match('^listEmployee') && this.id != "listEmployee" + id) {
-                $("#" + this.id).attr('style', 'border:solid 0px');
-            };
-        });
-    }
+	function changeEmployee(id) {
+		$("#employeeId").val(id);
+		$('.border-to-members').removeClass('border-to-members');
+		$('#listEmployee' + id).addClass('border-to-members');
+	}
 
+	function selectEmployee(id) {
+		$('.border-to-members').removeClass('border-to-members');
+		$('#listEmployee' + id).addClass('border-to-members');
+	}
   
     function taskChange(id) {
         $("#taskId").val(id);
@@ -71,7 +71,8 @@
             if (this.id.match('^listTask') && this.id != "listTask" + id) {
                 $("#" + this.id).attr('style', 'border:solid 0px');
             };
-        });
+		});
+		selectEmployee(($("#Employee" + id).html()));
     };
 
     function changeStatus() {
