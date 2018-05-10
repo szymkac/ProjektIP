@@ -139,7 +139,7 @@ a {
 
 .task-container {
 	width: calc(100% - 55px);
-	height: 100%;
+	height: 98%;
 	margin: 0 auto;
 }
 
@@ -479,9 +479,18 @@ a {
 	margin-bottom: 5px;
 }
 
+.marging-top-10 {
+    margin-top: 10px;
+}
+
 .marging-top-7 {
 	margin-top: 7px;
 }
+.margin-top-15-right-5 {
+    margin-top: 15px;
+    margin-right: 5px;
+}
+
 
 a.display-none {
 	visibility: hidden;

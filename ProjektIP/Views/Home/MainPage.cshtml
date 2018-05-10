@@ -13,7 +13,6 @@
         getAvatar();
         getMeetingColumnsForThreeDays(meetingColOneDate);
         getTasks();
-
     });
 
     function changeMode(newmode) {
@@ -98,7 +97,9 @@
         var actualPosition ='@(ViewBag.ActualPosition)';
         var imagepath = "avatar" + actualPosition+"_white.png";
         console.log(actualPosition);
-        document.getElementById("my_filter").src = "../Content/Image/" + imagepath;
+        if (document.getElementById("my_filter") != null) {
+            document.getElementById("my_filter").src = "../Content/Image/" + imagepath;
+        }
     }
 
     function getDate(myDate) {
@@ -316,9 +317,9 @@
         </div>
 		<div class="col-md-3 border-corners max-height scroll5 scroll-container ">
 			<div class="task-container">
-				<div class="row title-height title-container">
+				<div class="row title-height title-container marging-top-10">
 					ZADANIA
-					<img class="modal-button-img" src="~/Content/Image/tasks_color.png" width="20" height="20" />
+					<img  src="~/Content/Image/tasks_color.png" width="30" height="30" />
 				</div>
 				<div style="text-align:center; margin-top:10px">
 					DO ZROBIENIA:
