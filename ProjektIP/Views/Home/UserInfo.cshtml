@@ -4,12 +4,15 @@
         if ($('#main-page').length > 0) {
             getColorAvatar();
             $('#logout').removeClass('display-none');
-			$('#avatar').removeClass('display-none');
+            $('#avatar').removeClass('display-none');
+            $('#name').removeClass('display-none');
+            $('#surname').removeClass('display-none');
         }
         else {
             $('#logout').addClass('display-none');
-			$('#avatar').addClass('display-none');
-
+            $('#avatar').addClass('display-none');
+            $('#name').addClass('display-none');
+            $('#surname').addClass('display-none');
         }
 	});
 
@@ -21,6 +24,8 @@
     }
 </script>
 
+<li><label id="name" class="font-white margin-top-15-right-5">@(ViewBag.ActualName)  </label></li>
+<li><label id="surname" class="font-white margin-top-15-right-5">@(ViewBag.ActualSurname)</label></li>
 <li><img id="avatar" class="marging-top-7 avatar" width="35" height="35" /></li>
 <li><a id="logout" onclick="location.href='@Url.Action("Logout","Home")'"><span class="glyphicon glyphicon-off"></span></a></li>
 

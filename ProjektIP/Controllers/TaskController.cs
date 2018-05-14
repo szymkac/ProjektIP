@@ -38,7 +38,6 @@ namespace ProjektIP.Controllers
         {
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             List<TaskModel> taskList = GetTasksForUser(HomeController.ActualUser.Id, mode);
-
             return PartialView(taskList);
         }
 

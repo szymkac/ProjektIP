@@ -13,7 +13,6 @@ namespace ProjektIP.Controllers
     public class HomeController : Controller
     {
         public static User ActualUser;
-        public static long? ActualPosition;
         public IActionResult Info()
         {
             return View();
@@ -46,7 +45,6 @@ namespace ProjektIP.Controllers
         public IActionResult UserInfo()
         {
             ViewBag.loggedIn = ActualUser;
-            ViewBag.actualPosition = ActualPosition;
             return PartialView();
         }
         public IActionResult Logout()
@@ -59,8 +57,12 @@ namespace ProjektIP.Controllers
             if (ActualUser != null)
             {
                 List<EmployeeModel> ActualEmployee = EmployeeController.GetEmployeeWithId(ActualUser.Id);
-                ActualPosition = ActualEmployee[0].PositionId;
+                long? ActualPosition = ActualEmployee[0].PositionId;
+                string ActualName = ActualEmployee[0].Name;
+                string ActualSurname = ActualEmployee[0].SurName;
                 ViewBag.ActualPosition = ActualPosition;
+                ViewBag.ActualName = ActualName;
+                ViewBag.ActualSurname = ActualSurname;
                 return View("MainPage", ActualUser.UserPermission);
             }
             return RedirectToAction("Index", "Home");
