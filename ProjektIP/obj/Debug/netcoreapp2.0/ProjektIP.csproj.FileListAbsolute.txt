@@ -117,3 +117,15 @@ C:\Users\szyme\Desktop\Ip dolly 2\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\Pr
 C:\Users\szyme\Desktop\Ip dolly 2\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfo.cs
 C:\Users\szyme\Desktop\Ip dolly 2\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
 C:\Users\szyme\Desktop\Ip dolly 2\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.deps.json
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.json
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.dev.json
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.dll
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.pdb
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csprojResolveAssemblyReference.cache
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csproj.CoreCompileInputs.cache
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfoInputs.cache
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfo.cs
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
+C:\Users\szyme\Desktop\Ip dolly dolly\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb
