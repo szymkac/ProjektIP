@@ -311,7 +311,8 @@ namespace ProjektIP.Controllers
                              employee[0][3].ToString(),
                              employee[0][4].ToString(),
                              employee[0][5].ToString() == "1" ? true : false,
-                             employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
+                             employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?(),
+                             Convert.ToBoolean(mem[2])
                             ));
                     }
                 }
@@ -386,7 +387,8 @@ namespace ProjektIP.Controllers
                                  employee[0][3].ToString(),
                                  employee[0][4].ToString(),
                                  employee[0][5].ToString() == "1" ? true : false,
-                                 employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?()
+                                 employee[0][6] != null ? Convert.ToInt64(employee[0][6]) : new long?(),
+                                  Convert.ToBoolean(mem[2])
                                 ));
                         }
                     }
