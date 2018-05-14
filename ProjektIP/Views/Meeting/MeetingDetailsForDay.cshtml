@@ -75,58 +75,56 @@
 								":" + (item.HourStart.Minutes.ToString().Length == 1 ? "0" + item.HourStart.Minutes.ToString() : item.HourStart.Minutes.ToString());
 								if (item.HourEnd.HasValue)
 								{
-								dates += " - ";
-								dates += (item.HourEnd.Value.Hours.ToString().Length == 1 ? "0" + item.HourEnd.Value.Hours.ToString() : item.HourEnd.Value.Hours.ToString()) +
-								":" + (item.HourEnd.Value.Minutes.ToString().Length == 1 ? "0" + item.HourEnd.Value.Minutes.ToString() : item.HourEnd.Value.Minutes.ToString());
+									dates += " - ";
+									dates += (item.HourEnd.Value.Hours.ToString().Length == 1 ? "0" + item.HourEnd.Value.Hours.ToString() : item.HourEnd.Value.Hours.ToString()) +
+									":" + (item.HourEnd.Value.Minutes.ToString().Length == 1 ? "0" + item.HourEnd.Value.Minutes.ToString() : item.HourEnd.Value.Minutes.ToString());
 								}
-								}
-								<div class="col-md-7 font-white">
-									@Html.DisplayFor(modelItem => item.Title) <br />
-									@Html.DisplayFor(modelItem => dates)
-								</div>
-                                <div class="col-md-3">
-                                    @* tu bêdzie avatar!!!! *@
-                                    @{
-                                        string path = "../Content/Image/avatar";
-                                        path += item.EmployeeAuthorPositionId;
-                                        path += ".png";
-                                    }
-                                <img src = @path width="30" height="30" class="marging-withoutleft-10"/>
-
-                                </div>
+							}
+							<div class="col-md-7 font-white">
+								@Html.DisplayFor(modelItem => item.Title) <br />
+								@Html.DisplayFor(modelItem => dates)
 							</div>
-						</button>
-					</h5>
-				</div>
-
-				<div id="@(ViewBag.Column + "collapse" + item.Id)" class="collapse margin-top-minus10" aria-labelledby="@(ViewBag.Column + "heading" + item.Id)" data-parent="@(@"#" + ViewBag.Column + "accordion" + ViewBag.Column)">
-					<div class="card-body">
-						<div class="@(borderClass)">
-							<b>Miejsce:</b>
-							@Html.DisplayFor(modelItem => item.Location)
-							@Html.DisplayFor(modelItem => item.RoomName)
-							<br />
-							<b>Autor:</b> @Html.DisplayFor(modelItem => item.EmployeeAuthorName) <br />
-							<b>Priorytet:</b> @Html.DisplayFor(modelItem => item.PriorityName) <img src="@Url.Content(priorityPath)" alt="Priorytet" height="20" width="20" />  <br />
-							<b>Opis:</b>
-							@Html.DisplayFor(modelItem => item.Note)
-							@if (item.EmployeeAuthorId != ViewBag.ActualUserId)
-							{
-								<div class="row text-center">
-									<img src="~/Content/Image/cross.png" height="35" width="35" />
-									<img src="~/Content/Image/tick.png" height="35" width="35" />
-								</div>
-							}
-							else
-							{
-								<div class="row text-center">
-									<button class="btn btn-login background-blue font-white" onclick="openEditMeetingModal(@item.Id)">Edytuj</button>
-								</div>
-
-							}
+							<div class="col-md-3">
+								@{
+									string path = "../Content/Image/avatar";
+									path += item.EmployeeAuthorPositionId;
+									path += ".png";
+								}
+								<img src=@path width="30" height="30" class="marging-withoutleft-10" />
+							</div>
 						</div>
+					</button>
+				</h5>
+			</div>
+
+			<div id="@(ViewBag.Column + "collapse" + item.Id)" class="collapse margin-top-minus10" aria-labelledby="@(ViewBag.Column + "heading" + item.Id)" data-parent="@(@"#" + ViewBag.Column + "accordion" + ViewBag.Column)">
+				<div class="card-body">
+					<div class="@(borderClass)">
+						<b>Miejsce:</b>
+						@Html.DisplayFor(modelItem => item.Location)
+						@Html.DisplayFor(modelItem => item.RoomName)
+						<br />
+						<b>Autor:</b> @Html.DisplayFor(modelItem => item.EmployeeAuthorName) <br />
+						<b>Priorytet:</b> @Html.DisplayFor(modelItem => item.PriorityName) <img src="@Url.Content(priorityPath)" alt="Priorytet" height="20" width="20" />  <br />
+						<b>Opis:</b>
+						@Html.DisplayFor(modelItem => item.Note)
+						@if (item.EmployeeAuthorId != ViewBag.ActualUserId)
+						{
+							<div class="row text-center">
+								<img src="~/Content/Image/cross.png" height="35" width="35" onclick="confirmPrsent(@item.Id, false)"/>
+								<img src="~/Content/Image/tick.png" height="35" width="35" onclick="confirmPrsent(@item.Id, true)"/>
+							</div>
+						}
+						else
+						{
+							<div class="row text-center">
+								<button class="btn btn-login background-blue font-white" onclick="openEditMeetingModal(@item.Id)">Edytuj</button>
+							</div>
+
+						}
 					</div>
 				</div>
 			</div>
-							}
-						</div>
+		</div>
+	}
+</div>

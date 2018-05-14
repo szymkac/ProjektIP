@@ -112,13 +112,37 @@ a {
 
 .title-container {
 	text-align: center;
-	border-bottom: 3px solid #4472c4;
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 	background-color: white;
 	overflow: hidden;
+	width: 100%;
+	z-index: 5;
+	height: 45px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size:16px;
 }
+
+.task-section-bar {
+	position: sticky;
+	top: 45px;
+	text-align: center;
+	z-index: 3;
+	height: 40px;
+	background-color: white;
+	border-bottom: solid #4472c4 3px;
+	border-top: solid #4472c4 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+	.task-section-bar.not-first {
+		margin-top: 10px;
+	}
 
 .date-text {
 	font-size: x-large;
@@ -138,9 +162,7 @@ a {
 }
 
 .task-container {
-	width: calc(100% - 55px);
-	height: 98%;
-	margin: 0 auto;
+	width: 100%;
 }
 
 
@@ -177,6 +199,18 @@ a {
 	width: calc(100% - 14px);
 }
 
+.task-container .colapsed {
+	margin-left: 7px;
+	margin-right: 7px;
+	width: calc(100% - 14px);
+}
+
+.task-container .card-body {
+	margin-left: 6px;
+	margin-right: 6px;
+	width: calc(100% - 12px);
+}
+
 .meeting-fill-container {
 	height: 20px;
 	width: 100%;
@@ -198,7 +232,7 @@ a {
 	float: left;
 	position: -webkit-sticky;
 	position: sticky;
-	top: 0;
+	top: 30px;
 	margin: 0 0px;
 }
 
@@ -480,15 +514,16 @@ a {
 }
 
 .marging-top-10 {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .marging-top-7 {
 	margin-top: 7px;
 }
+
 .margin-top-15-right-5 {
-    margin-top: 15px;
-    margin-right: 5px;
+	margin-top: 15px;
+	margin-right: 5px;
 }
 
 
@@ -577,14 +612,15 @@ img[src].avatar {
 
 	.loading-panel.task {
 		width: calc(100% + 30px);
-		height: calc(100% + 30px);
+		height: 100%;
 		top: 0;
 		left: 0;
 	}
 
-	.task .loading-circle{
-		margin-top: 50%;
-	}
+.task .loading-circle {
+	margin-top: 50%;
+}
+
 .loading-circle {
 	border: 16px double #f3f3f3;
 	border-top: 16px double #4472c4;
