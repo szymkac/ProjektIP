@@ -18,6 +18,9 @@
         $.ajax({
             type: "GET",
             url: "/Employee/MemberList/",
+            data: {
+                showPresent: true
+            } ,
             success: function (viewHTML) {
                 $("#employees").html(viewHTML);
             },

@@ -560,7 +560,11 @@ img[src].avatar {
 }
 
 .text-container {
-	width: calc(100% - 70px);
+	width: calc(100% - 120px);
+}
+
+.text-container2 {
+    width: calc(100% - 70px);
 }
 
 .loading-panel {

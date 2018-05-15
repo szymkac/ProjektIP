@@ -28,8 +28,12 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
-        public IActionResult MemberList()
+        public IActionResult MemberList(bool? showPresent)
         {
+            if (showPresent.HasValue && showPresent.Value)
+                ViewBag.ShowPresent = true;
+            else
+                ViewBag.ShowPresent = false;
             return PartialView(GetAllEmployees());
         }
 
