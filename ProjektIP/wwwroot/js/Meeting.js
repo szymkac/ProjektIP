@@ -14,3 +14,19 @@
     });
 }
 
+function confirmPrsent(id, confirmationofPresence) {
+	$.ajax({
+		type: "POST",
+		url: "/Meeting/PushChangeConfirmation/",
+		data: {
+			meetingId: id,
+			confirmationofPresence: confirmationofPresence
+		},
+		success: function (Json) {
+			console.log("succes");
+		},
+		error: function (errorData) {
+			console.log(errorData);
+		}
+	});
+}
