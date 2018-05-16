@@ -58,7 +58,7 @@
   
     function taskChange(id) {
         $("#taskId").val(id);
-        $("#name").val($("#Name" + id).html());
+        $("#taskName").val($("#Name" + id).html());
         $("#comment").val($("#Comment" + id).html());
         $("#statusName").html($("#StatusName" + id).html());
         $("#statusId").val($("#Status" + id).html());
@@ -117,13 +117,13 @@
         </div>
         <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-left:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:10px 0px 0px 10px">
             <h4>Wprowadź zmiany:</h4>
-            <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" placeholder="Nazwa" /><br /></div>
-            <input asp-for="Title" style="margin-top:10px" name="name" id="name" class="form-control" placeholder="Nazwa" /><br />
+            <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" /><br /></div>
+            <input asp-for="Title" style="margin-top:10px" name="taskName" id="taskName" class="form-control" placeholder="Nazwa" /><br />
             <div style="margin-bottom:3px;">Aktualny status: <div id="statusName"></div></div><br />
             <div hidden><input asp-for="StatusId" style="margin-top:10px" name="statusId" id="statusId" class="form-control" /></div>
             <span asp-validation-for="StatusId" class="text-danger"></span>
             <select class="custom-select form-control" onchange="changeStatus()" id="status">
-                <option value="" disabled selected>Status:</option>
+                <option value="" disabled selected>Nowy status</option>
                 <option value="4">Zakończone</option>
                 <option value="5">Ponownie otwarte</option>
                 <option value="6">Anulowane</option>

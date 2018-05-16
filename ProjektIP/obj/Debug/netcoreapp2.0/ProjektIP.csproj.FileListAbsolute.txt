@@ -46,18 +46,6 @@ C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\P
 C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfo.cs
 C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
 C:\Users\monik\Desktop\IP _PROJEKT\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.deps.json
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.json
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.dev.json
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.dll
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.pdb
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csprojResolveAssemblyReference.cache
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.csproj.CoreCompileInputs.cache
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfoInputs.cache
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.AssemblyInfo.cs
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.dll
-C:\Users\lenovo\Desktop\IP\ProjektIP\ProjektIP\obj\Debug\netcoreapp2.0\ProjektIP.pdb
 C:\Users\monik\Desktop\Aktual\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.deps.json
 C:\Users\monik\Desktop\Aktual\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.json
 C:\Users\monik\Desktop\Aktual\ProjektIP\ProjektIP\bin\Debug\netcoreapp2.0\ProjektIP.runtimeconfig.dev.json

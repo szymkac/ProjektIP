@@ -77,14 +77,14 @@ namespace ProjektIP.Controllers
         }
 
         [HttpPost]
-        public IActionResult PushUpdateTaskToDB(long taskid, string name, long employeeId, long priorityId, long statusId, string comment)
+        public IActionResult PushUpdateTaskToDB(long taskid, string taskName, long employeeId, long priorityId, long statusId, string comment)
         {
             TaskModel task = TaskDAO.SelectFirst(new Dictionary<string, object>()
             {
                 {TaskDAO.Columns.IdTask,taskid }
             });
 
-            task.Title = name;
+            task.Title = taskName;
             if(statusId!=0)
             task.StatusId = statusId;
             task.EmployeeId = employeeId;
