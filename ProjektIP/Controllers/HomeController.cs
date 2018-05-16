@@ -56,10 +56,10 @@ namespace ProjektIP.Controllers
         {
             if (ActualUser != null)
             {
-                List<EmployeeModel> ActualEmployee = EmployeeController.GetEmployeeWithId(ActualUser.Id);
-                long? ActualPosition = ActualEmployee[0].PositionId;
-                string ActualName = ActualEmployee[0].Name;
-                string ActualSurname = ActualEmployee[0].SurName;
+                EmployeeModel ActualEmployee = EmployeeController.GetEmployeeWithId(ActualUser.Id);
+                long? ActualPosition = ActualEmployee.PositionId;
+                string ActualName = ActualEmployee.Name;
+                string ActualSurname = ActualEmployee.SurName;
                 ViewBag.ActualPosition = ActualPosition;
                 ViewBag.ActualName = ActualName;
                 ViewBag.ActualSurname = ActualSurname;

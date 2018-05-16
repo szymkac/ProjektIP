@@ -19,7 +19,8 @@
             type: "GET",
             url: "/Employee/MemberList/",
             data: {
-                showPresent: true
+                showPresent: true,
+                meetingId: "@(ViewBag.meetingId)"
             } ,
             success: function (viewHTML) {
                 $("#employees").html(viewHTML);

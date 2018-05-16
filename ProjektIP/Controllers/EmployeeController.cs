@@ -28,13 +28,31 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
-        public IActionResult MemberList(bool? showPresent)
+        public IActionResult MemberList(bool? showPresent, long? meetingId)
         {
             if (showPresent.HasValue && showPresent.Value)
                 ViewBag.ShowPresent = true;
             else
                 ViewBag.ShowPresent = false;
-            return PartialView(GetAllEmployees());
+            List<EmployeeModel> list = GetAllEmployees();
+            if (showPresent != null && showPresent == true && meetingId!=null)
+            {
+                List<object[]> result = BaseDAO.Select("Members", null, new Dictionary<string, object>() {
+                    { "IdMeeting",meetingId}
+                });
+                foreach (EmployeeModel e in list)
+                {
+                    foreach(object[] res in result)
+                    {
+                        if (e.Id == Convert.ToInt32(res[0]))
+                        {
+                            bool? conf = res[2] != null && res[2] != DBNull.Value ? Convert.ToBoolean(res[2]) : new bool?();
+                            e.Confirmation = conf;
+                        }
+                    }
+                }
+            }
+            return PartialView(list);
         }
 
 
@@ -116,9 +134,9 @@ namespace ProjektIP.Controllers
             });
         }
 
-        public static List<EmployeeModel> GetEmployeeWithId(long employeeId)
+        public static EmployeeModel GetEmployeeWithId(long employeeId)
         {
-            return EmployeeDAO.Select(new Dictionary<string, object>
+            return EmployeeDAO.SelectFirst(new Dictionary<string, object>
             {
                 {EmployeeDAO.Columns.IdEmployee, employeeId}
             });
@@ -152,15 +170,23 @@ namespace ProjektIP.Controllers
 
             public static EmployeeModel SelectFirst(Dictionary<string, object> filters)
             {
-                List<object[]> result = BaseDAO.Select("Employees", null, filters);
-                return new EmployeeModel(
-                    Convert.ToInt64(result[0][0]),
-                    result[0][1].ToString(),
-                    result[0][2].ToString(),
-                    result[0][3].ToString(),
-                    result[0][4].ToString(),
-                    result[0][5].ToString() == "1" ? true : false,
-                    result[0][6] != null && result[0][6] != DBNull.Value ? Convert.ToInt64(result[0][6]) : new long?());
+                List<EmployeeModel> list = new List<EmployeeModel>();
+
+                List<object[]> result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Employees E LEFT JOIN Positions P ON E.IdPosition = P.IdPosition {0}", BaseDAO.GetWhereClause(filters)));
+                foreach (object[] res in result)
+                {
+                        list.Add(new EmployeeModel(
+                            Convert.ToInt64(res[0]),
+                            res[1].ToString(),
+                            res[2].ToString(),
+                            res[3].ToString(),
+                            res[4].ToString(),
+                            res[5].ToString() == "1" ? true : false,
+                            res[6] != null && res[6] != DBNull.Value ? Convert.ToInt64(res[6]) : new long?(),
+                            res[8].ToString()
+                            ));
+                }
+                return list[0];
             }
 
             public static List<EmployeeModel> Select(Dictionary<string, object> filters)
@@ -169,6 +195,8 @@ namespace ProjektIP.Controllers
 
                 List<object[]> result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Employees E LEFT JOIN Positions P ON E.IdPosition = P.IdPosition {0}", BaseDAO.GetWhereClause(filters)));
                 foreach (object[] res in result)
+                {
+                    if (HomeController.ActualUser.Id != 0 && Convert.ToInt64(res[0])!=HomeController.ActualUser.Id)
                     list.Add(new EmployeeModel(
                         Convert.ToInt64(res[0]),
                         res[1].ToString(),
@@ -179,7 +207,7 @@ namespace ProjektIP.Controllers
                         res[6] != null && res[6] != DBNull.Value ? Convert.ToInt64(res[6]) : new long?(),
                         res[8].ToString()
                         ));
-
+                }
                 return list;
             }
             public static void Insert(EmployeeModel employee)

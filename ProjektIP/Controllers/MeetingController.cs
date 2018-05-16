@@ -110,6 +110,7 @@ namespace ProjektIP.Controllers
             }
 
             ViewBag.membersId = membersId;
+            ViewBag.meetingId = Id;
 
 
             return PartialView(model);
