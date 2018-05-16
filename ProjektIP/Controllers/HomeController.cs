@@ -63,6 +63,9 @@ namespace ProjektIP.Controllers
                 ViewBag.ActualPosition = ActualPosition;
                 ViewBag.ActualName = ActualName;
                 ViewBag.ActualSurname = ActualSurname;
+                ViewBag.TaskListCount = BaseDAO.Select("Tasks",null,new Dictionary<string, object>() {
+                    {"IdEmployee", ActualUser.Id }
+                }).Count;
                 return View("MainPage", ActualUser.UserPermission);
             }
             return RedirectToAction("Index", "Home");

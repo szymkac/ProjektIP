@@ -127,6 +127,22 @@ a {
 	font-size:16px;
 }
 
+.image-container {
+    text-align: center;
+    position:center;
+    top: 0;
+    background-color: white;
+    overflow: hidden;
+    width: 100%;
+    z-index: 5;
+    height: 200px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
 .task-section-bar {
 	position: sticky;
 	top: 45px;

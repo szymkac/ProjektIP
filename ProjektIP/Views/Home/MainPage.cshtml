@@ -315,30 +315,40 @@
 				<div class="loading-circle"></div>
 			</div>
         </div>
-		<div class="col-md-3 border-corners max-height scroll5 scroll-container ">
-			<div class="task-container">
-				<div class="title-container">
-					ZADANIA
-					<img  src="~/Content/Image/tasks_color.png" width="30" height="30" />
-				</div>
-				<div class="task-section-bar">
-					<span>DO ZROBIENIA:</span>
-				</div>
-				<div id="task1"></div>
-				<div class="task-section-bar not-first">
-					W TRAKCIE:
-				</div>
-				<div id="task2"></div>
-				<div class="task-section-bar not-first">
-					OSTATNIO WYKONANE:
-				</div>
-				<div id="task3">
-				</div>
-			</div>
-			<div id="task-loader" class="loading-panel task">
-				<div class="loading-circle"></div>
-			</div>
-		</div>
+		<div class="col-md-3 border-corners max-height scroll5 scroll-container">
+            <div class="task-container">
+                <div class="title-container">
+                    ZADANIA    <img src="~/Content/Image/tasks_color.png" width="30" height="30" />
+                </div>
+                @if (ViewBag.TaskListCount > 0)
+    {
+
+
+            <div class="task-section-bar">
+                <span>DO ZROBIENIA:</span>
+            </div>
+            <div id="task1"></div>
+            <div class="task-section-bar not-first">
+                W TRAKCIE:
+            </div>
+            <div id="task2"></div>
+            <div class="task-section-bar not-first">
+                OSTATNIO WYKONANE:
+            </div>
+            <div id="task3">
+            </div>
+}
+else
+{
+            <div class="image-container">
+                <img  class="img-center center-block"  src="~/Content/Image/holiday.png" width="200" height="200" />
+                </div>
+                }
+            </div>
+            <div id="task-loader" class="loading-panel task">
+                <div class="loading-circle"></div>
+            </div>
+            </div>
     </div>
 </div>
 
