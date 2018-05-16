@@ -66,12 +66,15 @@
         $("#priorityId").val($("#Priority" + id).html());
         $("#priority").val($("#Priority" + id).html());
         $("#typeId").val($("#Type" + id).html());
-        $("#listTask" + id).attr('style', 'border:dotted 2px #000000');
-        $('.row').each(function () {
-            if (this.id.match('^listTask') && this.id != "listTask" + id) {
-                $("#" + this.id).attr('style', 'border:solid 0px');
-            };
-		});
+   //     $("#listTask" + id).attr('style', 'border:dotted 2px #000000');
+  //      $('.row').each(function () {
+  //          if (this.id.match('^listTask') && this.id != "listTask" + id) {
+  //              $("#" + this.id).attr('style', 'border:solid 0px');
+  //          };
+		//});
+        $('.border-to-tasks').removeClass('border-to-tasks');
+        $('#listTask' + id).addClass('border-to-tasks');
+
 		selectEmployee(($("#Employee" + id).html()));
     };
 
@@ -93,19 +96,20 @@
         <div class="col-md-4 main-height">
             <div class="border-corners max-height scroll5 scroll-container">
                 <div class="task-container">
-                    <div style="text-align:center; margin-top:10px">
-                        NIEROZPOCZĘTE:
-                        <div class="task-bar"></div>
+                    <div class="title-container">
+                        <h4>Wybierz zadanie:</h4>
+                    </div>
+                    <div class="task-section-bar">
+                        <span>NIEROZPOCZĘTE:</span>
                     </div>
                     <div class="row" id="tasklist1"></div>
-                    <div style="text-align:center; margin-top:10px">
+
+                    <div class="task-section-bar">
                         ROZPOCZĘTE:
-                        <div class="task-bar"></div>
                     </div>
                     <div class="row" id="tasklist2"></div>
-                    <div style="text-align:center; margin-top:10px">
+                    <div class="task-section-bar">
                         WYKONANE:
-                        <div class="task-bar"></div>
                     </div>
                     <div class="row" id="tasklist3"> </div>
                 </div>

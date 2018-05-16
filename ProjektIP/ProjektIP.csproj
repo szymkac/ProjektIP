@@ -25,4 +25,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Content\Nowy folder1\" />
+    <Folder Include="Content\Nowy folder\" />
+  </ItemGroup>
+
 </Project>

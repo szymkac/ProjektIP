@@ -9,6 +9,8 @@
             }
         );
         getEmployees()
+
+        
     });
 
     // Uczestnicy wydarzenia
@@ -146,6 +148,7 @@
         }
     }
 
+    $('.clockpicker').clockpicker();
 </script>
 
 <div class="row">
@@ -173,11 +176,15 @@
                     <input asp-for="DateStart" class="form-control" name="datestart" id="datestart" onchange="changeDate()" />
                     <span asp-validation-for="DateStart" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 form-group ">
-                    <input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
+                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
+                    <input asp-for="HourStart" class="form-control" placeholder="00:00" />
                     <span asp-validation-for="HourStart" class="text-danger"></span>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
                 </div>
             </div>
+
             <label asp-for="DateEnd" class="control-label">Data do:</label>
             <div row>
                 <div class="col-md-6 form-group">
@@ -185,10 +192,14 @@
                     <span asp-validation-for="DateEnd" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-6 form-group ">
-                    <input asp-for="HourEnd" class="form-control" placeholder="00:00:00" />
+                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
+                    <input asp-for="HourEnd" class="form-control" placeholder="00:00" />
                     <span asp-validation-for="HourEnd" class="text-danger"></span>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
                 </div>
+
             </div>
             <div class="form-group margin-top-20" id="room">
                 <span asp-validation-for="RoomName" class="text-danger"></span>

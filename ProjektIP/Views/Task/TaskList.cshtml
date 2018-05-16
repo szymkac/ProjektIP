@@ -4,7 +4,7 @@
 	ViewData["Title"] = "TaskList";
 }
 
-<div id="@("accordion" + ViewBag.Column)">
+<div id="@("accordion" + ViewBag.Column)" class="max-width">
 	@foreach (var item in Model)
 	{
 		string colorClass;
@@ -66,10 +66,10 @@
 				priorityPath = "~/Content/Image/priority_normal.png";
 				break;
 		}
-		<div class="card margin-right-10p margin-left-20" onclick="taskChange(@(item.Id))">
-			<div class="card-header" id="@(ViewBag.Column + "heading" + item.Id)">
+		<div class="card " onclick="taskChange(@(item.Id))">
+			<div class="card-header margin-right-10p margin-left-20" id="@(ViewBag.Column + "heading" + item.Id)">
 				<h5 class="mb-0">
-					<div class="@("row " + colorClass)" id="listTask@(item.Id)">
+					<div class="@("row " + colorClass +" "+colorClass+"-hover task-list-item")" id="listTask@(item.Id)">
 						<div hidden id="Name@(item.Id)">@(item.Title)</div>
 						<div hidden id="Comment@(item.Id)">@(item.Comment)</div>
 						<div hidden id="Priority@(item.Id)">@(item.PriorityId)</div>
@@ -77,10 +77,10 @@
 						<div hidden id="StatusName@(item.Id)">@(item.StatusName)</div>
 						<div hidden id="Type@(item.Id)">@(item.TaskTypeId)</div>
 						<div hidden id="Employee@(item.Id)">@(item.EmployeeId)</div>
-						<div class="col-md-2">
+						<div class="inline">
 							<img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
 						</div>
-						<div class="col-md-8 font-white text-center">
+						<div class="inline text-container2 font-white text-center text-overflow-ellipsis">
 							#@Html.DisplayFor(modelItem => item.Id) <br />
 							@Html.DisplayFor(modelItem => item.Title) <br />
 						</div>

@@ -245,6 +245,7 @@
         $("#dateend").val(value);
     }
 
+    $('.clockpicker').clockpicker();
 </script>
 <div class="row">
     <form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post">
@@ -276,22 +277,29 @@
                     <input asp-for="DateStart" class="form-control" id="datestart" onchange="changeDate()" />
                     <span asp-validation-for="DateStart" class="text-danger"></span>
                 </div>
-                <div class="col-md-6 form-group ">
-                    <input asp-for="HourStart" class="form-control" placeholder="00:00:00" />
+
+                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
+                    <input asp-for="HourStart" class="form-control" placeholder="00:00" />
                     <span asp-validation-for="HourStart" class="text-danger"></span>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
                 </div>
             </div>
 
             <h5>Data do:</h5>
             <div row>
                 <div class="col-md-6 form-group">
-                    <input asp-for="DateEnd" class="form-control" id="dateend"/>
+                    <input asp-for="DateEnd" class="form-control" id="dateend" />
                     <span asp-validation-for="DateEnd" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-6 form-group ">
-                    <input asp-for="HourEnd" class="form-control" placeholder="00:00:00" />
+                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
+                    <input asp-for="HourEnd" class="form-control" placeholder="00:00" />
                     <span asp-validation-for="HourEnd" class="text-danger"></span>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
                 </div>
             </div>
             <div hidden>

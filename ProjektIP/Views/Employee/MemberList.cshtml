@@ -51,22 +51,20 @@
         }
 
         string imagePathTickCross;
-        switch (item.PositionId) //member decision
+        if (item.Confirmation.HasValue)
         {
-            case 1:
+            if (item.Confirmation.Value)
+            {
                 imagePathTickCross = "~/Content/Image/tick_without.png";
-                break;
-
-            case 2:
+            }
+            else
+            {
                 imagePathTickCross = "~/Content/Image/cross_without.png";
-                break;
-
-            case 3:
-                imagePathTickCross = "~/Content/Image/question.png";
-                break;
-            default:
-                imagePathTickCross = "~/Content/Image/question.png";
-                break;
+            }
+        }
+        else
+        {
+            imagePathTickCross = "~/Content/Image/question.png";
         }
 
         string classTextContainer= "inline text-container2 font-black text-overflow-ellipsis";
