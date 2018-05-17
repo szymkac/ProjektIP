@@ -629,7 +629,7 @@ namespace ProjektIP.Controllers
                         Dictionary<string, object> filler = new Dictionary<string, object>();
                         filler.Add(IdMeeting, idMeeting);
                         filler.Add(IdEmployee, idEmployee);
-                        filler.Add(Confirmation, false);
+                        filler.Add(Confirmation, null);
                         return filler;
                     }
                 }

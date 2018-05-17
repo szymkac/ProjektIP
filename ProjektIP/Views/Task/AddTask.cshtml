@@ -12,7 +12,7 @@
     function getEmployees() {
         $.ajax({
             type: "GET",
-            url: "/Employee/EmployeeList/",
+            url: "/Employee/EmployeeListWithActualUser/",
             success: function (viewHTML) {
                 $("#employees").html(viewHTML);
             },

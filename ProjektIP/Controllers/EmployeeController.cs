@@ -62,6 +62,13 @@ namespace ProjektIP.Controllers
             return PartialView(GetAllEmployees());
         }
 
+
+        [HttpGet]
+        public IActionResult EmployeeListWithActualUser()
+        {
+            return PartialView(GetAllEmployeesWithActualUser());
+        }
+
         public IActionResult PushAddEmployeeToDB(string name, string surname, string email, string phone, long positionId, bool addNewEmpleyeePermission, bool addNewTaskPermission, bool addNewEventPermission, bool previewEmployeesPermission)
         {
             Random random = new Random();
@@ -124,6 +131,10 @@ namespace ProjektIP.Controllers
         public static List<EmployeeModel> GetAllEmployees()
         {
             return EmployeeDAO.Select(null);
+        }
+        public static List<EmployeeModel> GetAllEmployeesWithActualUser()
+        {
+            return EmployeeDAO.SelectWithActualUser(null);
         }
 
         public static List<EmployeeModel> GetEmployeesOnPosition(long positionId)
@@ -207,6 +218,26 @@ namespace ProjektIP.Controllers
                         res[6] != null && res[6] != DBNull.Value ? Convert.ToInt64(res[6]) : new long?(),
                         res[8].ToString()
                         ));
+                }
+                return list;
+            }
+            public static List<EmployeeModel> SelectWithActualUser(Dictionary<string, object> filters)
+            {
+                List<EmployeeModel> list = new List<EmployeeModel>();
+
+                List<object[]> result = BaseDAO.SelectWithOutWhereClause(String.Format("SELECT * FROM Employees E LEFT JOIN Positions P ON E.IdPosition = P.IdPosition {0}", BaseDAO.GetWhereClause(filters)));
+                foreach (object[] res in result)
+                {
+                        list.Add(new EmployeeModel(
+                            Convert.ToInt64(res[0]),
+                            res[1].ToString(),
+                            res[2].ToString(),
+                            res[3].ToString(),
+                            res[4].ToString(),
+                            res[5].ToString() == "1" ? true : false,
+                            res[6] != null && res[6] != DBNull.Value ? Convert.ToInt64(res[6]) : new long?(),
+                            res[8].ToString()
+                            ));
                 }
                 return list;
             }

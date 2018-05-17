@@ -69,6 +69,12 @@ namespace ProjektIP.Controllers
             List<EmployeeModel> listEmployee = EmployeeController.GetAllEmployees();
             return PartialView(listEmployee);
         }
+        [HttpGet]
+        public IActionResult GetEmployeesWithActualUser()
+        {
+            List<EmployeeModel> listEmployee = EmployeeController.GetAllEmployeesWithActualUser();
+            return PartialView(listEmployee);
+        }
         [HttpPost]
         public IActionResult PushAddTaskToDB(string name, long typeId, long employeeId, long priorityId, string comment)
         {
