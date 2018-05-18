@@ -248,7 +248,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(int id, EmployeeModel employee)
             {
-                BaseDAO.Update("Employees", new KeyValuePair<string, object>(Columns.IdEmployee, id), Columns.Fill(employee));
+                BaseDAO.Update("Employees", new Dictionary<string, object>() { { Columns.IdEmployee, id } }, Columns.Fill(employee));
             }
         }
     }

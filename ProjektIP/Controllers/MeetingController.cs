@@ -67,7 +67,7 @@ namespace ProjektIP.Controllers
         [HttpPost]
         public IActionResult PushChangeConfirmation(long meetingId, bool confirmationofPresence)
         {
-            BaseDAO.Update("Members", new KeyValuePair<string, object>("IdMeeting", meetingId), new Dictionary<string, object>()
+            BaseDAO.Update("Members", new Dictionary<string, object> { { "IdMeeting", meetingId }, { "IdEmployee", HomeController.ActualUser.Id } }, new Dictionary<string, object>()
             {
                 {"IdEmployee",HomeController.ActualUser.Id },
                 { "IdMeeting", meetingId},
@@ -594,7 +594,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(int id, MeetingModel Meeting)
             {
-                BaseDAO.Update("Meetings", new KeyValuePair<string, object>(Columns.IdMeeting, id), Columns.Fill(Meeting));
+                BaseDAO.Update("Meetings", new Dictionary<string, object> { { Columns.IdMeeting, id } }, Columns.Fill(Meeting));
                 BaseDAO.Delete("Members", new Dictionary<string, object>()
                 {
                     {"IdMeeting",id }
