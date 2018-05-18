@@ -223,7 +223,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(long id, TaskModel Task)
             {
-                BaseDAO.Update("Tasks", new KeyValuePair<string, object>(Columns.IdTask, id), Columns.Fill(Task));
+                BaseDAO.Update("Tasks", new Dictionary<string, object> { { Columns.IdTask, id } }, Columns.Fill(Task));
             }
         }
     }
