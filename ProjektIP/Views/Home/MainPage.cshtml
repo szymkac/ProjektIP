@@ -65,7 +65,7 @@
 			$('#meeting-loader').hide();
 	}
 
-    function getTasks() {
+	function getTasks() {
         for (var i = 1; i < 4; i++) {
             (function (i) {
                 $.ajax({
@@ -85,11 +85,11 @@
 			type: "GET",
 			url: "/Meeting/MeetingDetailsForDay/",
 			data: {
-				date: changeDateFormat(dateIncrease(firstDayDate, (i - col - 1))),
+				date: changeDateFormat(dateIncrease(meetingColOneDate, (column - 1))),
 				column: column,
 				mode: mode
 			},
-			success: function (viewHTML) { meetingSuccessCallback(viewHTML, i) },
+			success: function (viewHTML) { meetingSuccessCallback(viewHTML, column) },
 			error: meetingErrorCallback
 		});
 	}

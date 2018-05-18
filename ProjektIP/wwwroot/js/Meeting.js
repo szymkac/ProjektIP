@@ -24,6 +24,8 @@ function confirmPrsent(id, confirmationOfPresence, column) {
 		},
 		success: function (Json) {
 			console.log("succes");
+			if (Json)
+				refreshMeetingColumn(column);
 		},
 		error: function (errorData) {
 			console.log(errorData);
