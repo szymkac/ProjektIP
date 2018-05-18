@@ -66,7 +66,7 @@ namespace ProjektIP.Controllers
         [HttpGet]
         public IActionResult EmployeeListWithActualUser()
         {
-            return PartialView(GetAllEmployeesWithActualUser());
+            return PartialView("EmployeeList", GetAllEmployeesWithActualUser());
         }
 
         public IActionResult PushAddEmployeeToDB(string name, string surname, string email, string phone, long positionId, bool addNewEmpleyeePermission, bool addNewTaskPermission, bool addNewEventPermission, bool previewEmployeesPermission)

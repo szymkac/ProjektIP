@@ -14,13 +14,13 @@
     });
 }
 
-function confirmPrsent(id, confirmationofPresence) {
+function confirmPrsent(id, confirmationOfPresence, column) {
 	$.ajax({
 		type: "POST",
 		url: "/Meeting/PushChangeConfirmation/",
 		data: {
 			meetingId: id,
-			confirmationofPresence: confirmationofPresence
+			confirmationofPresence: confirmationOfPresence
 		},
 		success: function (Json) {
 			console.log("succes");

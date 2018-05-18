@@ -74,7 +74,7 @@ namespace ProjektIP.Controllers
                 { "ConfirmationOfPresence", confirmationofPresence}
             });
 
-            return RedirectToAction("MainPage", "Home");
+			return Json(true);
         }
 
         [HttpGet]
@@ -179,7 +179,8 @@ namespace ProjektIP.Controllers
             DateTime day = DateTime.ParseExact(date, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             ViewBag.Column = column;
-            List<MeetingModel> meetingsList = new List<MeetingModel>();
+			ViewBag.Mode = mode;
+			List<MeetingModel> meetingsList = new List<MeetingModel>();
             switch (mode)
             {
                 case 1:
