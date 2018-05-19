@@ -615,6 +615,7 @@ img[src].avatar {
 	vertical-align: middle;
 }
 
+
 .text-container {
 	width: calc(100% - 120px);
 }
@@ -695,4 +696,17 @@ img[src].avatar {
     border: solid 2px transparent;
     border-radius: 10px;
     padding: 3px 0;
+}
+td.today {
+    background-color: #4472c4 !important;
+    color: white !important;
+}
+
+td.active {
+    background-color: #96cbf6 !important;
+    color: white !important;
+}
+
+.img-button{
+    cursor: pointer;
 }

@@ -10,8 +10,41 @@
         );
         getEmployees()
 
-        
+
+
+        console.log("cos");
     });
+
+    //Polski język w datepickerze
+    $.fn.datepicker.dates['polski'] = {
+        days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+        daysShort: ["Nie", "Pon", "Wt", "Śr", "Czw", "Pt", "Sob"],
+        daysMin: ["N", "P", "W", "Ś", "C", "Pt", "S"],
+        months: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
+        monthsShort: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+        today: "Dzisiaj",
+        clear: "Wyczyść",
+        format: "dd.mm.yyyy",
+        titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+        weekStart: 1
+    };
+
+    // DatePicker
+    $(document).ready(function () {
+        var date_input = $('input[id="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            container: container,
+            todayHighlight: false,
+            autoclose: true,
+            orientation: 'top',
+            language: 'polski',
+            todayHighlight: true
+        })
+    })
+
+    //ClockPicker
+    $('.clockpicker').clockpicker();
 
     // Uczestnicy wydarzenia
     function getEmployees() {
@@ -20,6 +53,8 @@
             url: "/Employee/MemberList/",
             success: function (viewHTML) {
                 $("#employees").html(viewHTML);
+
+                $(".employee-list-item").removeClass("border-to-members");
             },
             error: function (errorData) {
                 console.log(errorData);
@@ -46,7 +81,7 @@
         }
     }
 
-     document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
+    document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
     function switchCar(img) {
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/car_color.png";
@@ -67,7 +102,7 @@
         }
     }
 
-     document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
+    document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
     function switchMeeting(img) {
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/meeting_color.png";
@@ -85,7 +120,7 @@
         }
     }
 
-     document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
+    document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
     function switchSchool(img) {
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/school_color.png";
@@ -103,12 +138,12 @@
         }
     }
 
-    // Data od
-    // Data do
-    function changeDate() {
-        var value = $("#datestart").val();
-        $("#dateend").val(value);
-    }
+    //// Data od
+    //// Data do
+    //function changeDate() {
+    //    var value = $("[name = 'datestart']").val();
+    //    $("[name = 'dateend']").val(value);
+    //}
 
     // Pokój
     document.getElementById("location").style.display = "none";
@@ -147,8 +182,10 @@
             $("#newIdMembers").val(newIdMembers.value + id + ",");
         }
     }
+    function openDatePicker(target) {
+        $('[name = "'+target+'"]').datepicker('show');
+    }
 
-    $('.clockpicker').clockpicker();
 </script>
 
 <div class="row">
@@ -171,44 +208,46 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <label asp-for="DateStart" class="control-label">Data od:</label>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateStart" class="form-control" name="datestart" id="datestart" onchange="changeDate()" />
-                    <span asp-validation-for="DateStart" class="text-danger"></span>
-                </div>
-                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
-                    <input asp-for="HourStart" class="form-control" placeholder="00:00" />
-                    <span asp-validation-for="HourStart" class="text-danger"></span>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
+
+            <div class="form-group input-group">
+                <input asp-for="DateStart" class="form-control" id="date" name="datestart" placeholder="DD.MM.YYYY" type="text" />
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+                <span class="input-group-addon img-button" onclick="openDatePicker('datestart')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="form-group input-group clockpicker" data-autoclose="true">
+                <input asp-for="HourStart" class="form-control" placeholder="00:00" />
+                <span asp-validation-for="HourStart" class="text-danger"></span>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
             </div>
 
             <label asp-for="DateEnd" class="control-label">Data do:</label>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateEnd" class="form-control" name="dateend" id="dateend" />
-                    <span asp-validation-for="DateEnd" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
-                    <input asp-for="HourEnd" class="form-control" placeholder="00:00" />
-                    <span asp-validation-for="HourEnd" class="text-danger"></span>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
-
+            <div class="form-group input-group">
+                <input asp-for="DateEnd" class="form-control" id="date" name="dateend" placeholder="DD.MM.YYYY" type="text"/>
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+                <span class="input-group-addon img-button" onclick="openDatePicker('dateend')">
+                    <span class="glyphicon glyphicon-calendar" ></span>
+                </span>
             </div>
+            <div class="form-group input-group clockpicker" data-autoclose="true">
+                <input asp-for="HourEnd" class="form-control" placeholder="00:00" />
+                <span asp-validation-for="HourEnd" class="text-danger"></span>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+
             <div class="form-group margin-top-20" id="room">
                 <span asp-validation-for="RoomName" class="text-danger"></span>
                 <select class="custom-select form-control" name="roomId" id="roomName" onchange="changeRoom()">
                     <option value="" disabled selected>Pokój:</option>
                     @foreach (var item in ViewBag.listOfRooms)
-            {
-                <option value=@(item[0])>@(item[1])</option>
-    }
+                    {
+                        <option value=@(item[0])>@(item[1])</option>
+                    }
                     <option value="inne">Inne</option>
                 </select>
             </div>
@@ -234,7 +273,7 @@
             <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
         </div>
         <div hidden>
-            <input name="IdMembers" id="IdMembers" class="form-control" value="@(ViewBag.membersId)" />
+            @* <input name="IdMembers" id="IdMembers" class="form-control" value="@(ViewBag.membersId)" />*@
             <input name="newIdMembers" id="newIdMembers" class="form-control" />
         </div>
     </form>

@@ -28,6 +28,9 @@ namespace ProjektIP.Controllers
                 membersId += (int)member[0] + ",";
             ViewBag.membersId = membersId;
 
+            DateTime today = new DateTime();
+            ViewBag.Todat = today;
+
             return PartialView();
         }
 

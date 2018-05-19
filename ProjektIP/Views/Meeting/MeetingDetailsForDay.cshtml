@@ -67,7 +67,7 @@
 				<h5 class="mb-0">
 					<button class="btn btn-link colapsed max-width padding-top-bottom-0" data-toggle="collapse" data-target="@(@"#" + ViewBag.Column + "collapse" + item.Id)" aria-expanded="true" aria-controls="@(ViewBag.Column + "collapse" + item.Id)">
 						<div class="@("row " + colorClass)">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
 							</div>
 							@{
@@ -80,7 +80,7 @@
 									":" + (item.HourEnd.Value.Minutes.ToString().Length == 1 ? "0" + item.HourEnd.Value.Minutes.ToString() : item.HourEnd.Value.Minutes.ToString());
 								}
 							}
-							<div class="col-md-7 font-white">
+							<div class="col-md-6 font-white text-center text-overflow-ellipsis">
 								@Html.DisplayFor(modelItem => item.Title) <br />
 								@Html.DisplayFor(modelItem => dates)
 							</div>
