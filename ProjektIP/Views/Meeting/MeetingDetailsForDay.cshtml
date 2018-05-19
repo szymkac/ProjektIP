@@ -110,10 +110,14 @@
 						@Html.DisplayFor(modelItem => item.Note)
 						@if (item.EmployeeAuthorId != ViewBag.ActualUserId)
 						{
-							<div class="row text-center">
-								<img src="~/Content/Image/cross.png" height="35" width="35" onclick="confirmPrsent(@item.Id, false)"/>
-								<img src="~/Content/Image/tick.png" height="35" width="35" onclick="confirmPrsent(@item.Id, true)"/>
-							</div>
+							var members = item.Members.Where(x => x.Id == ViewBag.ActualUserId).ToArray();
+							if ((ViewBag.Mode == 1 || ViewBag.Mode == 0) && members.Length > 0 && !members[0].Confirmation.HasValue)
+							{
+								<div class="row text-center">
+									<img src="~/Content/Image/cross.png" height="35" width="35" onclick="confirmPrsent(@item.Id, false, @ViewBag.Column)" />
+									<img src="~/Content/Image/tick.png" height="35" width="35" onclick="confirmPrsent(@item.Id, true, @ViewBag.Column)" />
+								</div>
+							}
 						}
 						else
 						{

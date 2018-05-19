@@ -66,7 +66,7 @@ namespace ProjektIP.Controllers
         [HttpGet]
         public IActionResult EmployeeListWithActualUser()
         {
-            return PartialView(GetAllEmployeesWithActualUser());
+            return PartialView("EmployeeList", GetAllEmployeesWithActualUser());
         }
 
         public IActionResult PushAddEmployeeToDB(string name, string surname, string email, string phone, long positionId, bool addNewEmpleyeePermission, bool addNewTaskPermission, bool addNewEventPermission, bool previewEmployeesPermission)
@@ -248,7 +248,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(int id, EmployeeModel employee)
             {
-                BaseDAO.Update("Employees", new KeyValuePair<string, object>(Columns.IdEmployee, id), Columns.Fill(employee));
+                BaseDAO.Update("Employees", new Dictionary<string, object>() { { Columns.IdEmployee, id } }, Columns.Fill(employee));
             }
         }
     }

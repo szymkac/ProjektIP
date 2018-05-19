@@ -21,6 +21,7 @@
     }
 
 	function getMeetingColumnsForThreeDays(firstDayDate) {
+		$('#meeting-loader').show();
 		meetingSuccess = 0;
         var today = getDate(new Date());
         for (var i = 1; i < 4; i++) {
@@ -64,7 +65,7 @@
 			$('#meeting-loader').hide();
 	}
 
-    function getTasks() {
+	function getTasks() {
         for (var i = 1; i < 4; i++) {
             (function (i) {
                 $.ajax({
@@ -78,6 +79,19 @@
                 });
             })(i);
         }
+	}
+	function refreshMeetingColumn(column) {
+		$.ajax({
+			type: "GET",
+			url: "/Meeting/MeetingDetailsForDay/",
+			data: {
+				date: changeDateFormat(dateIncrease(meetingColOneDate, (column - 1))),
+				column: column,
+				mode: mode
+			},
+			success: function (viewHTML) { meetingSuccessCallback(viewHTML, column) },
+			error: meetingErrorCallback
+		});
 	}
 	function taskSuccessCallback(viewHTML, i) {
 		var section = "#task" + i;
@@ -222,154 +236,154 @@
 
 </script>
 <div id="main-page">
-    <div class="row main-height">
-        <div class="col-md-9 max-height">
-            <div class="button-container">
-                @if (Model.Contains(4))
-                {
-                    <button id="filter" class="btn background-blue modal-button left modal-button-menu-white grey-tooltip" title="Filtry" data-toggle="tooltip">
-                        <img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
-                    </button>
-                    <div class="left-button-group">
-                        <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=changeMode(1)>
-                            <img class="modal-button-img" id="my_filter" />
-                        </button>
-                        <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=changeMode(2)>
-                            <img class="modal-button-img" src="~/Content/Image/filter_all.png" />
-                        </button>
-                        <button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip" onclick="openModalChoosenUsers()">
-                            <img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
-                        </button>
-                    </div>
-                }
+	<div class="row main-height">
+		<div class="col-md-9 max-height">
+			<div class="button-container">
+				@if (Model.Contains(4))
+				{
+					<button id="filter" class="btn background-blue modal-button left modal-button-menu-white grey-tooltip" title="Filtry" data-toggle="tooltip">
+						<img class="modal-button-img" src="~/Content/Image/filter.png" onclick="showHideButtonsFilter()" />
+					</button>
+					<div class="left-button-group">
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Tylko ja" data-toggle="tooltip" onclick=changeMode(1)>
+							<img class="modal-button-img" id="my_filter" />
+						</button>
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wszyscy" data-toggle="tooltip" onclick=changeMode(2)>
+							<img class="modal-button-img" src="~/Content/Image/filter_all.png" />
+						</button>
+						<button class="btn background-blue modal-button modal-button-unvisible grey-tooltip" title="Wybrani" data-toggle="tooltip" onclick="openModalChoosenUsers()">
+							<img class="modal-button-img" src="~/Content/Image/filter_spy.png" />
+						</button>
+					</div>
+				}
 
-                @if (Model.Contains(1) || Model.Contains(2) || Model.Contains(3))
-                {
-                    <button id="menu" class="btn background-blue modal-button right modal-button-menu-white grey-tooltip" title="Menu" data-toggle="tooltip">
-                        <img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
-                    </button>
-                    <div class="right-button-group">
-                        @if (Model.Contains(1))
-                        {
-                            <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj pracownika" data-toggle="tooltip" onclick="openModalAddUser()">
-                                <img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
-                            </button>
-                        }
-                        @if (Model.Contains(2))
-                        {
-                            <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
-                                <img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
-                            </button>
-                            <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
-                                <img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
-                            </button>
-                        }
-                        @if (Model.Contains(3))
-                        {
-                            <button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip" onclick="openModalAddMeeting()">
-                                <img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
-                            </button>
+				@if (Model.Contains(1) || Model.Contains(2) || Model.Contains(3))
+				{
+					<button id="menu" class="btn background-blue modal-button right modal-button-menu-white grey-tooltip" title="Menu" data-toggle="tooltip">
+						<img class="modal-button-img" src="~/Content/Image/menu.png" onclick="showHideButtonsMenu()" />
+					</button>
+					<div class="right-button-group">
+						@if (Model.Contains(1))
+						{
+							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj pracownika" data-toggle="tooltip" onclick="openModalAddUser()">
+								<img class="modal-button-img" src="~/Content/Image/menu_addemployee.png" />
+							</button>
+						}
+						@if (Model.Contains(2))
+						{
+							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj zadanie" data-toggle="tooltip" onclick="openModalAddTask()">
+								<img class="modal-button-img" src="~/Content/Image/menu_addtask.png" />
+							</button>
+							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Zarządzaj zadaniami" data-toggle="tooltip" onclick="openModalTaskManager()">
+								<img class="modal-button-img" src="~/Content/Image/menu_edittask.png" />
+							</button>
+						}
+						@if (Model.Contains(3))
+						{
+							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip" onclick="openModalAddMeeting()">
+								<img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
+							</button>
 
-                        }
-                    </div>
-                }
-            </div>
-            <div class="border-corners task-height scroll-container scroll5">
-                <div class="side-button-container">
-                    <button id="PREV" class="btn btn-default btn-sm" onclick="onChangeDateButtonClick(this.id)">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </button>
-                </div>
-                <div class="meeting-bar"></div>
-                <div class="meeting-container">
-                    <div class="date-container">
-                        <div id="col-date-1" class="date-text"></div>
-                        <div id="col-today-1"></div>
-                    </div>
-                    <div id="col1"></div>
-                </div>
-                <div class="meeting-bar"></div>
-                <div class="meeting-container">
-                    <div class="date-container">
-                        <div id="col-date-2" class="date-text"></div>
-                        <div id="col-today-2"></div>
-                    </div>
-                    <div id="col2"></div>
-                </div>
-                <div class="meeting-bar"></div>
-                <div class="meeting-container">
-                    <div class="date-container">
-                        <div id="col-date-3" class="date-text"></div>
-                        <div id="col-today-3"></div>
-                    </div>
-                    <div id="col3"></div>
-                </div>
-                <div class="meeting-bar"></div>
-                <div class="side-button-container">
-                    <button id="NEXT" class="btn btn-default btn-sm" onclick="onChangeDateButtonClick(this.id)">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </button>
-                </div>
-            </div>
+						}
+					</div>
+				}
+			</div>
+			<div class="border-corners task-height scroll-container scroll5">
+				<div class="side-button-container">
+					<button id="PREV" class="btn btn-default btn-sm" onclick="onChangeDateButtonClick(this.id)">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</button>
+				</div>
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-1" class="date-text"></div>
+						<div id="col-today-1"></div>
+					</div>
+					<div id="col1"></div>
+				</div>
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-2" class="date-text"></div>
+						<div id="col-today-2"></div>
+					</div>
+					<div id="col2"></div>
+				</div>
+				<div class="meeting-bar"></div>
+				<div class="meeting-container">
+					<div class="date-container">
+						<div id="col-date-3" class="date-text"></div>
+						<div id="col-today-3"></div>
+					</div>
+					<div id="col3"></div>
+				</div>
+				<div class="meeting-bar"></div>
+				<div class="side-button-container">
+					<button id="NEXT" class="btn btn-default btn-sm" onclick="onChangeDateButtonClick(this.id)">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</button>
+				</div>
+			</div>
 			<div id="meeting-loader" class="loading-panel">
 				<div class="loading-circle"></div>
 			</div>
-        </div>
+		</div>
 		<div class="col-md-3 border-corners max-height scroll5 scroll-container">
-            <div class="task-container">
-                <div class="title-container">
-                    ZADANIA    <img src="~/Content/Image/tasks_color.png" width="30" height="30" />
-                </div>
-                @if (ViewBag.TaskListCount > 0)
-    {
+			<div class="task-container">
+				<div class="title-container">
+					ZADANIA    <img src="~/Content/Image/tasks_color.png" width="30" height="30" />
+				</div>
+				@if (ViewBag.TaskListCount > 0)
+				{
 
 
-            <div class="task-section-bar">
-                <span>DO ZROBIENIA:</span>
-            </div>
-            <div id="task1"></div>
-            <div class="task-section-bar not-first">
-                W TRAKCIE:
-            </div>
-            <div id="task2"></div>
-            <div class="task-section-bar not-first">
-                WYKONANE:
-            </div>
-            <div id="task3">
-            </div>
-}
-else
-{
-            <div class="image-container">
-                <img  class="img-center center-block"  src="~/Content/Image/holiday.png" width="200" height="200" />
-                </div>
-                }
-            </div>
-            <div id="task-loader" class="loading-panel task">
-                <div class="loading-circle"></div>
-            </div>
-            </div>
-    </div>
+					<div class="task-section-bar">
+						<span>DO ZROBIENIA:</span>
+					</div>
+					<div id="task1"></div>
+					<div class="task-section-bar not-first">
+						W TRAKCIE:
+					</div>
+					<div id="task2"></div>
+					<div class="task-section-bar not-first">
+						WYKONANE:
+					</div>
+					<div id="task3">
+					</div>
+				}
+				else
+				{
+					<div class="image-container">
+						<img class="img-center center-block" src="~/Content/Image/holiday.png" width="200" height="200" />
+					</div>
+				}
+			</div>
+			<div id="task-loader" class="loading-panel task">
+				<div class="loading-circle"></div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div id="modal-head">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div id="modal-head">
 
-                </div>
-            </div>
-            <div class="modal-body">
-                <div id="modal-body" class="modal-inner-body">
+				</div>
+			</div>
+			<div class="modal-body">
+				<div id="modal-body" class="modal-inner-body">
 
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
-                <button class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
+				<button class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>

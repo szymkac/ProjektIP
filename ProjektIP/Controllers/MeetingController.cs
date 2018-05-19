@@ -70,14 +70,14 @@ namespace ProjektIP.Controllers
         [HttpPost]
         public IActionResult PushChangeConfirmation(long meetingId, bool confirmationofPresence)
         {
-            BaseDAO.Update("Members", new KeyValuePair<string, object>("IdMeeting", meetingId), new Dictionary<string, object>()
+            BaseDAO.Update("Members", new Dictionary<string, object> { { "IdMeeting", meetingId }, { "IdEmployee", HomeController.ActualUser.Id } }, new Dictionary<string, object>()
             {
                 {"IdEmployee",HomeController.ActualUser.Id },
                 { "IdMeeting", meetingId},
                 { "ConfirmationOfPresence", confirmationofPresence}
             });
 
-            return RedirectToAction("MainPage", "Home");
+			return Json(true);
         }
 
         [HttpGet]
@@ -182,7 +182,8 @@ namespace ProjektIP.Controllers
             DateTime day = DateTime.ParseExact(date, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             ViewBag.ActualUserId = HomeController.ActualUser.Id;
             ViewBag.Column = column;
-            List<MeetingModel> meetingsList = new List<MeetingModel>();
+			ViewBag.Mode = mode;
+			List<MeetingModel> meetingsList = new List<MeetingModel>();
             switch (mode)
             {
                 case 1:
@@ -596,7 +597,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(int id, MeetingModel Meeting)
             {
-                BaseDAO.Update("Meetings", new KeyValuePair<string, object>(Columns.IdMeeting, id), Columns.Fill(Meeting));
+                BaseDAO.Update("Meetings", new Dictionary<string, object> { { Columns.IdMeeting, id } }, Columns.Fill(Meeting));
                 BaseDAO.Delete("Members", new Dictionary<string, object>()
                 {
                     {"IdMeeting",id }

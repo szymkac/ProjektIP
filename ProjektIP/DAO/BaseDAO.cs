@@ -188,7 +188,7 @@ namespace ProjektIP.DAO
         /// <param name="table">Nazwa tabeli</param>
         /// <param name="id">Identyfikator modyfikowanego pola</param>
         /// <param name="values">Słownik wartości, gdzie kluczem jest nazwa kolumny. Jeśli wartość ma pozostać bez zmiany, podać null</param>
-        public static void Update(string table, KeyValuePair<string, object> id, Dictionary<string, object> values)
+        public static void Update(string table, Dictionary<string, object> id, Dictionary<string, object> values)
         {
             using (SqlConnection conn = new SqlConnection(Startup.StaticConfiguration.GetConnectionString("DefaultConnection")))
             {
@@ -270,7 +270,7 @@ namespace ProjektIP.DAO
                     if (columns.Length > 0)
                         columns.Remove(columns.Length - 1);
 
-                    string sqlQuery = String.Format("UPDATE {0} SET {1} WHERE {2} = {3} ", table, columns, id.Key, id.Value);
+                    string sqlQuery = String.Format("UPDATE {0} SET {1} {2} ", table, columns, GetWhereClause(id));
 
                     conn.Open();
                     command.CommandText = sqlQuery;
