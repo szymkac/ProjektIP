@@ -28,8 +28,9 @@ namespace ProjektIP.Controllers
                 membersId += (int)member[0] + ",";
             ViewBag.membersId = membersId;
 
-            DateTime today = new DateTime();
-            ViewBag.Todat = today;
+            String format ="dd.MM.yyyy";
+            DateTime today = DateTime.Today;
+            ViewBag.Today = today.ToString(format);
 
             return PartialView();
         }
@@ -115,7 +116,13 @@ namespace ProjektIP.Controllers
             ViewBag.membersId = membersId;
             ViewBag.meetingId = Id;
 
+            String format = "dd.MM.yyyy";
+            DateTime today = DateTime.Today;
+            ViewBag.Today = today.ToString(format);
 
+            model.DateStart = model.DateStart.Date;
+            model.DateEnd = model.DateEnd.Value.Date;
+            
             return PartialView(model);
         }
 

@@ -10,7 +10,7 @@
         );
         getEmployees()
         setHiddenData();
-        
+        changeFormatOfDateTime();
     });
 
 
@@ -24,6 +24,8 @@
             } ,
             success: function (viewHTML) {
                 $("#employees").html(viewHTML);
+
+                
             },
             error: function (errorData) {
                 console.log(errorData);
@@ -31,6 +33,54 @@
         });
     }
 
+     function changeFormatOfDateTime() {
+         var dateStart = '@(Model.DateStart)';
+         var dateStartString = dateStart.substring(0,10);
+         var dateEnd = '@(Model.DateEnd)';
+         var dateEndString = dateEnd.substring(0, 10);
+         
+         var hourStart= '@(Model.HourStart)';
+         var hourStartString = hourStart.substring(0,5);
+         var hourEnd = '@(Model.HourEnd)';
+         var hourEndString = hourEnd.substring(0, 5);
+
+         $('[name = "datestart"]').val(dateStartString);
+         $('[name = "dateend"]').val(dateEndString);
+
+         $('#hourStart').val(hourStartString);
+         $('#hourEnd').val(hourEndString);
+    }
+
+
+    //Polski język w datepickerze
+    $.fn.datepicker.dates['polski'] = {
+        days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+        daysShort: ["Nie", "Pon", "Wt", "Śr", "Czw", "Pt", "Sob"],
+        daysMin: ["N", "P", "W", "Ś", "C", "Pt", "S"],
+        months: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
+        monthsShort: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+        today: "Dzisiaj",
+        clear: "Wyczyść",
+        format: "dd.mm.yyyy",
+        titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+        weekStart: 1
+    };
+
+    // DatePicker
+    $(document).ready(function () {
+        var date_input = $('input[id="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var today = '@(ViewBag.Today)';
+        date_input.datepicker({
+            container: container,
+            todayHighlight: false,
+            autoclose: true,
+            orientation: 'top',
+            language: 'polski',
+            todayHighlight: true,
+            startDate: today
+        })
+    })
 
     function selectOldEmployee() {
         var string = " ";
@@ -241,12 +291,16 @@
 
     //DATA START -> END
 
-    function changeDate() {
-        var value = $("#datestart").val();
-        $("#dateend").val(value);
-    }
+    //function changeDate() {
+    //    var value = $("#datestart").val();
+    //    $("#dateend").val(value);
+    //}
 
     $('.clockpicker').clockpicker();
+
+    function openDatePicker(target) {
+        $('[name = "' + target + '"]').datepicker('show');
+    }
 </script>
 <div class="row">
     <form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post">
@@ -261,7 +315,7 @@
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
             </div>
             <div row>
-               <h4>Typ wydarzenia:</h4>
+                <h4>Typ wydarzenia:</h4>
                 <br />
                 <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip" />
                 <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip" />
@@ -273,35 +327,37 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <h5>Data od:</h5>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateStart" class="form-control" id="datestart" onchange="changeDate()" />
-                    <span asp-validation-for="DateStart" class="text-danger"></span>
-                </div>
-
-                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
-                    <input asp-for="HourStart" class="form-control" placeholder="00:00" />
-                    <span asp-validation-for="HourStart" class="text-danger"></span>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
+            <div class="form-group input-group">
+                <input asp-for="DateStart" class="form-control" id="date" name="datestart" placeholder="DD.MM.YYYY" type="text" />
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+                <span class="input-group-addon img-button" onclick="openDatePicker('datestart')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="form-group input-group clockpicker" data-autoclose="true">
+                <input asp-for="HourStart" class="form-control" placeholder="00:00" id="hourStart" />
+                <span asp-validation-for="HourStart" class="text-danger"></span>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
             </div>
 
-            <h5>Data do:</h5>
-            <div row>
-                <div class="col-md-6 form-group">
-                    <input asp-for="DateEnd" class="form-control" id="dateend" />
-                    <span asp-validation-for="DateEnd" class="text-danger"></span>
-                </div>
 
-                <div class="col-md-6 form-group input-group clockpicker" data-autoclose="true">
-                    <input asp-for="HourEnd" class="form-control" placeholder="00:00" />
-                    <span asp-validation-for="HourEnd" class="text-danger"></span>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
+            <h5>Data do:</h5>
+            <label asp-for="DateEnd" class="control-label">Data do:</label>
+            <div class="form-group input-group">
+                <input asp-for="DateEnd" class="form-control" id="date" name="dateend" placeholder="DD.MM.YYYY" type="text" />
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+                <span class="input-group-addon img-button" onclick="openDatePicker('dateend')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <div class="form-group input-group clockpicker" data-autoclose="true">
+                <input asp-for="HourEnd" class="form-control" placeholder="00:00" id="hourEnd" />
+                <span asp-validation-for="HourEnd" class="text-danger"></span>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
             </div>
             <div hidden>
                 <label asp-for="RoomId" class="control-label"></label>
@@ -314,9 +370,9 @@
                 <select class="custom-select form-control" onchange="changeRoom()" id="roomName">
                     <option value="" disabled selected>Pokój:</option>
                     @foreach (var item in ViewBag.listOfRooms)
-                {
-                    <option value=@(item[0])>@(item[1])</option>
-            }
+            {
+                <option value=@(item[0])>@(item[1])</option>
+    }
                     <option value="inne">Inne</option>
                 </select>
             </div>

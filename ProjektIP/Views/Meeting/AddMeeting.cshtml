@@ -8,9 +8,7 @@
                 trigger: 'hover'
             }
         );
-        getEmployees()
-
-
+        getEmployees();
 
         console.log("cos");
     });
@@ -33,13 +31,15 @@
     $(document).ready(function () {
         var date_input = $('input[id="date"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var today = '@(ViewBag.Today)';
         date_input.datepicker({
             container: container,
             todayHighlight: false,
             autoclose: true,
             orientation: 'top',
             language: 'polski',
-            todayHighlight: true
+            todayHighlight: true,
+            startDate: today
         })
     })
 
