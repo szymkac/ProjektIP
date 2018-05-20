@@ -65,6 +65,7 @@
     // Typ wydarzenia
     document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
     function switchPhone(img) {
+        var location = document.getElementById("locationName").value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/phone_color.png";
             document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
@@ -72,8 +73,12 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(3);
 
-            document.getElementById("location").style.display = "none";
+            if (location == "" || location == null) {
+                document.getElementById("location").style.display = "none";
+                $("#roomName").val(null);
+            }
             document.getElementById("roomName").style.display = "initial";
+            
         }
         else {
             img.src = "../Content/Image/phone_grey.png";
@@ -83,6 +88,7 @@
 
     document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
     function switchCar(img) {
+        var location = document.getElementById("locationName").value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/car_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -93,17 +99,20 @@
             document.getElementById("location").style.display = "initial";
             document.getElementById("roomName").style.display = "none";
             $("#roomId").val(null);
+            $("#roomName").val("inne");
         }
         else {
             img.src = "../Content/Image/car_grey.png";
             $("#typeId").val(0);
-            document.getElementById("location").style.display = "none";
+            if (location == "" || location == null) 
+                document.getElementById("location").style.display = "none";
             document.getElementById("roomName").style.display = "initial";
         }
     }
 
     document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
     function switchMeeting(img) {
+        var location = document.getElementById("locationName").value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/meeting_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -111,7 +120,10 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(1);
 
-            document.getElementById("location").style.display = "none";
+            if (location == "" || location == null) {
+                document.getElementById("location").style.display = "none";
+                $("#roomName").val(null);
+            }
             document.getElementById("roomName").style.display = "initial";
         }
         else {
@@ -122,6 +134,7 @@
 
     document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
     function switchSchool(img) {
+        var location = document.getElementById("locationName").value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/school_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -129,7 +142,10 @@
             document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
             $("#typeId").val(4);
 
-            document.getElementById("location").style.display = "none";
+            if (location == "" || location == null) {
+                document.getElementById("location").style.display = "none";
+                $("#roomName").val(null);
+            }
             document.getElementById("roomName").style.display = "initial";
         }
         else {

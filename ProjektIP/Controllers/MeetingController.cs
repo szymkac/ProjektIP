@@ -120,9 +120,6 @@ namespace ProjektIP.Controllers
             DateTime today = DateTime.Today;
             ViewBag.Today = today.ToString(format);
 
-            model.DateStart = model.DateStart.Date;
-            model.DateEnd = model.DateEnd.Value.Date;
-            
             return PartialView(model);
         }
 
@@ -161,6 +158,12 @@ namespace ProjektIP.Controllers
             }
 
             MeetingModel model = new MeetingModel(id, meetingTypeId, dateStart, dateEnd, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
+            if (model.Location == null)
+                model.Location = "";
+            if (model.RoomId == null) {
+                model.RoomId = null;
+                model.RoomName = "";
+            }
 
             MeetingDAO.Update((int)id,model);
             return RedirectToAction("MainPage", "Home");

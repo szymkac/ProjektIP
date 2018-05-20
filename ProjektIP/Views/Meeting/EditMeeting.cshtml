@@ -98,6 +98,7 @@
     function setHiddenData() {
         var typeid = document.getElementById('typeId').value;
         var priorityid = document.getElementById('priorityId').value;
+        var roomid = document.getElementById('roomId').value;
         console.log(typeid);
         switch (typeid) {
             case "1":
@@ -160,6 +161,25 @@
                 $("#priority").val(4);
                 break;
         }
+
+        //if (roomid != "") {
+        //    $('#roomName').val(roomid);
+        //}
+        //else { 
+        //    $('#roomName').val("inne");
+        //    document.getElementById("location").style.display = "initial";
+        //}
+
+        
+        var location = document.getElementById("locationName").value;
+        if (location == "" || location==null) {
+            $('#roomName').val(roomid);
+        }
+        else {
+            $('#roomName').val("inne");
+            document.getElementById("location").style.display = "initial";
+            roomid = null;
+        }
         
 
     }
@@ -167,6 +187,8 @@
     //TYP Spotkania
     //document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
     function switchPhone(img) {
+        var roomid = document.getElementById('roomId').value;
+
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/phone_color.png";
             document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
@@ -174,7 +196,8 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(3);
 
-            document.getElementById("location").style.display = "none";
+            if(roomid!="")
+                document.getElementById("location").style.display = "none";
             document.getElementById("roomName").style.display = "initial";
         }
         else {
@@ -185,6 +208,7 @@
 
     //document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
     function switchCar(img) {
+        var roomid = document.getElementById('roomId').value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/car_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -194,18 +218,21 @@
 
             document.getElementById("location").style.display = "initial";
             document.getElementById("roomName").style.display = "none";
-            $("#roomId").val(null);
+            $("#roomId").val("");
+            $("#roomName").val("inne");
         }
         else {
             img.src = "../Content/Image/car_grey.png";
             $("#typeId").val(0);
-            document.getElementById("location").style.display = "none";
+            if (roomid != "")
+                document.getElementById("location").style.display = "none";
             document.getElementById("roomName").style.display = "initial";
         }
     }
 
     //document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
     function switchMeeting(img) {
+        var roomid = document.getElementById('roomId').value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/meeting_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -213,7 +240,8 @@
             document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
             $("#typeId").val(1);
 
-            document.getElementById("location").style.display = "none";
+            if (roomid != "")
+                document.getElementById("location").style.display = "none";
             document.getElementById("roomName").style.display = "initial";
         }
         else {
@@ -224,6 +252,7 @@
 
     //document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
     function switchSchool(img) {
+        var roomid = document.getElementById('roomId').value;
         if (img.src.substr(-8) === "grey.png") {
             img.src = "../Content/Image/school_color.png";
             document.getElementById("imgPhone").src = "../Content/Image/phone_grey.png";
@@ -231,7 +260,8 @@
             document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
             $("#typeId").val(4);
 
-            document.getElementById("location").style.display = "none";
+            if (roomid != "")
+                document.getElementById("location").style.display = "none";
             document.getElementById("roomName").style.display = "initial";
         }
         else {
@@ -256,7 +286,7 @@
             $("#locationName").val("");
         }
         else {
-            $("#roomId").val(null);
+            $("#roomId").val("");
             document.getElementById("location").style.display = "initial";
         }
     }
@@ -326,7 +356,8 @@
                 <input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <h5>Data od:</h5>
+
+            <label asp-for="DateStart" class="control-label">Data od:</label>
             <div class="form-group input-group">
                 <input asp-for="DateStart" class="form-control" id="date" name="datestart" placeholder="DD.MM.YYYY" type="text" />
                 <span asp-validation-for="DateStart" class="text-danger"></span>
@@ -342,8 +373,6 @@
                 </span>
             </div>
 
-
-            <h5>Data do:</h5>
             <label asp-for="DateEnd" class="control-label">Data do:</label>
             <div class="form-group input-group">
                 <input asp-for="DateEnd" class="form-control" id="date" name="dateend" placeholder="DD.MM.YYYY" type="text" />
