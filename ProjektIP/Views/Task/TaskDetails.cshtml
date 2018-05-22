@@ -2,7 +2,7 @@
 <script src="~/js/Task.js"></script>
 <div id="@("accordion" + ViewBag.Column)">
     @foreach (var item in Model)
-    {        
+    {
         string colorClass;
         string borderClass;
         string imagePath;
@@ -70,22 +70,33 @@
                             <div class="col-md-2">
                                 <img src="@Url.Content(imagePath)" alt="Typ" height="40" width="40" />
                             </div>
-                            <div class="col-md-7 font-white">
-                                #@Html.DisplayFor(modelItem => item.Id) <br />
-                                @Html.DisplayFor(modelItem => item.Title) <br />
-                            </div>
                             @if (item.StatusId == 1 || item.StatusId == 5)
                             {
+                                <div class="col-md-8 font-white text-center text-overflow-ellipsis">
+                                    #@Html.DisplayFor(modelItem => item.Id) <br />
+                                    @Html.DisplayFor(modelItem => item.Title) <br />
+                                </div>
                                 <div class="text-center marging-top-bottom-5">
                                     <img src="~/Content/Image/tasks_start.png" height="34" width="34" onclick="changeStatus(@item.Id, 2)" />
                                 </div>
                             }
                             else if (item.StatusId == 2)
                             {
+                                <div class="col-md-7 font-white text-center text-overflow-ellipsis">
+                                    #@Html.DisplayFor(modelItem => item.Id) <br />
+                                    @Html.DisplayFor(modelItem => item.Title) <br />
+                                </div>
                                 <div class="text-center marging-top-bottom-5">
                                     <img src="~/Content/Image/tasks_end.png" height="34" width="34" onclick="changeStatus(@item.Id,3)" />
                                 </div>
 
+                            }
+                            else
+                            {
+                                <div class="col-md-10 font-white text-center text-overflow-ellipsis">
+                                    #@Html.DisplayFor(modelItem => item.Id) <br />
+                                    @Html.DisplayFor(modelItem => item.Title) <br />
+                                </div>
                             }
                         </div>
                     </button>

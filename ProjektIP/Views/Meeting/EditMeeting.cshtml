@@ -11,6 +11,9 @@
         getEmployees()
         setHiddenData();
         changeFormatOfDateTime();
+
+         var note = '@(Model.Note)';
+         $('#Note').val(note);
     });
 
 
@@ -162,13 +165,6 @@
                 break;
         }
 
-        //if (roomid != "") {
-        //    $('#roomName').val(roomid);
-        //}
-        //else { 
-        //    $('#roomName').val("inne");
-        //    document.getElementById("location").style.display = "initial";
-        //}
 
         
         var location = document.getElementById("locationName").value;
@@ -345,12 +341,13 @@
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />
             </div>
             <div row>
-                <h4>Typ wydarzenia:</h4>
+                <h4>Wprowadź zmiany:</h4>
+                <label>Typ wydarzenia:</label>
                 <br />
-                <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip" />
-                <img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip" />
+                <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
             </div>
             <div class="form-group margin-top-20">
                 <input asp-for="Title" class="form-control" placeholder="Nazwa wydarzenia" />
@@ -410,10 +407,6 @@
                 <input asp-for="Location" class="form-control " placeholder="Lokalizacja" id="locationName" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-            <div class="form-group margin-top-20">
-                <input asp-for="Note" class="form-control" placeholder="Opis" />
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
             <div hidden>
                 <input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
             </div>
@@ -426,11 +419,16 @@
                 <option value="4">Opcjonalny</option>
             </select>
 
+            <div class="form-group margin-top-20">
+                <textarea asp-for="Note" rows="3" class="form-control scroll-container scroll5" placeholder="Opis" name="Note" id="Note" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+
             <button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
         </div>
         <div class="col-md-6 main-height">
 
-            <div style="margin-left:75px" class="form-group" id="employee">
+            <div class="form-group" id="employee">
                 <h4>Wybierz uczestników:</h4>
                 @*<label asp-for="Members" class="control-label">Wybierz uczestników:</label>
                 <div hidden>

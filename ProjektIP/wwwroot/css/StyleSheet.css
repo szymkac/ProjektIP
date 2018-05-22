@@ -710,3 +710,7 @@ td.active {
 .img-button{
     cursor: pointer;
 }
+
+textarea {
+    resize: none;
+}

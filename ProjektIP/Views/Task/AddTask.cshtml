@@ -25,49 +25,53 @@
 </script>
 
 <div class="row">
+    
     <form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-md-6 main-height">
-        <div hidden>
-            <input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
-        </div>
-        <h4>Typ zadania:</h4>
-        <span asp-validation-for="TaskTypeId" class="text-danger"></span>
-        <br />
-        <img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip" />
-        <img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip" />
-        <img id="imgProblem" height="50" width="50" onclick="switchProblem(this)" title="Problem" data-toggle="tooltipTask" class="grey-tooltip" />
-        <img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip" />
-        <div class="form-group" style="margin-top:10px;">
-            <input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" data-validationRules="required,maxLength50" onchange="validateField(this)"/>
-            <span asp-validation-for="Title" data-validator="name" class="text-danger"></span>
-        </div>
-        <div class="form-group" style="margin-top:10px">
-            <input asp-for="Comment" name="comment" class="form-control" placeholder="Opis" onchange="validateField(this)" />
-            <span asp-validation-for="Comment" data-validator="comment" class="text-danger"></span>
-        </div>
-        <div hidden>
-            <input asp-for="PriorityId" name="priorityId" id="priorityId" value="2" class="form-control" />
+            <h4>Dane zadania:</h4>
+            <div hidden>
+                <input asp-for="TaskTypeId" name="typeId" id="typeId" class="form-control" />
+            </div>
+            <label>Typ zadania:</label>
+            <span asp-validation-for="TaskTypeId" class="text-danger"></span>
+            <br />
+            <img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img id="imgProblem" height="50" width="50" onclick="switchProblem(this)" title="Problem" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <div class="form-group" style="margin-top:10px;">
+                <input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" data-validationRules="required,maxLength50" onchange="validateField(this)" />
+                <span asp-validation-for="Title" data-validator="name" class="text-danger"></span>
+            </div>
 
-        </div>
-        <span asp-validation-for="PriorityId" class="text-danger"></span>
-        <select class="custom-select form-control" onchange="changePriority()" id="priority">
-            <option value="" disabled selected>Priorytet:</option>
-            <option value="1">Pilny</option>
-            <option value="2">Normalny</option>
-            <option value="3">Niski</option>
-            <option value="4">Opcjonalny</option>
-        </select>
+            <div hidden>
+                <input asp-for="PriorityId" name="priorityId" id="priorityId" value="2" class="form-control" />
+
+            </div>
+            <span asp-validation-for="PriorityId" class="text-danger"></span>
+            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+                <option value="" disabled selected>Priorytet:</option>
+                <option value="1">Pilny</option>
+                <option value="2">Normalny</option>
+                <option value="3">Niski</option>
+                <option value="4">Opcjonalny</option>
+            </select>
+
+            <div class="form-group" style="margin-top:10px">
+                <textarea asp-for="Comment" rows="6" name="comment" class="form-control scroll-container scroll5" placeholder="Opis" onchange="validateField(this)" />
+                <span asp-validation-for="Comment" data-validator="comment" class="text-danger"></span>
+            </div>
         </div>
         <div class="col-md-6 main-height">
-            <div style="margin-left:75px" class="form-group" id="employee">
+            <div class="form-group" id="employee">
                 <h4>Wybierz zleceniobiorcę:</h4>
                 <div hidden>
                     <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" />
                     <span asp-validation-for="EmployeeId" class="text-danger"></span>
                 </div>
-            </div>  
-            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>            
+            </div>
+            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
         </div>
     </form>
 </div>

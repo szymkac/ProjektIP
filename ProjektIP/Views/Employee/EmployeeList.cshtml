@@ -4,7 +4,7 @@
 	ViewData["Title"] = "EmployeeList";
 }
 
-<div id="@("accordion" + ViewBag.Column)">
+<div id="@("accordion" + ViewBag.Column)"  class="img-button">
 	@foreach (var item in Model)
 	{
 		string imagePath;
