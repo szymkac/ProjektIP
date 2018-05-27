@@ -112,8 +112,6 @@
                             }
                         }
 
-                        @*@Html.DisplayFor(modelItem => item.Location)
-                            @Html.DisplayFor(modelItem => item.RoomName)*@
                         <br />
                         <b>Autor:</b> @Html.DisplayFor(modelItem => item.EmployeeAuthorName) <br />
                         <b>Priorytet:</b> @Html.DisplayFor(modelItem => item.PriorityName) <img src="@Url.Content(priorityPath)" alt="Priorytet" height="20" width="20" />  <br />
@@ -135,7 +133,6 @@
                             <div class="row text-center">
                                 <button class="btn btn-login background-blue font-white" onclick="openEditMeetingModal(@item.Id)">Edytuj</button>
                             </div>
-
                         }
                     </div>
                 </div>

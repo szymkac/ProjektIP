@@ -713,4 +713,17 @@ td.active {
 
 textarea {
     resize: none;
+	overflow-y:auto;
+}
+
+.main-page-date {
+	margin-top: 10px;
+}
+	.main-page-date .form-control {
+		border: solid 4px #4472c4;
+	}
+
+.no-margin{
+	margin: 0;
+	padding:0;
 }

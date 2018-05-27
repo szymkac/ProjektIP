@@ -1,7 +1,6 @@
 ﻿@model ProjektIP.Models.MeetingModel
 
 <script>
-
     $(function () {
         $('[data-toggle="tooltipTask"]').tooltip(
             {
@@ -9,8 +8,6 @@
             }
         );
         getEmployees();
-
-        console.log("cos");
     });
 
     //Polski język w datepickerze
@@ -42,6 +39,10 @@
             startDate: today
         })
     })
+
+	function openDatePicker(target) {
+		$('[name = "' + target + '"]').datepicker('show');
+	}
 
     //ClockPicker
     $('.clockpicker').clockpicker();
@@ -198,9 +199,7 @@
             $("#newIdMembers").val(newIdMembers.value + id + ",");
         }
     }
-    function openDatePicker(target) {
-        $('[name = "'+target+'"]').datepicker('show');
-    }
+    
 
 </script>
 

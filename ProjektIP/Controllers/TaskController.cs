@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProjektIP.Common;
 using ProjektIP.DAO;
 using ProjektIP.Models;
 
@@ -79,7 +80,8 @@ namespace ProjektIP.Controllers
         public IActionResult PushAddTaskToDB(string name, long typeId, long employeeId, long priorityId, string comment)
         {
             TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
-            return RedirectToAction("MainPage", "Home");
+			MailMessageSender.SendMessage("monika.calka95@gmail.com", "Kochanie <3", "halooo :D");
+			return RedirectToAction("MainPage", "Home");
         }
 
         [HttpPost]
