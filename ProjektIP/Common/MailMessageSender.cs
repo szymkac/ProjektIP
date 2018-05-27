@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektIP.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -37,7 +38,7 @@ namespace ProjektIP.Common
 			MailMessage mail = new MailMessage(fromAddress, toAddress);
 			mail.IsBodyHtml = true;
 			mail.AlternateViews.Add(getEmbeddedImage(filePath));
-			mail.Subject = "yourSubject";
+			mail.Subject = subject;
 			return mail;
 		}
 		static private AlternateView getEmbeddedImage(String filePath)
@@ -50,5 +51,59 @@ namespace ProjektIP.Common
 			alternateView.LinkedResources.Add(res);
 			return alternateView;
 		}
-	}
+
+        static private string EmailBodyToAddTask(TaskModel model)
+        {
+            string htmlBody = "<h2>Zlecono Ci zadanie.</h2><br /><hr/>" +
+                "<h4>Szczegóły zadania:<h4><br/>" +
+                "<b>Nazwa: </b>" + model.Title + "<br/>" +
+                "<b>Autor: </b>" + model.AuthorName + "<br/>" +
+                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+                "<b>Opis: </b>" + model.Comment + "<br/><br/>" +
+                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+            return htmlBody;
+        }
+
+        static private string EmailBodyToAddMeeting(MeetingModel model)
+        {
+            string htmlBody = "<h2>Zostałeś zaproszony na spotkanie.</h2><br /><hr/>" +
+                "<h4>Szczegóły wydarzenia:<h4><br/>" +
+                "<b>Nazwa: </b>" + model.Title + "<br/>" +
+                "<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
+                "<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
+                "<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
+                "<b>Miejsce: </b>" + (model.Location !=null && model.Location != "" ? model.Location:model.RoomName) + "<br/>" +
+                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+                "<b>Opis: </b>" + model.Note + "<br/><br/>" +
+                "Potwierdź swoją obecność na stronie internetowej."+ "<br/>" +
+                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+            return htmlBody;
+        }
+        static private string EmailBodyToEditMeeting(MeetingModel model)
+        {
+            string htmlBody = "<h2>Spotkanie uległo zmianie.</h2><br /><hr/>" +
+                "<h4>Szczegóły wydarzenia:<h4><br/>" +
+                "<b>Nazwa: </b>" + model.Title + "<br/>" +
+                "<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
+                "<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
+                "<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
+                "<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
+                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+                "<b>Opis: </b>" + model.Note + "<br/ < br /> " +
+                "Ponownie potwierdź swoją obecność na stronie internetowej." + "<br/>" +
+                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+            return htmlBody;
+        }
+        static private string EmailBodyToAddEmployee()
+        {
+            string tempLogin = "moncal777";
+            string tempPassword = "XDC223";
+            string htmlBody = "<h2>Witamy w naszej firmie.</h2><br /><hr/>" +
+                "<h4>Twoje dane logowania:<h4><br/>" +
+                "<b>Login: </b>" + tempLogin + "<br/>" +
+                "<b>Hasło: </b>" + tempPassword + "<br/><br/>" +
+                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+            return htmlBody;
+        }
+    }
 }

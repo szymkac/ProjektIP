@@ -7,9 +7,17 @@
 
   <ItemGroup>
     <Compile Remove="Common\node_modules\**" />
+    <Compile Remove="Content\Nowy folder1\**" />
+    <Compile Remove="Content\Nowy folder\**" />
     <Content Remove="Common\node_modules\**" />
+    <Content Remove="Content\Nowy folder1\**" />
+    <Content Remove="Content\Nowy folder\**" />
     <EmbeddedResource Remove="Common\node_modules\**" />
+    <EmbeddedResource Remove="Content\Nowy folder1\**" />
+    <EmbeddedResource Remove="Content\Nowy folder\**" />
     <None Remove="Common\node_modules\**" />
+    <None Remove="Content\Nowy folder1\**" />
+    <None Remove="Content\Nowy folder\**" />
   </ItemGroup>
 
 
@@ -23,11 +31,6 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Content\Nowy folder1\" />
-    <Folder Include="Content\Nowy folder\" />
   </ItemGroup>
 
 </Project>
