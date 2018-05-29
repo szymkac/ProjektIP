@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,7 +11,7 @@ namespace ProjektIP.Common
 {
     static public class MailMessageSender
     {
-		static public void SendMessage(string addressTo, string addressee, string subject)
+		static public void SendMessage(string addressTo, string addressee, string subject, IModel model, MailTypes mailTypes)
 		{
 			MailAddress fromAddress = new MailAddress("pingwinyib@gmail.com", "What's Today");
 			MailAddress toAddress = new MailAddress(addressTo, addressee);
@@ -50,5 +51,13 @@ namespace ProjektIP.Common
 			alternateView.LinkedResources.Add(res);
 			return alternateView;
 		}
+	}
+
+	public enum MailTypes
+	{
+		addTask,
+		addMeeting,
+		editMeeting,
+		addEmployee
 	}
 }

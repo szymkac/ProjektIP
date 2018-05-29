@@ -11,6 +11,19 @@
 				if (value.length > maxLength)
 					errorMessage += "Przekroczono maksymalną liczbę znaków (" + maxLength + "). ";
 			}
+			else {
+				switch (rule) {
+					case "notZero":
+						if (parseInt(value) === 0)
+							errorMessage = "Pole jest wymagane.";
+						break;
+					case "mail":
+						var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+						if (!re.test(value.toLowerCase()))
+							errorMessage = "Zły format adresu e-mail."
+						break;
+				}
+			}
 
 		}.bind(this));
 	}
@@ -25,7 +38,8 @@ function validateForm() {
 	var val = true;
 	var fields = $('[data-validationRules]');
 	$.each(fields, function (i, field) {
-		val = val === true ? validateField(field) : false;
+		var _val = validateField(field);
+		val = val === true ? _val : false;
 	}.bind(this));
 	return val;
 }
