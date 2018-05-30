@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ProjektIP.Common
 {
-    static public class MailMessageSender
-    {
-		static public void SendMessage(string addressTo, string addressee, string subject, IModel model, MailTypes mailTypes)
+	public static class MailMessageSender
+	{
+		public static void SendMessage(string addressTo, string addressee, string subject, IModel model, MailTypes mailTypes)
 		{
 			MailAddress fromAddress = new MailAddress("pingwinyib@gmail.com", "What's Today");
 			MailAddress toAddress = new MailAddress(addressTo, addressee);
@@ -52,58 +52,65 @@ namespace ProjektIP.Common
 			return alternateView;
 		}
 
-        static private string EmailBodyToAddTask(TaskModel model)
-        {
-            string htmlBody = "<h2>Zlecono Ci zadanie.</h2><br /><hr/>" +
-                "<h4>Szczegóły zadania:<h4><br/>" +
-                "<b>Nazwa: </b>" + model.Title + "<br/>" +
-                "<b>Autor: </b>" + model.AuthorName + "<br/>" +
-                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
-                "<b>Opis: </b>" + model.Comment + "<br/><br/>" +
-                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
-            return htmlBody;
-        }
+		static private string EmailBodyToAddTask(TaskModel model)
+		{
+			string htmlBody = "<h2>Zlecono Ci zadanie.</h2><br /><hr/>" +
+				"<h4>Szczegóły zadania:<h4><br/>" +
+				"<b>Nazwa: </b>" + model.Title + "<br/>" +
+				"<b>Autor: </b>" + model.AuthorName + "<br/>" +
+				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+				"<b>Opis: </b>" + model.Comment + "<br/><br/>" +
+				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+			return htmlBody;
+		}
 
-        static private string EmailBodyToAddMeeting(MeetingModel model)
-        {
-            string htmlBody = "<h2>Zostałeś zaproszony na spotkanie.</h2><br /><hr/>" +
-                "<h4>Szczegóły wydarzenia:<h4><br/>" +
-                "<b>Nazwa: </b>" + model.Title + "<br/>" +
-                "<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
-                "<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
-                "<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
-                "<b>Miejsce: </b>" + (model.Location !=null && model.Location != "" ? model.Location:model.RoomName) + "<br/>" +
-                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
-                "<b>Opis: </b>" + model.Note + "<br/><br/>" +
-                "Potwierdź swoją obecność na stronie internetowej."+ "<br/>" +
-                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
-            return htmlBody;
-        }
-        static private string EmailBodyToEditMeeting(MeetingModel model)
-        {
-            string htmlBody = "<h2>Spotkanie uległo zmianie.</h2><br /><hr/>" +
-                "<h4>Szczegóły wydarzenia:<h4><br/>" +
-                "<b>Nazwa: </b>" + model.Title + "<br/>" +
-                "<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
-                "<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
-                "<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
-                "<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
-                "<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
-                "<b>Opis: </b>" + model.Note + "<br/ < br /> " +
-                "Ponownie potwierdź swoją obecność na stronie internetowej." + "<br/>" +
-                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
-            return htmlBody;
-        }
-        static private string EmailBodyToAddEmployee()
-        {
-            string tempLogin = "moncal777";
-            string tempPassword = "XDC223";
-            string htmlBody = "<h2>Witamy w naszej firmie.</h2><br /><hr/>" +
-                "<h4>Twoje dane logowania:<h4><br/>" +
-                "<b>Login: </b>" + tempLogin + "<br/>" +
-                "<b>Hasło: </b>" + tempPassword + "<br/><br/>" +
-                "<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
-            return htmlBody;
-        }
-    }
+		static private string EmailBodyToAddMeeting(MeetingModel model)
+		{
+			string htmlBody = "<h2>Zostałeś zaproszony na spotkanie.</h2><br /><hr/>" +
+				"<h4>Szczegóły wydarzenia:<h4><br/>" +
+				"<b>Nazwa: </b>" + model.Title + "<br/>" +
+				"<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
+				"<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
+				"<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
+				"<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
+				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+				"<b>Opis: </b>" + model.Note + "<br/><br/>" +
+				"Potwierdź swoją obecność na stronie internetowej." + "<br/>" +
+				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+			return htmlBody;
+		}
+		static private string EmailBodyToEditMeeting(MeetingModel model)
+		{
+			string htmlBody = "<h2>Spotkanie uległo zmianie.</h2><br /><hr/>" +
+				"<h4>Szczegóły wydarzenia:<h4><br/>" +
+				"<b>Nazwa: </b>" + model.Title + "<br/>" +
+				"<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
+				"<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
+				"<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
+				"<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
+				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+				"<b>Opis: </b>" + model.Note + "<br/ < br /> " +
+				"Ponownie potwierdź swoją obecność na stronie internetowej." + "<br/>" +
+				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+			return htmlBody;
+		}
+		static private string EmailBodyToAddEmployee()
+		{
+			string tempLogin = "moncal777";
+			string tempPassword = "XDC223";
+			string htmlBody = "<h2>Witamy w naszej firmie.</h2><br /><hr/>" +
+				"<h4>Twoje dane logowania:<h4><br/>" +
+				"<b>Login: </b>" + tempLogin + "<br/>" +
+				"<b>Hasło: </b>" + tempPassword + "<br/><br/>" +
+				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+			return htmlBody;
+		}
+	}
+	public enum MailTypes
+	{
+		addTask,
+		addMeeting,
+		editMeeting,
+		addEmployee
+	}
 }

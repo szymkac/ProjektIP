@@ -1,9 +1,13 @@
 ﻿@model IEnumerable<long>
+<script src="~/js/Date.js"></script>
+<script src="~/js/Modal.js"></script>
 <script>
     var mode;
 	var meetingColOneDate = getDate(new Date());
 	var meetingSuccess = 0;
 	var taskSuccess = 0;
+
+	//Page initialization
     $(function () {
         $('[data-toggle="tooltip"]').tooltip(
             {
@@ -30,8 +34,6 @@
 		$('#meetingsDate').val(changeDateFormat(meetingColOneDate, '.'));
     });
 
-
-
     // DatePicker
     $(document).ready(function () {
 		var date_input = $('input[id="meetingsDate"]');
@@ -55,6 +57,8 @@
         mode = newmode;
         getMeetingColumnsForThreeDays(meetingColOneDate);
     }
+
+	//Meetings 
 
 	function getMeetingColumnsForThreeDays(firstDayDate) {
 		$('#meeting-loader').show();
@@ -101,6 +105,22 @@
 			$('#meeting-loader').hide();
 	}
 
+	function refreshMeetingColumn(column) {
+		$.ajax({
+			type: "GET",
+			url: "/Meeting/MeetingDetailsForDay/",
+			data: {
+				date: changeDateFormat(dateIncrease(meetingColOneDate, (column - 1))),
+				column: column,
+				mode: mode
+			},
+			success: function (viewHTML) { meetingSuccessCallback(viewHTML, column) },
+			error: meetingErrorCallback
+		});
+	}
+
+	//Tasks
+
 	function getTasks() {
         for (var i = 1; i < 4; i++) {
             (function (i) {
@@ -116,19 +136,7 @@
             })(i);
         }
 	}
-	function refreshMeetingColumn(column) {
-		$.ajax({
-			type: "GET",
-			url: "/Meeting/MeetingDetailsForDay/",
-			data: {
-				date: changeDateFormat(dateIncrease(meetingColOneDate, (column - 1))),
-				column: column,
-				mode: mode
-			},
-			success: function (viewHTML) { meetingSuccessCallback(viewHTML, column) },
-			error: meetingErrorCallback
-		});
-	}
+	
 	function taskSuccessCallback(viewHTML, i) {
 		var section = "#task" + i;
 		$(section).html(viewHTML);
@@ -152,37 +160,6 @@
         }
     }
 
-    function getDate(myDate) {
-        var dd = myDate.getDate();
-        var mm = myDate.getMonth() + 1;
-        var yyyy = myDate.getFullYear();
-
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-
-        var date = mm + '/' + dd + '/' + yyyy;
-        return date;
-    }
-    function dateIncrease(date, plusDays) {
-        var myDate = new Date(date);
-        myDate.setDate(myDate.getDate() + plusDays);
-        return getDate(myDate);
-    }
-    function dateDecrease(date, minusDays) {
-        var myDate = new Date(date);
-        myDate.setDate(myDate.getDate() - minusDays);
-        return getDate(myDate);
-    }
-	function changeDateFormat(date, separator) {
-		var _separator = separator ? separator : '/';
-		myDate = date.split('/');
-		return myDate[1] + _separator + myDate[0] + _separator + myDate[2];
-    }
     function onChangeDateButtonClick(direction) {
         if (direction === "NEXT")
             meetingColOneDate = dateIncrease(meetingColOneDate, 3);
@@ -205,49 +182,9 @@
 		}
 
 	}
-    function openModal(url) {
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (viewHTML) {
-                $('#modal-body').html(viewHTML);
-                $('#modal-window').modal('show');
-            },
-            error: function (errorData) {
-                console.log(errorData);
-            }
-        });
-    }
-    function openModalAddUser() {
-        $('#modal-head').html('<h3>Dodaj pracownika</h3>');
-        this.openModal("/Employee/AddEmployee/");
-    }
-    function openModalChoosenUsers() {
-        mode = 3;
-        $('#modal-head').html('<h3>Wybierz pracowników</h3>');
-        this.openModal("/Employee/ChooseEmployee/");
-    }
 
-    function openModalTaskManager() {
-        $('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
-        this.openModal("/Task/TaskManager/");
-    }
-    function openModalAddTask() {
-        $('#modal-head').html('<h3>Dodaj zadanie</h3>');
-        this.openModal("/Task/AddTask/");
-    }
-    function openModalAddMeeting() {
-        $('#modal-head').html('<h3>Dodaj spotkanie</h3>');
-        this.openModal("/Meeting/AddMeeting/");
-    }
-    function closeModal() {
-        $('#modal-window').modal('hide');
-    }
-    function saveModal() {
-        var val = validateForm();
-        if (val)
-            $("#partialViewForm").submit();
-    }
+	//Menu buttons
+
     function showHideButtonsMenu() {
         if ($("#menu").hasClass("modal-button-menu-white")) {
             $(".right-button-group").find(".modal-button").addClass("modal-button-visible");
