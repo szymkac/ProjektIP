@@ -82,7 +82,7 @@ namespace ProjektIP.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditMeeting(long Id)
+        public IActionResult EditMeeting(long Id, bool Details)
         {
             MeetingModel model = MeetingDAO.SelectFirst(new Dictionary<string, object>()
             {
@@ -91,7 +91,7 @@ namespace ProjektIP.Controllers
 
             List<object[]> roomList=BaseDAO.Select("Rooms", null,null);
             ViewBag.listOfRooms = roomList;
-
+			ViewBag.details = Details;
 
             List<object[]> membersList = BaseDAO.Select("Members", new List<string>() { "IdEmployee", "IdMeeting", "ConfirmationOfPresence" },
                 new Dictionary<string, object>()
