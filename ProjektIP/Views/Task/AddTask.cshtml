@@ -26,54 +26,60 @@
 
 <div class="row">
 
-	<form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
-		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<div class="col-md-6 main-height">
-			<h4>Dane zadania:</h4>
-			<div hidden>
-				<input asp-for="TaskTypeId" name="typeId" data-validationRules="required,notZero" id="typeId" class="form-control" />
-			</div>
-			<label>Typ zadania:</label>
-			<span asp-validation-for="TaskTypeId" data-validator="typeId" class="text-danger"></span>
-			<br />
-			<img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-			<img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-			<img height="50" width="50" onclick="switchProblem(this)" id="imgProblem" title="Problem" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-			<img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+    <form id="partialViewForm" action="/Task/PushAddTaskToDB" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-6 main-height">
+            <h4>Dane zadania:</h4>
+            <div hidden>
+                <input asp-for="TaskTypeId" name="typeId" data-validationRules="required,notZero" id="typeId" class="form-control" />
+            </div>
+            <label>Typ zadania:</label>
 
-			<div class="form-group" style="margin-top:10px;">
-				<input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" data-validationRules="required,maxLength50" onchange="validateField(this)" />
-				<span asp-validation-for="Title" data-validator="name" class="text-danger"></span>
-			</div>
+            <br />
+            <img height="50" width="50" onclick="switchZadanie(this)" id="imgZadanie" title="Zadanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img height="50" width="50" onclick="switchZmiana(this)" id="imgZmiana" title="Zmiana" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img height="50" width="50" onclick="switchProblem(this)" id="imgProblem" title="Problem" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <img height="50" width="50" onclick="switchBlad(this)" id="imgBlad" title="Błąd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            <br />
+            <span asp-validation-for="TaskTypeId" data-validator="typeId" class="text-danger"></span>
 
-			<div hidden>
-				<input asp-for="PriorityId" name="priorityId" id="priorityId" data-validationRules="required" class="form-control" />
-			</div>
-			<span asp-validation-for="PriorityId" data-validator="priorityId" class="text-danger"></span>
-			<select class="custom-select form-control" onchange="changePriority()" id="priority">
-				<option value="" disabled selected>Priorytet:</option>
-				<option value="1">Pilny</option>
-				<option value="2">Normalny</option>
-				<option value="3">Niski</option>
-				<option value="4">Opcjonalny</option>
-			</select>
+            <div class="form-group" style="margin-top:10px;">
+                <input asp-for="Title" name="name" class="form-control" placeholder="Nazwa" data-validationRules="required,maxLength50" onchange="validateField(this)" />
+                <span asp-validation-for="Title" data-validator="name" class="text-danger"></span>
+            </div>
 
-			<div class="form-group" style="margin-top:10px">
-				<textarea asp-for="Comment" rows="6" name="comment" class="form-control scroll-container scroll5" placeholder="Opis" onchange="validateField(this)" />
-				<span asp-validation-for="Comment" data-validator="comment" class="text-danger"></span>
-			</div>
-		</div>
-		<div class="col-md-6 main-height">
-			<div class="form-group" id="employee">
-				<h4>Wybierz zleceniobiorcę:</h4>
-				<div hidden>
-					<input asp-for="EmployeeId" name="employeeId" data-validationRules="required" id="employeeId" class="form-control" />
-				</div>
-				<span asp-validation-for="EmployeeId" data-validator="employeeId" class="text-danger"></span>
-			</div>
-			<div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
-		</div>
-	</form>
+            <div hidden>
+                <input asp-for="PriorityId" name="priorityId" id="priorityId" data-validationRules="required" class="form-control" />
+            </div>
+
+            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+                <option value="" disabled selected>Priorytet:</option>
+                <option value="1">Pilny</option>
+                <option value="2">Normalny</option>
+                <option value="3">Niski</option>
+                <option value="4">Opcjonalny</option>
+            </select>
+            <span asp-validation-for="PriorityId" data-validator="priorityId" class="text-danger"></span>
+
+            <div class="form-group" style="margin-top:10px">
+                <textarea asp-for="Comment" rows="6" name="comment" class="form-control scroll-container scroll5" placeholder="Opis" onchange="validateField(this)" />
+                <span asp-validation-for="Comment" data-validator="comment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 main-height">
+            <div class="form-group" id="employee">
+                <h4>Wybierz zleceniobiorcę:</h4>
+                <div hidden>
+                    <input asp-for="EmployeeId" name="employeeId" data-validationRules="required" id="employeeId" class="form-control" />
+                </div>
+
+            </div>
+            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
+
+            <span asp-validation-for="EmployeeId" data-validator="employeeId" class="text-danger"></span>
+        </div>
+        
+    </form>
 </div>
 
 <script>
