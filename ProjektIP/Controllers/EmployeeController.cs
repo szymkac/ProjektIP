@@ -87,7 +87,7 @@ namespace ProjektIP.Controllers
                 if(!usersList.Any())
                 {
                     EmployeeDAO.Insert(employeeModel);
-                    employeeModel = EmployeeDAO.SelectFirst(EmployeeDAO.Columns.Fill(employeeModel));
+                    employeeModel = EmployeeDAO.SelectFirst(EmployeeDAO.Columns.Fill(employeeModel, true));
                     BaseDAO.Insert("Users", new Dictionary<string, object>
                     {
                         {"Login", login },
@@ -166,15 +166,21 @@ namespace ProjektIP.Controllers
                 public static string Active = "Active";
                 public static string IdPosition = "IdPosition";
 
-                public static Dictionary<string, object> Fill(EmployeeModel employee)
+                public static Dictionary<string, object> Fill(EmployeeModel employee, bool join)
                 {
                     Dictionary<string, object> filler = new Dictionary<string, object>();
-                    filler.Add(Name, employee.Name);
+                    if(join)
+                    filler.Add("E."+Name, employee.Name);
+                    else
+                        filler.Add(Name, employee.Name);
                     filler.Add(Surname, employee.SurName);
                     filler.Add(Email, employee.Email);
                     filler.Add(Phone, employee.Phone);
                     filler.Add(Active, employee.Active);
-                    filler.Add(IdPosition, employee.PositionId);
+                    if (join)
+                        filler.Add("E."+IdPosition, employee.PositionId);
+                    else
+                        filler.Add(IdPosition, employee.PositionId);
                     return filler;
                 }
             }
@@ -243,12 +249,12 @@ namespace ProjektIP.Controllers
             }
             public static void Insert(EmployeeModel employee)
             {
-                BaseDAO.Insert("Employees", Columns.Fill(employee));
+                BaseDAO.Insert("Employees", Columns.Fill(employee, false));
             }
 
             public static void Update(int id, EmployeeModel employee)
             {
-                BaseDAO.Update("Employees", new Dictionary<string, object>() { { Columns.IdEmployee, id } }, Columns.Fill(employee));
+                BaseDAO.Update("Employees", new Dictionary<string, object>() { { Columns.IdEmployee, id } }, Columns.Fill(employee, false));
             }
         }
     }
