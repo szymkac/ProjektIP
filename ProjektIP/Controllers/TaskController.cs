@@ -79,13 +79,14 @@ namespace ProjektIP.Controllers
 		[HttpPost]
 		public IActionResult PushAddTaskToDB(string name, long typeId, long employeeId, long priorityId, string comment)
 		{
-			TaskController.TaskDAO.Insert(new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId));
+			TaskModel taskModel = new TaskModel(0, typeId, HomeController.ActualUser.Id, employeeId, name, null, null, comment, 1, priorityId);
+			TaskController.TaskDAO.Insert(taskModel);
 			EmployeeModel model = EmployeeController.EmployeeDAO.SelectFirst(new Dictionary<string, object>()
 			{
 				{"IdEmployee", employeeId }
 			});
 
-			//MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "halooo :D", new TaskModel(, MailTypes.addTask);
+			MailMessageSender.SendMessage(/*model.Email*/"szymek1295@gmail.com", model.Name + " " + model.SurName, "Przydzielono Ci zadanie", taskModel, MailTypes.addTask);
 			return RedirectToAction("MainPage", "Home");
 		}
 

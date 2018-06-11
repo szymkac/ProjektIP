@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjektIP.DAO;
+using ProjektIP.Models;
 
 namespace ProjektIP.Common
 {
-	public class User
+	public class User:Model
 	{
 		public long Id;
 		public string Login;

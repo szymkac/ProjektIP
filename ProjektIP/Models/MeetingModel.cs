@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjektIP.Models
 {
-	public class MeetingModel: IModel
+	public class MeetingModel: Model
 	{
 		public long Id { get; set; }
 

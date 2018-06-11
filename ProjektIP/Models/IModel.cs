@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProjektIP.Models
 {
-    public interface IModel
+    public abstract class Model
     {
 		//please add this interface to every model which data are used in emails :)
     }

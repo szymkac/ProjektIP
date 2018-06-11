@@ -11,7 +11,7 @@ namespace ProjektIP.Common
 {
 	public static class MailMessageSender
 	{
-		public static void SendMessage(string addressTo, string addressee, string subject, IModel model, MailTypes mailTypes)
+		public static void SendMessage(string addressTo, string addressee, string subject, Model model, MailTypes mailTypes)
 		{
 			MailAddress fromAddress = new MailAddress("pingwinyib@gmail.com", "What's Today");
 			MailAddress toAddress = new MailAddress(addressTo, addressee);
@@ -28,25 +28,41 @@ namespace ProjektIP.Common
 				Timeout = 20000
 			};
 
-			MailMessage mailWithImg = getMailWithImg(fromAddress, toAddress, subject, filePath);
+			MailMessage mailWithImg = getMailWithImg(fromAddress, toAddress, subject, filePath, model, mailTypes);
 			smtp.Send(mailWithImg);
 
 		}
 
-		static private MailMessage getMailWithImg(MailAddress fromAddress, MailAddress toAddress, string subject, string filePath)
+		static private MailMessage getMailWithImg(MailAddress fromAddress, MailAddress toAddress, string subject, string filePath, Model model, MailTypes mailTypes)
 		{
+			string bodyAdd = "";
+			switch (mailTypes)
+			{
+				case MailTypes.addTask:
+					bodyAdd = EmailBodyToAddTask((TaskModel)model);
+					break;
+				case MailTypes.addMeeting:
+					bodyAdd = EmailBodyToAddMeeting((MeetingModel)model);
+					break;
+				case MailTypes.editMeeting:
+					bodyAdd = EmailBodyToEditMeeting((MeetingModel)model);
+					break;
+				case MailTypes.addEmployee:
+					bodyAdd = EmailBodyToAddEmployee((User)model);
+					break;
+			}
 			MailMessage mail = new MailMessage(fromAddress, toAddress);
 			mail.IsBodyHtml = true;
-			mail.AlternateViews.Add(getEmbeddedImage(filePath));
+			mail.AlternateViews.Add(getEmbeddedImage(filePath, bodyAdd));
 			mail.Subject = subject;
 			return mail;
 		}
-		static private AlternateView getEmbeddedImage(String filePath)
+		static private AlternateView getEmbeddedImage(String filePath, string bodyAdd)
 		{
 			LinkedResource res = new LinkedResource(filePath);
 			res.ContentId = Guid.NewGuid().ToString();
 			string htmlBody = @"<img src='cid:" + res.ContentId + @"'/>";
-			htmlBody += " " + "<br />" + " " + "Kupa";
+			htmlBody += " " + "<br />" + " " + bodyAdd;
 			AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
 			alternateView.LinkedResources.Add(res);
 			return alternateView;
@@ -94,13 +110,12 @@ namespace ProjektIP.Common
 				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
 			return htmlBody;
 		}
-		static private string EmailBodyToAddEmployee()
+		static private string EmailBodyToAddEmployee(User user)
 		{
-			string tempLogin = "moncal777";
 			string tempPassword = "XDC223";
 			string htmlBody = "<h2>Witamy w naszej firmie.</h2><br /><hr/>" +
 				"<h4>Twoje dane logowania:<h4><br/>" +
-				"<b>Login: </b>" + tempLogin + "<br/>" +
+				"<b>Login: </b>" + user.Login + "<br/>" +
 				"<b>Hasło: </b>" + tempPassword + "<br/><br/>" +
 				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
 			return htmlBody;

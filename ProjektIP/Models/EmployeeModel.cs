@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjektIP.Models
 {
-	public class EmployeeModel: IModel
+	public class EmployeeModel: Model
 	{
 		public long Id { get; set; }
 
