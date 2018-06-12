@@ -13,10 +13,10 @@ namespace ProjektIP.Common
 	{
 		public static void SendMessage(string addressTo, string addressee, string subject, Model model, MailTypes mailTypes)
 		{
-			MailAddress fromAddress = new MailAddress("pingwinyib@gmail.com", "What's Today");
-			MailAddress toAddress = new MailAddress(addressTo, addressee);
-			const string fromPassword = "fourier<3";
-			string filePath = @"Content\Image\logo_mini.png";
+            MailAddress fromAddress = new MailAddress("pingwinyib@gmail.com", "What's Today");
+            MailAddress toAddress = new MailAddress(addressTo, addressee);
+            const string fromPassword = "fourier<3";
+            string filePath = @"Content\Image\logo_mini.png";
 
 			var smtp = new SmtpClient
 			{

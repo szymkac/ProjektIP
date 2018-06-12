@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProjektIP.Common;
 using ProjektIP.DAO;
 using ProjektIP.Models;
 
@@ -65,6 +66,12 @@ namespace ProjektIP.Controllers
             MeetingModel meetingModel = new MeetingModel(0, meetingTypeId, datestart, dateend, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
             MeetingDAO.Insert(meetingModel);
 
+            MeetingModel fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(meetingModel, true))[0];
+
+            foreach (EmployeeModel employee in fullMeetingModel.Members)
+            {
+                MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Zaproszono Cię na spotkanie", fullMeetingModel, MailTypes.addMeeting);
+            }
             return RedirectToAction("MainPage", "Home");
         }
 
@@ -166,6 +173,15 @@ namespace ProjektIP.Controllers
             }
 
             MeetingDAO.Update((int)id,model);
+
+            MeetingModel fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(model, true))[0];
+
+            foreach (EmployeeModel employee in fullMeetingModel.Members)
+            {
+               // if (employee.Confirmation != false)
+                    MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Edytowano Twoje spotkanie", fullMeetingModel, MailTypes.editMeeting);
+            }
+
             return RedirectToAction("MainPage", "Home");
         }
 
@@ -239,9 +255,9 @@ namespace ProjektIP.Controllers
             for (int i = 0; i < id.Count; i++)
             {
                 if (i == id.Count - 1)
-                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR Mb.IdEmployee LIKE {0}) ", id[i]);
+                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR (Mb.IdEmployee LIKE {0} AND (Mb.ConfirmationOfPresence = 1 OR Mb.ConfirmationOfPresence  IS NULL))) ", id[i]);
                 else
-                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR Mb.IdEmployee LIKE {0}) OR", id[i]);
+                    likeId += String.Format("(Mt.IdAuthor LIKE {0} OR (Mb.IdEmployee LIKE {0} AND (Mb.ConfirmationOfPresence = 1 OR Mb.ConfirmationOfPresence  IS NULL))) OR", id[i]);
             }
 
             List<MeetingModel> list = MeetingDAO.Select(new Dictionary<string, object>()
@@ -249,6 +265,8 @@ namespace ProjektIP.Controllers
                 {"IdEmployee", likeId },
                 {"DateFrom", dateFrom}
             });
+
+
             return list;
         }
 
@@ -279,19 +297,31 @@ namespace ProjektIP.Controllers
                 public static string IdPriority = "IdPriority";
                 public static string Title = "Title";
 
-                public static Dictionary<string, object> Fill(MeetingModel Meeting)
+                public static Dictionary<string, object> Fill(MeetingModel Meeting, bool join)
                 {
                     Dictionary<string, object> filler = new Dictionary<string, object>();
-                    filler.Add(IdMeetingType, Meeting.MeetingTypeId);
+                    if(join)
+                        filler.Add("Mt."+IdMeetingType, Meeting.MeetingTypeId);
+                    else
+                        filler.Add(IdMeetingType, Meeting.MeetingTypeId);
                     filler.Add(DateFrom, Meeting.DateStart);
                     filler.Add(DateTo, Meeting.DateEnd);
                     filler.Add(HourFrom, Meeting.HourStart);
                     filler.Add(HourTo, Meeting.HourEnd);
-                    filler.Add(IdAuthor, Meeting.EmployeeAuthorId);
-                    filler.Add(IdRoom, Meeting.RoomId);
+                    if (join)
+                        filler.Add("Mt." + IdAuthor, Meeting.EmployeeAuthorId);
+                    else
+                        filler.Add(IdAuthor, Meeting.EmployeeAuthorId);
+                    if (join)
+                        filler.Add("Mt." + IdRoom, Meeting.RoomId);
+                    else
+                        filler.Add(IdRoom, Meeting.RoomId);
                     filler.Add(Location, Meeting.Location);
                     filler.Add(Note, Meeting.Note);
-                    filler.Add(IdPriority, Meeting.PriorityId);
+                    if (join)
+                        filler.Add("Mt." + IdPriority, Meeting.PriorityId);
+                    else
+                        filler.Add(IdPriority, Meeting.PriorityId);
                     filler.Add(Title, Meeting.Title);
                     return filler;
                 }
@@ -595,10 +625,10 @@ namespace ProjektIP.Controllers
 
             public static void Insert(MeetingModel Meeting)
             {
-                BaseDAO.Insert("Meetings", Columns.Fill(Meeting));
+                BaseDAO.Insert("Meetings", Columns.Fill(Meeting,false));
                 if (Meeting.Members != null && Meeting.Members.Count>0)
                 {
-                    MeetingModel meeting = SelectFirst(Columns.Fill(new MeetingModel(Meeting.Id,Meeting.MeetingTypeId,Meeting.DateStart,Meeting.DateEnd,Meeting.HourStart,Meeting.HourEnd,Meeting.EmployeeAuthorId,Meeting.RoomId,Meeting.Location,Meeting.Note,Meeting.PriorityId,Meeting.Title,new List<EmployeeModel>())));
+                    MeetingModel meeting = SelectFirst(Columns.Fill(new MeetingModel(Meeting.Id,Meeting.MeetingTypeId,Meeting.DateStart,Meeting.DateEnd,Meeting.HourStart,Meeting.HourEnd,Meeting.EmployeeAuthorId,Meeting.RoomId,Meeting.Location,Meeting.Note,Meeting.PriorityId,Meeting.Title,new List<EmployeeModel>()),false));
                     long idMeeting = meeting.Id;
                     foreach (EmployeeModel employee in Meeting.Members)
                         BaseDAO.Insert("Members", MembersDAO.Columns.Fill(employee.Id, idMeeting));
@@ -607,7 +637,7 @@ namespace ProjektIP.Controllers
 
             public static void Update(int id, MeetingModel Meeting)
             {
-                BaseDAO.Update("Meetings", new Dictionary<string, object> { { Columns.IdMeeting, id } }, Columns.Fill(Meeting));
+                BaseDAO.Update("Meetings", new Dictionary<string, object> { { Columns.IdMeeting, id } }, Columns.Fill(Meeting,false));
                 BaseDAO.Delete("Members", new Dictionary<string, object>()
                 {
                     {"IdMeeting",id }

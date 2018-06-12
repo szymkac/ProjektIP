@@ -106,9 +106,15 @@ namespace ProjektIP.Controllers
 			task.PriorityId = priorityId;
 			task.Comment = comment;
 
-			TaskDAO.Update(taskid, task);
+            EmployeeModel model = EmployeeController.EmployeeDAO.SelectFirst(new Dictionary<string, object>()
+            {
+                {"IdEmployee", employeeId }
+            });
+            TaskDAO.Update(taskid, task);
+            TaskModel fullTask = TaskDAO.Select(TaskDAO.Columns.Fill(task, true))[0];
+           // MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "Edytowano Twoje zadanie", fullTask, MailTypes.editTask);
 
-			return RedirectToAction("MainPage", "Home");
+            return RedirectToAction("MainPage", "Home");
 		}
 
 		private List<TaskModel> GetTasksForUser(long id, int mode)

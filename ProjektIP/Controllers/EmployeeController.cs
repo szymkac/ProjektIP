@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ProjektIP.Common;
 using ProjektIP.DAO;
 using ProjektIP.Models;
 
@@ -77,7 +78,7 @@ namespace ProjektIP.Controllers
             bool randomLoginAndPassword = true;
             string login = string.Empty;
             string password = string.Empty;
-         
+            User user = null;
             do
             {
                 login = name.Substring(0, 3).ToLower() + surname.Substring(0, 3).ToLower() + random.Next(0, 9999).ToString("D4");
@@ -94,7 +95,7 @@ namespace ProjektIP.Controllers
                         {"Password", password },
                         { "IdEmployee",employeeModel.Id} // Zła wartość
                     });
-
+                  
                     if (addNewEmpleyeePermission)
                         BaseDAO.Insert("EmployeePermissions", new Dictionary<string, object>()
                             {
@@ -119,12 +120,12 @@ namespace ProjektIP.Controllers
                                 { "IdEmployee",employeeModel.Id},
                                 { "IdPermission", 4}
                             });
-
+                    user = new User(login, password);
                     randomLoginAndPassword = false;
                 }
             }
             while (randomLoginAndPassword);
-            
+            MailMessageSender.SendMessage(employeeModel.Email, employeeModel.Name + " " + employeeModel.SurName, "Dane logowania", user, MailTypes.addEmployee);
             return RedirectToAction("MainPage", "Home");
         }
 

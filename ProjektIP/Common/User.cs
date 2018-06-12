@@ -11,7 +11,8 @@ namespace ProjektIP.Common
 	{
 		public long Id;
 		public string Login;
-		public List<long> UserPermission;
+        public string Password;
+        public List<long> UserPermission;
 
 		public User()
 		{
