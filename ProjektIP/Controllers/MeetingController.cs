@@ -66,11 +66,11 @@ namespace ProjektIP.Controllers
             MeetingModel meetingModel = new MeetingModel(0, meetingTypeId, datestart, dateend, hourStart, hourEnd, HomeController.ActualUser.Id, roomId, location, note, priorityId, title, members);
             MeetingDAO.Insert(meetingModel);
 
-            MeetingModel fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(meetingModel, true))[0];
+            List<MeetingModel> fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(meetingModel, true));
 
-            foreach (EmployeeModel employee in fullMeetingModel.Members)
+            foreach (EmployeeModel employee in fullMeetingModel[fullMeetingModel.Count - 1].Members)
             {
-                MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Zaproszono Cię na spotkanie", fullMeetingModel, MailTypes.addMeeting);
+                MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Zaproszono Cię na spotkanie", fullMeetingModel[fullMeetingModel.Count - 1], MailTypes.addMeeting);
             }
             return RedirectToAction("MainPage", "Home");
         }
@@ -174,12 +174,12 @@ namespace ProjektIP.Controllers
 
             MeetingDAO.Update((int)id,model);
 
-            MeetingModel fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(model, true))[0];
+            List<MeetingModel> fullMeetingModel = MeetingDAO.Select(MeetingDAO.Columns.Fill(model, true));
 
-            foreach (EmployeeModel employee in fullMeetingModel.Members)
+            foreach (EmployeeModel employee in fullMeetingModel[fullMeetingModel.Count - 1].Members)
             {
                // if (employee.Confirmation != false)
-                    MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Edytowano Twoje spotkanie", fullMeetingModel, MailTypes.editMeeting);
+                    MailMessageSender.SendMessage(employee.Email, employee.Name + " " + employee.SurName, "Edytowano Twoje spotkanie", fullMeetingModel[fullMeetingModel.Count - 1], MailTypes.editMeeting);
             }
 
             return RedirectToAction("MainPage", "Home");
