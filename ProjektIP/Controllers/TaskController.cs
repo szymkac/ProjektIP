@@ -85,8 +85,9 @@ namespace ProjektIP.Controllers
 			{
 				{"IdEmployee", employeeId }
 			});
-
-			MailMessageSender.SendMessage(/*model.Email*/"szymek1295@gmail.com", model.Name + " " + model.SurName, "Przydzielono Ci zadanie", taskModel, MailTypes.addTask);
+			//ściągnąć model po id razem z słownikiem
+			TaskModel fullTask = TaskDAO.Select(TaskDAO.Columns.Fill(taskModel,true))[0];
+			MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "Przydzielono Ci zadanie", fullTask, MailTypes.addTask);
 			return RedirectToAction("MainPage", "Home");
 		}
 
@@ -143,17 +144,29 @@ namespace ProjektIP.Controllers
 				public static string IdStatus = "IdStatus";
 				public static string IdPriority = "IdPriority";
 
-				public static Dictionary<string, object> Fill(TaskModel Task)
+				public static Dictionary<string, object> Fill(TaskModel Task, bool join)
 				{
 					Dictionary<string, object> filler = new Dictionary<string, object>();
-					filler.Add(IdTaskType, Task.TaskTypeId);
+					if(join)
+						filler.Add("T."+IdTaskType, Task.TaskTypeId);
+					else
+						filler.Add(IdTaskType, Task.TaskTypeId);
 					filler.Add(DateFrom, Task.DateStart);
 					filler.Add(DateTo, Task.DateEnd);
 					filler.Add(IdAuthor, Task.AuthorId);
-					filler.Add(IdEmployee, Task.EmployeeId);
+					if(join)
+					filler.Add("T."+IdEmployee, Task.EmployeeId);
+					else
+						filler.Add(IdEmployee, Task.EmployeeId);
 					filler.Add(Comment, Task.Comment);
-					filler.Add(IdStatus, Task.StatusId);
-					filler.Add(IdPriority, Task.PriorityId);
+					if(join)
+					filler.Add("T."+IdStatus, Task.StatusId);
+					else
+						filler.Add(IdStatus, Task.StatusId);
+					if(join)
+					filler.Add("T."+IdPriority, Task.PriorityId);
+					else
+						filler.Add(IdPriority, Task.PriorityId);
 					filler.Add(Title, Task.Title);
 					return filler;
 				}
@@ -226,13 +239,15 @@ namespace ProjektIP.Controllers
 			}
 			public static void Insert(TaskModel Task)
 			{
-				BaseDAO.Insert("Tasks", Columns.Fill(Task));
+				BaseDAO.Insert("Tasks", Columns.Fill(Task,false));
 			}
 
 			public static void Update(long id, TaskModel Task)
 			{
-				BaseDAO.Update("Tasks", new Dictionary<string, object> { { Columns.IdTask, id } }, Columns.Fill(Task));
+				BaseDAO.Update("Tasks", new Dictionary<string, object> { { Columns.IdTask, id } }, Columns.Fill(Task,false));
 			}
+
+
 		}
 	}
 }
