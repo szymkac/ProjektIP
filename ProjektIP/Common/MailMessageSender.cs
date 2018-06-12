@@ -50,6 +50,9 @@ namespace ProjektIP.Common
 				case MailTypes.addEmployee:
 					bodyAdd = EmailBodyToAddEmployee((User)model);
 					break;
+				case MailTypes.editTask:
+					bodyAdd = EmailBodyToEditTask((TaskModel)model);
+					break;
 			}
 			MailMessage mail = new MailMessage(fromAddress, toAddress);
 			mail.IsBodyHtml = true;
@@ -71,7 +74,7 @@ namespace ProjektIP.Common
 		static private string EmailBodyToAddTask(TaskModel model)
 		{
 			string htmlBody = "<h2>Zlecono Ci zadanie.</h2><br /><hr/>" +
-				"<h4>Szczegóły zadania:<h4><br/>" +
+				"<h3>Szczegóły zadania:</h3><br/>" +
 				"<b>Nazwa: </b>" + model.Title + "<br/>" +
 				"<b>Autor: </b>" + model.AuthorName + "<br/>" +
 				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
@@ -83,7 +86,7 @@ namespace ProjektIP.Common
 		static private string EmailBodyToAddMeeting(MeetingModel model)
 		{
 			string htmlBody = "<h2>Zostałeś zaproszony na spotkanie.</h2><br /><hr/>" +
-				"<h4>Szczegóły wydarzenia:<h4><br/>" +
+				"<h3>Szczegóły wydarzenia:</h3><br/>" +
 				"<b>Nazwa: </b>" + model.Title + "<br/>" +
 				"<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
 				"<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
@@ -91,33 +94,43 @@ namespace ProjektIP.Common
 				"<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
 				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
 				"<b>Opis: </b>" + model.Note + "<br/><br/>" +
-				"Potwierdź swoją obecność na stronie internetowej." + "<br/>" +
+				"<h3>Potwierdź swoją obecność na stronie internetowej.</h3>" + "<br/>" +
 				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
 			return htmlBody;
 		}
 		static private string EmailBodyToEditMeeting(MeetingModel model)
 		{
 			string htmlBody = "<h2>Spotkanie uległo zmianie.</h2><br /><hr/>" +
-				"<h4>Szczegóły wydarzenia:<h4><br/>" +
+				"<h3>Szczegóły wydarzenia:</h3><br/>" +
 				"<b>Nazwa: </b>" + model.Title + "<br/>" +
 				"<b>Data: </b>" + model.DateStart + (model.DateEnd.HasValue ? " - " + model.DateEnd : "") + "<br/>" +
 				"<b>Godzina: </b>" + model.HourStart + (model.HourEnd.HasValue ? " - " + model.HourEnd : "") + "<br/>" +
 				"<b>Autor: </b>" + model.EmployeeAuthorName + "<br/>" +
 				"<b>Miejsce: </b>" + (model.Location != null && model.Location != "" ? model.Location : model.RoomName) + "<br/>" +
 				"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
-				"<b>Opis: </b>" + model.Note + "<br/ < br /> " +
-				"Ponownie potwierdź swoją obecność na stronie internetowej." + "<br/>" +
+				"<b>Opis: </b>" + model.Note + "<br/> <br/> " +
+				"<h3>Ponownie potwierdź swoją obecność na stronie internetowej.</h3>" + "<br/>" +
 				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
 			return htmlBody;
 		}
 		static private string EmailBodyToAddEmployee(User user)
 		{
-			string tempPassword = "XDC223";
 			string htmlBody = "<h2>Witamy w naszej firmie.</h2><br /><hr/>" +
-				"<h4>Twoje dane logowania:<h4><br/>" +
+				"</h4>Twoje dane logowania:</h3><br/>" +
 				"<b>Login: </b>" + user.Login + "<br/>" +
-				"<b>Hasło: </b>" + tempPassword + "<br/><br/>" +
+				"<b>Hasło: </b>" + user.Password + "<br/><br/>" +
 				"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
+			return htmlBody;
+		}
+		static private string EmailBodyToEditTask(TaskModel model)
+		{
+			string htmlBody = "<h2>Zadanie uległo zmianie.</h2><br /><hr/>" +
+			"<h3>Szczegóły zadania:</h3><br/>" +
+			"<b>Nazwa: </b>" + model.Title + "<br/>" +
+			"<b>Autor: </b>" + model.AuthorName + "<br/>" +
+			"<b>Priorytet: </b>" + model.PriorityName + "<br/>" +
+			"<b>Opis: </b>" + model.Comment + "<br/><br/>" +
+			"<hr/>Wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać. Aby uzyskać więcej informacji należy zalogować się na stronę internetową.";
 			return htmlBody;
 		}
 	}
@@ -126,6 +139,7 @@ namespace ProjektIP.Common
 		addTask,
 		addMeeting,
 		editMeeting,
-		addEmployee
+		addEmployee,
+		editTask
 	}
 }

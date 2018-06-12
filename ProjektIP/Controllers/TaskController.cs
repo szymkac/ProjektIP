@@ -112,7 +112,7 @@ namespace ProjektIP.Controllers
             });
             TaskDAO.Update(taskid, task);
             TaskModel fullTask = TaskDAO.Select(TaskDAO.Columns.Fill(task, true))[0];
-           // MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "Edytowano Twoje zadanie", fullTask, MailTypes.editTask);
+			MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "Edytowano Twoje zadanie", fullTask, MailTypes.editTask);
 
             return RedirectToAction("MainPage", "Home");
 		}

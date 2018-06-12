@@ -22,6 +22,7 @@ namespace ProjektIP.Common
 		public User(string login, string password)
 		{
 			this.Login = login;
+			this.Password = password;
 			Dictionary<string, object> filter = new Dictionary<string, object>();
 			filter.Add("Login", login);
 			filter.Add("Password", password);

@@ -108,15 +108,9 @@ namespace ProjektIP.Controllers
             List<int> listMembersId = new List<int>();
 
             string membersId = "";
-            //foreach (EmployeeModel item in model.Members)
-            //{
-            //    membersId += item.Id + ",";
-            //}
-
 
             foreach (object[] i in membersList)
             {
-                //      listMembersId.Add((int)i[0]);
                 membersId += (int)i[0] + ",";
             }
 
