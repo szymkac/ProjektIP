@@ -155,13 +155,6 @@
         }
     }
 
-    //// Data od
-    //// Data do
-    //function changeDate() {
-    //    var value = $("[name = 'datestart']").val();
-    //    $("[name = 'dateend']").val(value);
-    //}
-
     // Pokój
     document.getElementById("location").style.display = "none";
     function changeRoom() {
@@ -206,7 +199,7 @@
 <div class="row">
     <form id="partialViewForm" action="/Meeting/PushAddMeetingToDB" method="post">
         <div class="col-md-6">
-            <h4>Dane spotkania:</h4>
+            <h4>Dane wydarzenia:</h4>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden>
                 <input asp-for="MeetingTypeId" id="typeId" class="form-control" />

@@ -300,7 +300,6 @@ a {
 	margin-bottom: 20px;
 }
 
-/* ---------- Bordery --------------- */
 .border-type-yellow {
 	border-bottom: 2px solid #ffc576;
 	border-left: 2px solid #ffc576;
@@ -336,10 +335,7 @@ a {
 	border-bottom-right-radius: 20px;
 	padding: 5px;
 }
-/* ---------- Bordery --------------- */
-/* ----------   END   --------------- */
 
-/* ---------- Modal --------------- */
 .modal-inner-body {
 	margin: 0 20px;
 }
@@ -399,10 +395,7 @@ a {
 	.modal-button-menu-white:focus {
 		outline: 0;
 	}
-/* ---------- Modal --------------- */
-/* ---------- END --------------- */
 
-/* ---------- Tooltip --------------- */
 .grey-tooltip + .tooltip > .tooltip-inner {
 	background-color: #c1bdc3;
 	max-width: 75px;
@@ -411,10 +404,7 @@ a {
 .grey-tooltip + .tooltip > .tooltip-arrow {
 	border-top-color: #c1bdc3;
 }
-/* ---------- Tooltip --------------- */
-/* ----------   END   --------------- */
 
-/* ---------- Scrollbar --------------- */
 .scroll5::-webkit-scrollbar {
 	width: 15px;
 }
@@ -440,12 +430,7 @@ a {
 .login-alert {
 	margin: 10px 10%;
 }
-/* ---------- Scrollbar --------------- */
-/* ----------    END    --------------- */
 
-
-/* ---------- Check boxy --------------- */
-/* The container */
 .check-container {
 	display: block;
 	position: relative;
@@ -459,14 +444,12 @@ a {
 	user-select: none;
 }
 
-	/* Hide the browser's default checkbox */
 	.check-container input {
 		position: absolute;
 		opacity: 0;
 		cursor: pointer;
 	}
 
-/* Create a custom checkbox */
 .checkmark {
 	position: absolute;
 	top: 0;
@@ -478,33 +461,28 @@ a {
 	border-radius: 5px;
 }
 
-/* On mouse-over, add a grey background color */
 .check-container:hover input ~ .checkmark {
 	background-color: #ccc;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 }
 
-/* When the checkbox is checked, add a blue background */
 .check-container input:checked ~ .checkmark {
 	background-color: #4472c4;
 	border: 1px solid #4472c4;
 	border-radius: 5px;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
 	content: "";
 	position: absolute;
 	display: none;
 }
 
-/* Show the checkmark when checked */
 .check-container input:checked ~ .checkmark:after {
 	display: block;
 }
 
-/* Style the checkmark/indicator */
 .check-container .checkmark:after {
 	left: 9px;
 	top: 5px;
@@ -516,9 +494,6 @@ a {
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
-
-/* ---------- Check boxy --------------- */
-/* ----------     END    --------------- */
 
 .border-to-members {
 	border: dotted 2px #4472c4;
