@@ -1,5 +1,12 @@
 ﻿function openEditMeetingModal(id, details) {
 	var _details = details ? details : false;
+	$('#close-modal-button').html(_details ? "POWRÓT" : "ANULUJ");
+
+	if (_details)
+		$('#accept-modal-button').addClass('modal-button-unvisible');
+	else
+		$('#accept-modal-button').removeClass('modal-button-unvisible');
+
     $.ajax({
         type: "GET",
         url: "/Meeting/EditMeeting/",

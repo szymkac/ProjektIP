@@ -1,4 +1,8 @@
-﻿function openModal(url) {
+﻿function openModal(url, acceptText, closeText) {
+	$('#accept-modal-button').removeClass('modal-button-unvisible');
+	$('#accept-modal-button').html(acceptText ? acceptText : "ZAPISZ");
+	$('#close-modal-button').html(closeText ? closeText : "ANULUJ");
+
 	$.ajax({
 		type: "GET",
 		url: url,
@@ -18,9 +22,8 @@ function openModalAddUser() {
 function openModalChoosenUsers() {
 	mode = 3;
 	$('#modal-head').html('<h3>Wybierz pracowników</h3>');
-	this.openModal("/Employee/ChooseEmployee/");
+	this.openModal("/Employee/ChooseEmployee/", "WYBIERZ");
 }
-
 function openModalTaskManager() {
 	$('#modal-head').html('<h3>Zarządzanie zadaniami</h3>');
 	this.openModal("/Task/TaskManager/");
@@ -30,7 +33,7 @@ function openModalAddTask() {
 	this.openModal("/Task/AddTask/");
 }
 function openModalAddMeeting() {
-	$('#modal-head').html('<h3>Dodaj spotkanie</h3>');
+	$('#modal-head').html('<h3>Dodaj wydarzenie</h3>');
 	this.openModal("/Meeting/AddMeeting/");
 }
 function closeModal() {

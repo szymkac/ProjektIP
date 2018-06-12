@@ -264,7 +264,7 @@
 						}
 						@if (Model.Contains(3))
 						{
-							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj spotkanie" data-toggle="tooltip" onclick="openModalAddMeeting()">
+							<button class="btn background-blue modal-button right modal-button-unvisible grey-tooltip" title="Dodaj wydarzenie" data-toggle="tooltip" onclick="openModalAddMeeting()">
 								<img class="modal-button-img" src="~/Content/Image/menu_addmeeting.png" />
 							</button>
 
@@ -372,9 +372,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
-				<button class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
-
+				<button id="close-modal-button" class="btn btn-secondary" onclick="closeModal()">ANULUJ</button>
+				<button id="accept-modal-button" class="btn btn-primary" onclick="saveModal()">ZAPISZ</button>
 			</div>
 		</div>
 	</div>

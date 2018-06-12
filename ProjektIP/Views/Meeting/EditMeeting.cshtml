@@ -344,13 +344,6 @@
 		}
     }
 
-    //DATA START -> END
-
-    //function changeDate() {
-    //    var value = $("#datestart").val();
-    //    $("#dateend").val(value);
-    //}
-
     $('.clockpicker').clockpicker();
 
     function openDatePicker(target) {
@@ -420,7 +413,6 @@
 				<span asp-validation-for="RoomId" class="text-danger"></span>
 			</div>
 			<div class="form-group margin-top-20" id="room">
-				@* <label asp-for="RoomName" class="control-label">Pokój:</label>*@
 				<span asp-validation-for="RoomName" class="text-danger"></span>
 				<select class="custom-select form-control" onchange="changeRoom()" id="roomName">
 					<option value="" disabled selected>Pokój:</option>
@@ -432,7 +424,6 @@
 				</select>
 			</div>
 			<div class="form-group margin-top-20" id="location">
-				@*<label asp-for="Location" class="control-label"></label>*@
 				<input asp-for="Location" class="form-control " placeholder="Lokalizacja" id="locationName" />
 				<span asp-validation-for="Location" class="text-danger"></span>
 			</div>
@@ -452,18 +443,15 @@
 				<textarea asp-for="Note" rows="3" class="form-control scroll-container scroll5" placeholder="Opis" name="Note" id="Note" />
 				<span asp-validation-for="Note" class="text-danger"></span>
 			</div>
-
-			<button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
+			@if (!ViewBag.details)
+			{
+				<button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
+			}
 		</div>
 		<div class="col-md-6 main-height">
 
 			<div class="form-group" id="employee">
 				<h4>Wybierz uczestników:</h4>
-				@*<label asp-for="Members" class="control-label">Wybierz uczestników:</label>
-					<div hidden>
-						<input asp-for="Members" name="member" id="member" class="form-control" />
-						<span asp-validation-for="Members" class="text-danger"></span>
-					</div>*@
 			</div>
 			<div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
 		</div>
