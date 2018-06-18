@@ -111,7 +111,11 @@ namespace ProjektIP.Controllers
                 {"IdEmployee", employeeId }
             });
             TaskDAO.Update(taskid, task);
-            TaskModel fullTask = TaskDAO.Select(TaskDAO.Columns.Fill(task, true))[0];
+			TaskModel fullTask = task;
+			List <TaskModel> fullTasks = TaskDAO.Select(TaskDAO.Columns.Fill(task, true));
+			if (fullTasks.Count > 0)
+				fullTask = fullTasks[0];
+
 			MailMessageSender.SendMessage(model.Email, model.Name + " " + model.SurName, "Edytowano Twoje zadanie", fullTask, MailTypes.editTask);
 
             return RedirectToAction("MainPage", "Home");
