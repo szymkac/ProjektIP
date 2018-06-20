@@ -13124,25 +13124,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\szyme\\.nuget\\packages\\": {},
+    "C:\\Users\\monik\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\szyme\\Desktop\\IP\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
+      "projectUniqueName": "C:\\Users\\monik\\Desktop\\IP aktual\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
       "projectName": "ProjektIP",
-      "projectPath": "C:\\Users\\szyme\\Desktop\\IP\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
-      "packagesPath": "C:\\Users\\szyme\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\szyme\\Desktop\\IP\\ProjektIP\\ProjektIP\\obj\\",
+      "projectPath": "C:\\Users\\monik\\Desktop\\IP aktual\\ProjektIP\\ProjektIP\\ProjektIP.csproj",
+      "packagesPath": "C:\\Users\\monik\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\monik\\Desktop\\IP aktual\\ProjektIP\\ProjektIP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\szyme\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\monik\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
