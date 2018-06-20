@@ -1,5 +1,4 @@
 ﻿@model ProjektIP.Models.TaskModel
-
 <script>
     $(function () {
         $('[data-toggle="tooltipTask"]').tooltip(
@@ -8,7 +7,7 @@
             }
         );
         getEmployees();
-		getTasks();
+        getTasks();
     });
 
     function getEmployees() {
@@ -45,17 +44,19 @@
         }
     };
 
-	function changeEmployee(id) {
-		$("#employeeId").val(id);
-		$('.border-to-members').removeClass('border-to-members');
-		$('#listEmployee' + id).addClass('border-to-members');
-	}
+    function changeEmployee(id) {
+        $("#employeeId").val(id);
+        $('.border-to-members').removeClass('border-to-members');
+        $('#listEmployee' + id).addClass('border-to-members');
+        validateField(document.getElementById("employeeId"));
 
-	function selectEmployee(id) {
-		$('.border-to-members').removeClass('border-to-members');
-		$('#listEmployee' + id).addClass('border-to-members');
-	}
-  
+    }
+
+    function selectEmployee(id) {
+        $('.border-to-members').removeClass('border-to-members');
+        $('#listEmployee' + id).addClass('border-to-members');
+    }
+
     function taskChange(id) {
         $("#taskId").val(id);
         $("#taskName").val($("#Name" + id).html());
@@ -66,16 +67,21 @@
         $("#priorityId").val($("#Priority" + id).html());
         $("#priority").val($("#Priority" + id).html());
         $("#typeId").val($("#Type" + id).html());
-   //     $("#listTask" + id).attr('style', 'border:dotted 2px #000000');
-  //      $('.row').each(function () {
-  //          if (this.id.match('^listTask') && this.id != "listTask" + id) {
-  //              $("#" + this.id).attr('style', 'border:solid 0px');
-  //          };
-		//});
+        //     $("#listTask" + id).attr('style', 'border:dotted 2px #000000');
+        //      $('.row').each(function () {
+        //          if (this.id.match('^listTask') && this.id != "listTask" + id) {
+        //              $("#" + this.id).attr('style', 'border:solid 0px');
+        //          };
+        //});
         $('.border-to-tasks').removeClass('border-to-tasks');
         $('#listTask' + id).addClass('border-to-tasks');
 
-		selectEmployee(($("#Employee" + id).html()));
+        selectEmployee(($("#Employee" + id).html()));
+
+        validateField(document.getElementById("employeeId"));
+        validateField(document.getElementById("priorityId"));
+        validateField(document.getElementById("taskName"));
+        validateField(document.getElementById("taskId"));
     };
 
     function changeStatus() {
@@ -85,14 +91,14 @@
 
     function changePriority() {
         $("#priorityId").val($("#priority").val());
+        validateField(document.getElementById("priorityId"));
     }
 
 
 </script>
 
-
 <div class="row">
-    <form id="partialViewForm" action="/Task/PushUpdateTaskToDB" method="post">
+    <form id="partialViewForm" action="/Task/PushUpdateTaskToDB" method="post" autocomplete="off">
         <div class="col-md-4 main-height">
             <div class="border-corners max-height scroll5 scroll-container">
                 <div class="task-container">
@@ -103,7 +109,6 @@
                         <span>NIEROZPOCZĘTE:</span>
                     </div>
                     <div class="row" id="tasklist1"></div>
-
                     <div class="task-section-bar">
                         ROZPOCZĘTE:
                     </div>
@@ -114,12 +119,15 @@
                     <div class="row" id="tasklist3"> </div>
                 </div>
             </div>
+            <span asp-validation-for="Id" data-validator="taskId" class="text-danger"></span>
+            <br />        
         </div>
         <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-left:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:10px 0px 0px 10px">
             <h4>Wprowadź zmiany:</h4>
-            <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" /><br /></div>
-            <input asp-for="Title" style="margin-top:10px" name="taskName" id="taskName" class="form-control" placeholder="Nazwa" /><br />
-            <div style="margin-bottom:3px;">Aktualny status: <div id="statusName"></div></div><br />
+            <div hidden>   <input asp-for="Id" style="margin-top:10px" name="taskId" id="taskId" class="form-control" data-validationRules="required" /><br /></div>
+            <input asp-for="Title" name="taskName" id="taskName" placeholder="Nazwa" data-validationRules="required,maxLength50" onchange="validateField(this)" class="form-control control-margin" />
+            <span asp-validation-for="Title" data-validator="taskName" class="text-danger"></span>
+            <div style="margin-bottom:3px;" class="control-margin">Aktualny status: <div id="statusName"></div></div>
             <div hidden><input asp-for="StatusId" style="margin-top:10px" name="statusId" id="statusId" class="form-control" /></div>
             <span asp-validation-for="StatusId" class="text-danger"></span>
             <select class="custom-select form-control" onchange="changeStatus()" id="status">
@@ -127,25 +135,24 @@
                 <option value="4">Zakończone</option>
                 <option value="5">Ponownie otwarte</option>
                 <option value="6">Anulowane</option>
-            </select><br />
-            <div hidden><input asp-for="PriorityId" style="margin-top:10px" name="priorityId" id="priorityId" class="form-control" /></div>
-            <span asp-validation-for="PriorityId" class="text-danger"></span>
-            <select class="custom-select form-control" onchange="changePriority()" id="priority">
+            </select>
+            <div hidden><input asp-for="PriorityId" name="priorityId" id="priorityId" data-validationRules="required" class="form-control" /></div>
+            <select class="custom-select form-control control-margin" onchange="changePriority()" id="priority">
                 <option value="" disabled selected>Priorytet:</option>
                 <option value="1">Pilny</option>
                 <option value="2">Normalny</option>
                 <option value="3">Niski</option>
                 <option value="4">Opcjonalny</option>
-            </select><br />
-            <textarea asp-for="Comment" rows="6" name="comment" id="comment" class="form-control scroll-container scroll5" placeholder="Opis" /><br />
-
+            </select>
+            <span asp-validation-for="PriorityId" data-validator="priorityId" class="text-danger"></span>
+            <textarea asp-for="Comment" rows="6" name="comment" id="comment" class="form-control scroll-container scroll5 control-margin" placeholder="Opis" /><br />
         </div>
         <div class="col-md-4 main-height" style="border-bottom:1px solid #4472c4;border-right:1px solid #4472c4;border-top:1px solid #4472c4;border-radius:0px 10px 10px 0px">
             <h4>Wybierz zleceniobiorcę:</h4>
-            <div hidden>  <input asp-for="EmployeeId" name="employeeId" id="employeeId" class="form-control" /> <input asp-for="Id" name="taskId" id="taskId" class="form-control" /><br /></div>
+            <div hidden>  <input asp-for="EmployeeId" name="employeeId" data-validationRules="required" id="employeeId" class="form-control" /> <input asp-for="Id" name="taskId" id="taskId" class="form-control" /><br /></div>
             <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
-
+            <span data-validator="employeeId" class="text-danger"></span>
+            <br/>
         </div>
     </form>
 </div>
-

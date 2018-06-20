@@ -11,22 +11,23 @@
     }
 </script>
 <div class="row">
-    <form id="partialViewForm" action="/Employee/PushAddEmployeeToDB" method="post">
+    <form id="partialViewForm" action="/Employee/PushAddEmployeeToDB" method="post" autocomplete="off">
         <div class="col-md-7">
             <div>
                 <h4>Dane osobowe:</h4>
                 <input class="form-control control-margin" type="text" name="name" placeholder="Imię" data-validationRules="required,maxLength20" onchange="validateField(this)" />
-                <span data-validator="name" class="text-danger"></span>
+                <span asp-validation-for="Name" data-validator="name" class="text-danger"></span>
                 <input class="form-control control-margin" type="text" name="surname" placeholder="Nazwisko" data-validationRules="required,maxLength50" onchange="validateField(this)" />
-                <span data-validator="surname" class="text-danger"></span>
+                <span asp-validation-for="SurName" data-validator="surname" class="text-danger"></span>
                 <input class="form-control control-margin" type="text" name="email" placeholder="E-mail" data-validationRules="required,maxLength50,mail" onchange="validateField(this)" />
-                <span data-validator="email" class="text-danger"></span>
+                <span asp-validation-for="Email" data-validator="email" class="text-danger"></span>
 
-                <input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" />
+                <input class="form-control control-margin" type="text" name="phone" placeholder="Telefon" data-validationRules="maxLength15,numbers"  onchange="validateField(this)" />
+                <span asp-validation-for="Phone" data-validator="phone" class="text-danger"></span>
                 <div hidden>
                     <input asp-for="PositionId" name="positionId" id="positionId" data-validationRules="required" class="form-control" />
                 </div>
-                <select class="custom-select form-control" onchange="changePosition()" id="position">
+                <select class="custom-select form-control control-margin" onchange="changePosition()" id="position">
                     <option value="" disabled selected>Stanowisko:</option>
                     <option value="1">Kierownik</option>
                     <option value="2">Programista</option>

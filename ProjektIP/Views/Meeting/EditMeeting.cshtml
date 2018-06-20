@@ -1,5 +1,4 @@
 ﻿@model ProjektIP.Models.MeetingModel
-
 <script>
 	var details = @ViewBag.details.ToString().ToLower();
     $(function () {
@@ -218,7 +217,8 @@
 				img.src = "../Content/Image/phone_grey.png";
 				$("#typeId").val(0);
 			}
-		}
+        }
+        validateField(document.getElementById("typeId"));
     }
 
     //document.getElementById("imgCar").src = "../Content/Image/car_grey.png";
@@ -244,7 +244,8 @@
 					document.getElementById("location").style.display = "none";
 				document.getElementById("roomName").style.display = "initial";
 			}
-		}
+        }
+        validateField(document.getElementById("typeId"));
     }
 
     //document.getElementById("imgMeeting").src = "../Content/Image/meeting_grey.png";
@@ -266,7 +267,8 @@
 				img.src = "../Content/Image/meeting_grey.png";
 				$("#typeId").val(0);
 			}
-		}
+        }
+        validateField(document.getElementById("typeId"));
     }
 
     //document.getElementById("imgSchool").src = "../Content/Image/school_grey.png";
@@ -288,7 +290,8 @@
 				img.src = "../Content/Image/school_grey.png";
 				$("#typeId").val(0);
 			}
-		}
+        }
+        validateField(document.getElementById("typeId"));
     }
 
     //PRIORYTET
@@ -297,7 +300,8 @@
 		if (!details) {
 			var value = $("#priority").val();
 			$("#priorityId").val(value);
-		}
+        }
+        validateField(document.getElementById("priorityId"));
     }
 
     //POKOJE
@@ -341,7 +345,8 @@
 				$("#listEmployee" + id).addClass("border-to-members");
 				$("#newIdMembers").val(newIdMembers.value + id + ",");
 			}
-		}
+        }
+        validateField(document.getElementById("newIdMembers"));
     }
 
     $('.clockpicker').clockpicker();
@@ -351,116 +356,116 @@
     }
 </script>
 <div class="row">
-	<form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post">
-		<div class="col-md-6">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div hidden>
-				<label asp-for="Id" class="control-label"></label>
-				<input asp-for="Id" class="form-control" />
-				<span asp-validation-for="Id" class="text-danger"></span>
-			</div>
-			<div hidden>
-				<input asp-for="MeetingTypeId" id="typeId" class="form-control" />
-			</div>
-			<div row>
-				<h4>Wprowadź zmiany:</h4>
-				<label>Typ wydarzenia:</label>
-				<br />
-				<img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-				<img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-				<img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-				<img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
-			</div>
-			<div class="form-group margin-top-20">
-				<input asp-for="Title" id="title" class="form-control" placeholder="Nazwa wydarzenia" />
-				<span asp-validation-for="Title" class="text-danger"></span>
-			</div>
+    <form id="partialViewForm" action="/Meeting/PushEditMeetingToDB" method="post" autocomplete="off">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden>
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div hidden>
+                <input asp-for="MeetingTypeId" name="MeetingTypeId" data-validationRules="required,notZero" id="typeId" class="form-control" />
+            </div>
+            <div row>
+                <h4>Wprowadź zmiany:</h4>
+                <label>Typ wydarzenia:</label>
+                <br />
+                <img height="50" width="50" onclick="switchPhone(this)" id="imgPhone" title="Tele konferencja" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchCar(this)" id="imgCar" title="Wyjazd" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchMeeting(this)" id="imgMeeting" title="Spotkanie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+                <img height="50" width="50" onclick="switchSchool(this)" id="imgSchool" title="Szkolenie" data-toggle="tooltipTask" class="grey-tooltip img-button" />
+            </div>
+            <span asp-validation-for="MeetingTypeId" data-validator="MeetingTypeId" class="text-danger"></span>
+            <div class="form-group margin-top-20 control-margin">
+                <input asp-for="Title" name="title" id="title" class="form-control" placeholder="Nazwa wydarzenia" data-validationRules="required,maxLength50" onchange="validateField(this)" />
+                <span asp-validation-for="Title" data-validator="title" class="text-danger"></span>
+            </div>
+            <label asp-for="DateStart" class="control-label control-margin">Data od:</label>
+            <div class="input-group input-date-time">
+                <input asp-for="DateStart" class="form-control" id="date" name="datestart" placeholder="DD.MM.YYYY" type="text" data-validationRules="required,date" onchange="validateField(this)" />
+                <span class="input-group-addon img-button" onclick="openDatePicker('datestart')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <span asp-validation-for="DateStart" data-validator="datestart" class="text-danger"></span>
 
-			<label asp-for="DateStart" class="control-label">Data od:</label>
-			<div class="form-group input-group input-date-time">
-				<input asp-for="DateStart" class="form-control" id="date" name="datestart" placeholder="DD.MM.YYYY" type="text" />
-				<span asp-validation-for="DateStart" class="text-danger"></span>
-				<span class="input-group-addon img-button" onclick="openDatePicker('datestart')">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>
-			<div class="form-group input-group clockpicker input-date-time" data-autoclose="true">
-				<input asp-for="HourStart" class="form-control" placeholder="00:00" id="hourStart" />
-				<span asp-validation-for="HourStart" class="text-danger"></span>
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-			</div>
+            <div class="form-group input-group clockpicker input-date-time  control-margin" data-autoclose="true">
+                <input asp-for="HourStart" name="hourStart" class="form-control" placeholder="00:00" id="hourStart" data-validationRules="required,time" onchange="validateField(this)" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+            <span asp-validation-for="HourStart" data-validator="hourStart" class="text-danger"></span>
 
-			<label asp-for="DateEnd" class="control-label">Data do:</label>
-			<div class="form-group input-group input-date-time">
-				<input asp-for="DateEnd" class="form-control" id="date" name="dateend" placeholder="DD.MM.YYYY" type="text" />
-				<span asp-validation-for="DateEnd" class="text-danger"></span>
-				<span class="input-group-addon img-button" onclick="openDatePicker('dateend')">
-					<span class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>
-			<div class="form-group input-group clockpicker input-date-time" data-autoclose="true">
-				<input asp-for="HourEnd" class="form-control" placeholder="00:00" id="hourEnd" />
-				<span asp-validation-for="HourEnd" class="text-danger"></span>
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-			</div>
-			<div hidden>
-				<label asp-for="RoomId" class="control-label"></label>
-				<input asp-for="RoomId" class="form-control" id="roomId" />
-				<span asp-validation-for="RoomId" class="text-danger"></span>
-			</div>
-			<div class="form-group margin-top-20" id="room">
-				<span asp-validation-for="RoomName" class="text-danger"></span>
-				<select class="custom-select form-control" onchange="changeRoom()" id="roomName">
-					<option value="" disabled selected>Pokój:</option>
-					@foreach (var item in ViewBag.listOfRooms)
-					{
-						<option value=@(item[0])>@(item[1])</option>
-					}
-					<option value="inne">Inne</option>
-				</select>
-			</div>
-			<div class="form-group margin-top-20" id="location">
-				<input asp-for="Location" class="form-control " placeholder="Lokalizacja" id="locationName" />
-				<span asp-validation-for="Location" class="text-danger"></span>
-			</div>
-			<div hidden>
-				<input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
-			</div>
-			<span asp-validation-for="PriorityId" class="text-danger"></span>
-			<select class="custom-select form-control margin-bottom-20 margin-top-20" onchange="changePriority()" id="priority">
-				<option value="" disabled selected>Priorytet:</option>
-				<option value="1">Pilny</option>
-				<option value="2">Normalny</option>
-				<option value="3">Niski</option>
-				<option value="4">Opcjonalny</option>
-			</select>
+            <p class="no-margin"><label asp-for="DateEnd" class="control-label control-margin">Data do:</label></p>
+            <div class="form-group input-group input-date-time">
+                <input asp-for="DateEnd" class="form-control" id="date" name="dateend" placeholder="DD.MM.YYYY" type="text" data-validationRules="date" onchange="validateField(this)" />
+                <span class="input-group-addon img-button" onclick="openDatePicker('dateend')">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <span asp-validation-for="DateEnd" class="text-danger" data-validator="dateend"></span>
 
-			<div class="form-group margin-top-20">
-				<textarea asp-for="Note" rows="3" class="form-control scroll-container scroll5" placeholder="Opis" name="Note" id="Note" />
-				<span asp-validation-for="Note" class="text-danger"></span>
-			</div>
-			@if (!ViewBag.details)
-			{
-				<button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
-			}
-		</div>
-		<div class="col-md-6 main-height">
+            <div class="form-group input-group clockpicker input-date-time control-margin" data-autoclose="true">
+                <input asp-for="HourEnd" class="form-control" name="hourEnd" placeholder="00:00" id="hourEnd" data-validationRules="time, maxLength5" onchange="validateField(this)" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+            <span asp-validation-for="HourEnd" class="text-danger" data-validator="hourEnd"></span>
 
-			<div class="form-group" id="employee">
-				<h4>Wybierz uczestników:</h4>
-			</div>
-			<div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
-		</div>
-
-		<div hidden>
-			<input name="oldIdMembers" id="oldIdMembers" class="form-control" value="@(ViewBag.membersId)" />
-			<input name="newIdMembers" id="newIdMembers" class="form-control" />
-		</div>
-	</form>
+            <div hidden>
+                <label asp-for="RoomId" class="control-label"></label>
+                <input asp-for="RoomId" class="form-control" id="roomId" />
+                <span asp-validation-for="RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group control-margin" id="room">
+                <span asp-validation-for="RoomName" class="text-danger"></span>
+                <select class="custom-select form-control" onchange="changeRoom()" id="roomName">
+                    <option value="" disabled selected>Pokój:</option>
+                    @foreach (var item in ViewBag.listOfRooms)
+            {
+                <option value=@(item[0])>@(item[1])</option>
+    }
+                    <option value="inne">Inne</option>
+                </select>
+            </div>
+            <div class="form-group control-margin" id="location">
+                <input asp-for="Location" class="form-control " placeholder="Lokalizacja" id="locationName" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div hidden>
+                <input asp-for="PriorityId" class="control-label" name="priorityId" id="priorityId">
+            </div>
+            <span asp-validation-for="PriorityId" name="priorityId" id="priorityId" data-validationRules="required" class="text-danger"></span>
+            <select class="custom-select form-control control-margin" onchange="changePriority()" id="priority">
+                <option value="" disabled selected>Priorytet:</option>
+                <option value="1">Pilny</option>
+                <option value="2">Normalny</option>
+                <option value="3">Niski</option>
+                <option value="4">Opcjonalny</option>
+            </select>
+            <span asp-validation-for="PriorityId" data-validator="priorityId" class="text-danger"></span>
+            <div class="form-group control-margin margin-bottom-20">
+                <textarea asp-for="Note" rows="3" class="form-control scroll-container scroll5" placeholder="Opis" name="Note" id="Note" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            @if (!ViewBag.details)
+    {
+        <button class="btn tn-login font-white background-blue center-block" type="button" id="addressSearch" onclick="location.href='@Url.Action("DeleteMeetingFromDB","Meeting",new { id=Model.Id })'">Odwołaj wydarzenie</button>
+}
+        </div>
+        <div class="col-md-6 main-height">
+            <div class="form-group" id="employee">
+                <h4>Wybierz uczestników:</h4>
+            </div>
+            <div class="border-corners task-height scroll5 scroll-container" id="employees"></div>
+        </div>
+        <div hidden>
+            <input name="oldIdMembers" id="oldIdMembers" class="form-control" value="@(ViewBag.membersId)" />
+            <input name="newIdMembers" id="newIdMembers" class="form-control" />
+        </div>
+    </form>
 </div>
-
 
